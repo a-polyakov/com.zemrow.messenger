@@ -2,8 +2,7 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.ChatTypeEnum;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Чат
@@ -22,7 +21,7 @@ public class Chat extends AbstractEntity {
     /**
      * Использованый нумиратор (для определения префикса)
      */
-    public UUID numberingId;
+    public IgniteUuid numberingId;
     /**
      * Номер чата(документа)
      */
@@ -46,11 +45,11 @@ public class Chat extends AbstractEntity {
         this.chatType = chatType;
     }
 
-    public UUID getNumberingId() {
+    public IgniteUuid getNumberingId() {
         return numberingId;
     }
 
-    public void setNumberingId(UUID numberingId) {
+    public void setNumberingId(IgniteUuid numberingId) {
         this.numberingId = numberingId;
     }
 
@@ -60,5 +59,22 @@ public class Chat extends AbstractEntity {
 
     public void setOrderNumber(Long orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Chat{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", label='").append(label).append('\'');
+        sb.append(", chatType='").append(chatType).append('\'');
+        sb.append(", numberingId='").append(numberingId).append('\'');
+        sb.append(", orderNumber=").append(orderNumber);
     }
 }

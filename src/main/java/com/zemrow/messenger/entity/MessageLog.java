@@ -1,8 +1,7 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * История сообщения
@@ -13,7 +12,7 @@ public class MessageLog extends AbstractEntityCreateOnly {
     /**
      * ID сообщения
      */
-    public UUID messageId;
+    public IgniteUuid messageId;
     /**
      * Предыдущий текст
      */
@@ -21,11 +20,11 @@ public class MessageLog extends AbstractEntityCreateOnly {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getMessageId() {
+    public IgniteUuid getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(UUID messageId) {
+    public void setMessageId(IgniteUuid messageId) {
         this.messageId = messageId;
     }
 
@@ -35,5 +34,20 @@ public class MessageLog extends AbstractEntityCreateOnly {
 
     public void setOldText(String oldText) {
         this.oldText = oldText;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("MessageLog{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", messageId='").append(messageId).append('\'');
+        sb.append(", oldText='").append(oldText).append('\'');
     }
 }

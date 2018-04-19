@@ -1,8 +1,7 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Неудачные попытки войти в систему
@@ -13,7 +12,7 @@ public class UserSessionFail extends AbstractEntityCreateOnly {
     /**
      * Точка входа пользователя
      */
-    public UUID userEntryPointId;
+    public IgniteUuid userEntryPointId;
     /**
      * IP адрес клиента
      */
@@ -25,11 +24,11 @@ public class UserSessionFail extends AbstractEntityCreateOnly {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getUserEntryPointId() {
+    public IgniteUuid getUserEntryPointId() {
         return userEntryPointId;
     }
 
-    public void setUserEntryPointId(UUID userEntryPointId) {
+    public void setUserEntryPointId(IgniteUuid userEntryPointId) {
         this.userEntryPointId = userEntryPointId;
     }
 
@@ -47,5 +46,21 @@ public class UserSessionFail extends AbstractEntityCreateOnly {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserSessionFail{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", userEntryPointId='").append(userEntryPointId).append('\'');
+        sb.append(", ipAddress='").append(ipAddress).append('\'');
+        sb.append(", comment='").append(comment).append('\'');
     }
 }

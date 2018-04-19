@@ -3,8 +3,7 @@ package com.zemrow.messenger.entity;
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateAndDelete;
 import com.zemrow.messenger.entity.enums.UserLinkEnum;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Организационная структура пользователей
@@ -16,12 +15,12 @@ public class UserLink extends AbstractEntityCreateAndDelete {
      * ID пользователя родителя
      */
     @QuerySqlField(notNull = true, index = true)
-    public UUID parentUserId;
+    public IgniteUuid parentUserId;
     /**
      * ID пользователя потомка
      */
     @QuerySqlField(notNull = true, index = true)
-    public UUID childUserId;
+    public IgniteUuid childUserId;
     /**
      * Тип связи
      */
@@ -29,19 +28,19 @@ public class UserLink extends AbstractEntityCreateAndDelete {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getParentUserId() {
+    public IgniteUuid getParentUserId() {
         return parentUserId;
     }
 
-    public void setParentUserId(UUID parentUserId) {
+    public void setParentUserId(IgniteUuid parentUserId) {
         this.parentUserId = parentUserId;
     }
 
-    public UUID getChildUserId() {
+    public IgniteUuid getChildUserId() {
         return childUserId;
     }
 
-    public void setChildUserId(UUID childUserId) {
+    public void setChildUserId(IgniteUuid childUserId) {
         this.childUserId = childUserId;
     }
 
@@ -51,5 +50,21 @@ public class UserLink extends AbstractEntityCreateAndDelete {
 
     public void setUserLinkType(UserLinkEnum userLinkType) {
         this.userLinkType = userLinkType;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserLink{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", parentUserId='").append(parentUserId).append('\'');
+        sb.append(", childUserId='").append(childUserId).append('\'');
+        sb.append(", userLinkType='").append(userLinkType).append('\'');
     }
 }

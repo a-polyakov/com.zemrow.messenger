@@ -1,21 +1,22 @@
 package com.zemrow.messenger.entity;
 
-import java.util.UUID;
+import com.zemrow.messenger.entity.abstracts.AbstractEntityWithoutId;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Дерево задач
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public class ChatTree {
+public class ChatTree extends AbstractEntityWithoutId {
     /**
      * ID родительского чата
      */
-    public UUID parentChatId;
+    public IgniteUuid parentChatId;
     /**
      * id дочернего чата
      */
-    public UUID childChatId;
+    public IgniteUuid childChatId;
     /**
      * Разность уровней
      */
@@ -23,19 +24,19 @@ public class ChatTree {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getParentChatId() {
+    public IgniteUuid getParentChatId() {
         return parentChatId;
     }
 
-    public void setParentChatId(UUID parentChatId) {
+    public void setParentChatId(IgniteUuid parentChatId) {
         this.parentChatId = parentChatId;
     }
 
-    public UUID getChildChatId() {
+    public IgniteUuid getChildChatId() {
         return childChatId;
     }
 
-    public void setChildChatId(UUID childChatId) {
+    public void setChildChatId(IgniteUuid childChatId) {
         this.childChatId = childChatId;
     }
 
@@ -45,5 +46,15 @@ public class ChatTree {
 
     public void setDistance(Integer distance) {
         this.distance = distance;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("ChatTree{");
+        sb.append("parentChatId='").append(parentChatId).append('\'');
+        sb.append(", childChatId='").append(childChatId).append('\'');
+        sb.append(", distance=").append(distance);
+        sb.append('}');
+        return sb.toString();
     }
 }

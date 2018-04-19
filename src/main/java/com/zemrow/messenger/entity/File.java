@@ -107,4 +107,25 @@ public class File extends AbstractEntityCreateAndDelete {
     public void setGzipOn(Boolean gzipOn) {
         this.gzipOn = gzipOn;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("File{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", mimeType='").append(mimeType).append('\'');
+        sb.append(", fileSize=").append(fileSize);
+        sb.append(", path='").append(path).append('\'');
+        sb.append(", fileAccessType='").append(fileAccessType).append('\'');
+        sb.append(", crc32=").append(crc32);
+        sb.append(", lastOpenTime=").append(lastOpenTime);
+        sb.append(", gzipOn=").append(gzipOn);
+    }
 }

@@ -2,8 +2,7 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.MessageTypeEnum;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Сообщение
@@ -14,7 +13,7 @@ public class Message extends AbstractEntity {
     /**
      * ID чата
      */
-    public UUID chatId;
+    public IgniteUuid chatId;
     /**
      * Текст
      */
@@ -22,11 +21,11 @@ public class Message extends AbstractEntity {
     /**
      * ID прикрепленного файла
      */
-    public UUID fileId;
+    public IgniteUuid fileId;
     /**
      * ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
      */
-    public UUID childChatId;
+    public IgniteUuid childChatId;
     /**
      * Тип сообщения
      */
@@ -34,11 +33,11 @@ public class Message extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getChatId() {
+    public IgniteUuid getChatId() {
         return chatId;
     }
 
-    public void setChatId(UUID chatId) {
+    public void setChatId(IgniteUuid chatId) {
         this.chatId = chatId;
     }
 
@@ -50,19 +49,19 @@ public class Message extends AbstractEntity {
         this.text = text;
     }
 
-    public UUID getFileId() {
+    public IgniteUuid getFileId() {
         return fileId;
     }
 
-    public void setFileId(UUID fileId) {
+    public void setFileId(IgniteUuid fileId) {
         this.fileId = fileId;
     }
 
-    public UUID getChildChatId() {
+    public IgniteUuid getChildChatId() {
         return childChatId;
     }
 
-    public void setChildChatId(UUID childChatId) {
+    public void setChildChatId(IgniteUuid childChatId) {
         this.childChatId = childChatId;
     }
 
@@ -72,5 +71,23 @@ public class Message extends AbstractEntity {
 
     public void setMessageType(MessageTypeEnum messageType) {
         this.messageType = messageType;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Message{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", chatId='").append(chatId).append('\'');
+        sb.append(", text='").append(text).append('\'');
+        sb.append(", fileId='").append(fileId).append('\'');
+        sb.append(", childChatId='").append(childChatId).append('\'');
+        sb.append(", messageType='").append(messageType).append('\'');
     }
 }

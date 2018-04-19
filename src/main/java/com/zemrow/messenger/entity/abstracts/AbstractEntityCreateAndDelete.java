@@ -1,6 +1,6 @@
 package com.zemrow.messenger.entity.abstracts;
 
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Костяк сущности (с информацией о создании и удалении)
@@ -15,7 +15,7 @@ public abstract class AbstractEntityCreateAndDelete extends AbstractEntityCreate
     /**
      * Пользователь удаливший запись
      */
-    private UUID deletedBy;
+    private IgniteUuid deletedBy;
 
 //================================ AUTO GENERATE ==============================
 
@@ -27,11 +27,26 @@ public abstract class AbstractEntityCreateAndDelete extends AbstractEntityCreate
         this.deleteTime = deleteTime;
     }
 
-    public UUID getDeletedBy() {
+    public IgniteUuid getDeletedBy() {
         return deletedBy;
     }
 
-    public void setDeletedBy(UUID deletedBy) {
+    public void setDeletedBy(IgniteUuid deletedBy) {
         this.deletedBy = deletedBy;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AbstractEntityCreateAndDelete{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", deleteTime=").append(deleteTime);
+        sb.append(", deletedBy='").append(deletedBy).append('\'');
     }
 }

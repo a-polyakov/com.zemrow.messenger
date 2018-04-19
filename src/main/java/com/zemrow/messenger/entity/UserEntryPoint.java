@@ -2,8 +2,7 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.EntryPointTypeEnum;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Способы авторизации пользователя
@@ -14,7 +13,7 @@ public class UserEntryPoint extends AbstractEntity {
     /**
      * ID пользователя
      */
-    public UUID userId;
+    public IgniteUuid userId;
     /**
      * Прошел ли подтверждение
      */
@@ -34,11 +33,11 @@ public class UserEntryPoint extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getUserId() {
+    public IgniteUuid getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(IgniteUuid userId) {
         this.userId = userId;
     }
 
@@ -72,5 +71,23 @@ public class UserEntryPoint extends AbstractEntity {
 
     public void setCredential(String credential) {
         this.credential = credential;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserEntryPoint{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", userId='").append(userId).append('\'');
+        sb.append(", validate=").append(validate);
+        sb.append(", entryPointType='").append(entryPointType).append('\'');
+        sb.append(", clientId='").append(clientId).append('\'');
+        sb.append(", credential='").append(credential).append('\'');
     }
 }

@@ -62,4 +62,21 @@ public class UserStatus extends AbstractEntity {
     public void setColor(Integer color) {
         this.color = color;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserStatus{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", label='").append(label).append('\'');
+        sb.append(", userStatusType=").append(userStatusType);
+        sb.append(", weight=").append(weight);
+        sb.append(", color=").append(color);
+    }
 }

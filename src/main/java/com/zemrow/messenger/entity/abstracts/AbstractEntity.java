@@ -1,8 +1,7 @@
 package com.zemrow.messenger.entity.abstracts;
 
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Костяк сущности (с информацией о создании, редактировании и удалении)
@@ -19,7 +18,7 @@ public abstract class AbstractEntity extends AbstractEntityCreateAndDelete {
      * Пользователь обновивший запись
      */
     @QuerySqlField(notNull = true)
-    private UUID updatedBy;
+    private IgniteUuid updatedBy;
 
 //================================ AUTO GENERATE ==============================
 
@@ -31,12 +30,26 @@ public abstract class AbstractEntity extends AbstractEntityCreateAndDelete {
         this.updateTime = updateTime;
     }
 
-    public UUID getUpdatedBy() {
+    public IgniteUuid getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(UUID updatedBy) {
+    public void setUpdatedBy(IgniteUuid updatedBy) {
         this.updatedBy = updatedBy;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AbstractEntity{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", updatedBy='").append(updatedBy).append('\'');
+    }
 }

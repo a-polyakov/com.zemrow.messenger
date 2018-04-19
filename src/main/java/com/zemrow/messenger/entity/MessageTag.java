@@ -1,8 +1,7 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Тег сообщения
@@ -13,11 +12,11 @@ public class MessageTag extends AbstractEntity {
     /**
      * ID сообщения
      */
-    public UUID messageId;
+    public IgniteUuid messageId;
     /**
      * ID тега
      */
-    public UUID tagId;
+    public IgniteUuid tagId;
     /**
      * Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
      */
@@ -25,19 +24,19 @@ public class MessageTag extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getMessageId() {
+    public IgniteUuid getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(UUID messageId) {
+    public void setMessageId(IgniteUuid messageId) {
         this.messageId = messageId;
     }
 
-    public UUID getTagId() {
+    public IgniteUuid getTagId() {
         return tagId;
     }
 
-    public void setTagId(UUID tagId) {
+    public void setTagId(IgniteUuid tagId) {
         this.tagId = tagId;
     }
 
@@ -47,5 +46,21 @@ public class MessageTag extends AbstractEntity {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("MessageTag{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", messageId='").append(messageId).append('\'');
+        sb.append(", tagId='").append(tagId).append('\'');
+        sb.append(", value='").append(value).append('\'');
     }
 }

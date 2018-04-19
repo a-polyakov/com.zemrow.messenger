@@ -84,4 +84,23 @@ public class Tag extends AbstractEntity {
     public void setTagGroup(TagGroupEnum tagGroup) {
         this.tagGroup = tagGroup;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Tag{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", tag='").append(tag).append('\'');
+        sb.append(", tagType='").append(tagType).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", leftMenuShow=").append(leftMenuShow);
+        sb.append(", headerShow=").append(headerShow);
+        sb.append(", tagGroup='").append(tagGroup).append('\'');
+    }
 }

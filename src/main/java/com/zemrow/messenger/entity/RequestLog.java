@@ -82,4 +82,23 @@ public class RequestLog extends AbstractEntityCreateOnly {
     public void setErrorStackTrace(String errorStackTrace) {
         this.errorStackTrace = errorStackTrace;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("RequestLog{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", token='").append(token).append('\'');
+        sb.append(", serviceId='").append(serviceId).append('\'');
+        sb.append(", action='").append(action).append('\'');
+        sb.append(", startInvoke=").append(startInvoke);
+        sb.append(", endInvoke=").append(endInvoke);
+        sb.append(", errorStackTrace='").append(errorStackTrace).append('\'');
+    }
 }

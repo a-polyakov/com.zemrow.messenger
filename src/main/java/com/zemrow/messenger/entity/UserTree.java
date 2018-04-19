@@ -1,21 +1,22 @@
 package com.zemrow.messenger.entity;
 
-import java.util.UUID;
+import com.zemrow.messenger.entity.abstracts.AbstractEntityWithoutId;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Дерево пользователей
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public class UserTree {
+public class UserTree extends AbstractEntityWithoutId {
     /**
      * ID родительского пользователя
      */
-    public UUID parentUserId;
+    public IgniteUuid parentUserId;
     /**
      * ID дочернего пользователя
      */
-    public UUID childUserId;
+    public IgniteUuid childUserId;
     /**
      * Разность уровней
      */
@@ -23,19 +24,19 @@ public class UserTree {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getParentUserId() {
+    public IgniteUuid getParentUserId() {
         return parentUserId;
     }
 
-    public void setParentUserId(UUID parentUserId) {
+    public void setParentUserId(IgniteUuid parentUserId) {
         this.parentUserId = parentUserId;
     }
 
-    public UUID getChildUserId() {
+    public IgniteUuid getChildUserId() {
         return childUserId;
     }
 
-    public void setChildUserId(UUID childUserId) {
+    public void setChildUserId(IgniteUuid childUserId) {
         this.childUserId = childUserId;
     }
 
@@ -45,5 +46,15 @@ public class UserTree {
 
     public void setDistance(Integer distance) {
         this.distance = distance;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserTree{");
+        sb.append("parentUserId='").append(parentUserId).append('\'');
+        sb.append(", childUserId='").append(childUserId).append('\'');
+        sb.append(", distance=").append(distance);
+        sb.append('}');
+        return sb.toString();
     }
 }

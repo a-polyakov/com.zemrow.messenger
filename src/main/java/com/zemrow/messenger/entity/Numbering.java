@@ -3,8 +3,7 @@ package com.zemrow.messenger.entity;
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.ChatTypeEnum;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Настройка нумирации для компании и типа чата
@@ -16,7 +15,7 @@ public class Numbering extends AbstractEntity {
      * ID пользователя (компании, отдела)
      */
     @QuerySqlField(notNull = true, index = true)
-    public UUID userId;
+    public IgniteUuid userId;
     /**
      * Тип чата(документа)
      */
@@ -32,11 +31,11 @@ public class Numbering extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getUserId() {
+    public IgniteUuid getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(IgniteUuid userId) {
         this.userId = userId;
     }
 
@@ -62,5 +61,22 @@ public class Numbering extends AbstractEntity {
 
     public void setMaxNumber(Long maxNumber) {
         this.maxNumber = maxNumber;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Numbering{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    protected void toString(StringBuilder sb) {
+        super.toString(sb);
+        sb.append(", userId='").append(userId).append('\'');
+        sb.append(", chatType='").append(chatType).append('\'');
+        sb.append(", prefix='").append(prefix).append('\'');
+        sb.append(", maxNumber=").append(maxNumber);
     }
 }

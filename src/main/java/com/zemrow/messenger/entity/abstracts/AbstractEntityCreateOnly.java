@@ -1,19 +1,19 @@
 package com.zemrow.messenger.entity.abstracts;
 
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-
-import java.util.UUID;
+import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Костяк сущности (с информацией о создании)
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public abstract class AbstractEntityCreateOnly {
+public abstract class AbstractEntityCreateOnly extends AbstractEntityWithoutId {
     /**
      * ID записи
      */
-    private UUID id;
+    @QuerySqlField(notNull = true, index = true)
+    private IgniteUuid id;
     /**
      * Дата создания записи
      */
@@ -23,15 +23,15 @@ public abstract class AbstractEntityCreateOnly {
      * Пользователь создавший запись
      */
     @QuerySqlField(notNull = true)
-    private UUID createdBy;
+    private IgniteUuid createdBy;
 
 //================================ AUTO GENERATE ==============================
 
-    public UUID getId() {
+    public IgniteUuid getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(IgniteUuid id) {
         this.id = id;
     }
 
@@ -43,12 +43,25 @@ public abstract class AbstractEntityCreateOnly {
         this.createTime = createTime;
     }
 
-    public UUID getCreatedBy() {
+    public IgniteUuid getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(UUID createdBy) {
+    public void setCreatedBy(IgniteUuid createdBy) {
         this.createdBy = createdBy;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AbstractEntityCreateOnly{");
+        toString(sb);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    protected void toString(StringBuilder sb) {
+        sb.append("id='").append(id).append('\'');
+        sb.append(", createTime=").append(createTime);
+        sb.append(", createdBy='").append(createdBy).append('\'');
+    }
 }

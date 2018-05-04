@@ -1,7 +1,6 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityWithoutId;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Дерево пользователей
@@ -12,11 +11,11 @@ public class UserTree extends AbstractEntityWithoutId {
     /**
      * ID родительского пользователя
      */
-    public IgniteUuid parentUserId;
+    public Long parentUserId;
     /**
      * ID дочернего пользователя
      */
-    public IgniteUuid childUserId;
+    public Long childUserId;
     /**
      * Разность уровней
      */
@@ -24,19 +23,19 @@ public class UserTree extends AbstractEntityWithoutId {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getParentUserId() {
+    public Long getParentUserId() {
         return parentUserId;
     }
 
-    public void setParentUserId(IgniteUuid parentUserId) {
+    public void setParentUserId(Long parentUserId) {
         this.parentUserId = parentUserId;
     }
 
-    public IgniteUuid getChildUserId() {
+    public Long getChildUserId() {
         return childUserId;
     }
 
-    public void setChildUserId(IgniteUuid childUserId) {
+    public void setChildUserId(Long childUserId) {
         this.childUserId = childUserId;
     }
 

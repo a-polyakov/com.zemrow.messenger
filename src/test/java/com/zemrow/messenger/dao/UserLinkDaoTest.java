@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.UserLink;
 import com.zemrow.messenger.entity.enums.UserLinkEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,12 +20,11 @@ public class UserLinkDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new UserLinkDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final UserLink entity = new UserLink();
-            entity.setParentUserId(IgniteUuid.randomUuid());
-            entity.setChildUserId(IgniteUuid.randomUuid());
+            entity.setParentUserId(session.getUserId());
+            entity.setChildUserId(session.getUserId() + IdConstant.DELTA_ID);
             entity.setUserLinkType(UserLinkEnum.CONTAINS);
 
             System.out.println("Before insert " + entity);

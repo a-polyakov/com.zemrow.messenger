@@ -2,7 +2,6 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.ChatWork;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,11 +19,10 @@ public class ChatWorkDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new ChatWorkDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final ChatWork entity = new ChatWork();
-            entity.setChatId(IgniteUuid.randomUuid());
+            entity.setChatId(IdConstant.FIRST_ID_CHAT);
             entity.setUserId(session.getUserId());
             entity.setStartTime(System.currentTimeMillis());
 

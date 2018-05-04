@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.UserTree;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.lang.IgniteBiTuple;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,12 +20,11 @@ public class UserTreeDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new UserTreeDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final UserTree entity = new UserTree();
-            entity.setParentUserId(IgniteUuid.randomUuid());
-            entity.setChildUserId(IgniteUuid.randomUuid());
+            entity.setParentUserId(session.getUserId());
+            entity.setChildUserId(session.getUserId() + IdConstant.DELTA_ID);
             entity.setDistance(1);
 
             System.out.println("Before insert " + entity);

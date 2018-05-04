@@ -11,7 +11,7 @@ import org.apache.ignite.Ignite;
 public class UserSessionDao extends AbstractDaoCreateAndDelete<UserSession> {
 
     public UserSessionDao(Ignite ignite) {
-        super(ignite, UserSession.class, 2);
+        super(ignite, UserSession.class, IdConstant.FIRST_ID_USER_SESSION, -1);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.MessageTag;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,12 +19,11 @@ public class MessageTagDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new MessageTagDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final MessageTag entity = new MessageTag();
-            entity.setMessageId(IgniteUuid.randomUuid());
-            entity.setTagId(IgniteUuid.randomUuid());
+            entity.setMessageId(IdConstant.FIRST_ID_MESSAGE);
+            entity.setTagId(IdConstant.FIRST_ID_TAG);
             entity.setValue("value");
 
             System.out.println("Before insert " + entity);

@@ -2,7 +2,6 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.EntryPointTypeEnum;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Способы авторизации пользователя
@@ -13,7 +12,7 @@ public class UserEntryPoint extends AbstractEntity {
     /**
      * ID пользователя
      */
-    public IgniteUuid userId;
+    public Long userId;
     /**
      * Прошел ли подтверждение
      */
@@ -33,11 +32,11 @@ public class UserEntryPoint extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(IgniteUuid userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

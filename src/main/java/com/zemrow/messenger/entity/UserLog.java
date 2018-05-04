@@ -2,7 +2,6 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * История изменения пользователь
@@ -14,7 +13,7 @@ public class UserLog extends AbstractEntityCreateOnly {
      * ID пользователя
      */
     @QuerySqlField(notNull = true, index = true)
-    public IgniteUuid userId;
+    public Long userId;
     /**
      * Поле
      */
@@ -34,11 +33,11 @@ public class UserLog extends AbstractEntityCreateOnly {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(IgniteUuid userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

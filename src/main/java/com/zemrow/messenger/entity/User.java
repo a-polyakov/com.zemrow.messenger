@@ -2,10 +2,8 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.UserTypeEnum;
-import org.apache.ignite.cache.query.annotations.QuerySqlField;
-import org.apache.ignite.lang.IgniteUuid;
-
 import java.util.Map;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Пользователь
@@ -16,7 +14,7 @@ public class User extends AbstractEntity {
     /**
      * ссылка на таблицу file где хранится аватар
      */
-    private IgniteUuid avatarId;
+    private Long avatarId;
     /**
      * Наименование пользователя
      */
@@ -35,7 +33,7 @@ public class User extends AbstractEntity {
      * Состояние пользователя: Не в сети, В сети, Не беспокоить
      */
     @QuerySqlField(notNull = true)
-    private IgniteUuid userStatusId;
+    private Long userStatusId;
     /**
      * Локаль с которой работает пользователя
      */
@@ -47,11 +45,11 @@ public class User extends AbstractEntity {
     //TODO private TimeZone timeZone;
 
 //================================ AUTO GENERATE ==============================
-    public IgniteUuid getAvatarId() {
+    public Long getAvatarId() {
         return avatarId;
     }
 
-    public void setAvatarId(IgniteUuid avatarId) {
+    public void setAvatarId(Long avatarId) {
         this.avatarId = avatarId;
     }
 
@@ -79,11 +77,11 @@ public class User extends AbstractEntity {
         this.info = info;
     }
 
-    public IgniteUuid getUserStatusId() {
+    public Long getUserStatusId() {
         return userStatusId;
     }
 
-    public void setUserStatusId(IgniteUuid userStatusId) {
+    public void setUserStatusId(Long userStatusId) {
         this.userStatusId = userStatusId;
     }
 

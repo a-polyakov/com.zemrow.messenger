@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.UserFilter;
 import com.zemrow.messenger.entity.enums.FilterGridEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,11 +20,10 @@ public class UserFilterDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new UserFilterDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final UserFilter entity = new UserFilter();
-            entity.setUserId(IgniteUuid.randomUuid());
+            entity.setUserId(session.getUserId());
             entity.setGridId(FilterGridEnum.MY_ISSUE_LIST);
             entity.setFilterId("test");
             entity.setData("{}");

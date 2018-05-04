@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class ChatWorkDao extends AbstractDao<ChatWork> {
 
     public ChatWorkDao(Ignite ignite) {
-        super(ignite, ChatWork.class, 2);
+        super(ignite, ChatWork.class, IdConstant.FIRST_ID_CHAT_WORK, 2);
     }
 }

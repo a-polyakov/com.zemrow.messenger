@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.ChatToUser;
 import com.zemrow.messenger.entity.enums.ChatToUserTypeEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,12 +20,11 @@ public class ChatToUserDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new ChatToUserDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final ChatToUser entity = new ChatToUser();
-            entity.setChatId(IgniteUuid.randomUuid());
-            entity.setUserId(IgniteUuid.randomUuid());
+            entity.setChatId(IdConstant.FIRST_ID_CHAT);
+            entity.setUserId(session.getUserId());
             entity.setChatToUserType(ChatToUserTypeEnum.DEFAULT);
 
             System.out.println("Before insert " + entity);

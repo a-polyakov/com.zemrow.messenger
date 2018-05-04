@@ -1,15 +1,13 @@
 package com.zemrow.messenger.dao;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.cache.CacheAtomicityMode;
 import org.apache.ignite.cache.CacheMode;
 import org.apache.ignite.cache.query.SqlFieldsQuery;
 import org.apache.ignite.configuration.CacheConfiguration;
-import org.apache.ignite.lang.IgniteUuid;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * DAO (data access object) для работы с приоритетом чата
@@ -29,7 +27,7 @@ public class ChatPriorityDao {
     /**
      * Кеш
      */
-    protected final IgniteCache<IgniteUuid, Long> cache;
+    protected final IgniteCache<Long, Long> cache;
 
     /**
      * @param ignite
@@ -42,6 +40,7 @@ public class ChatPriorityDao {
         // Количество резервных копий на других узлах
         cacheCfg.setBackups(2);
         cacheCfg.setAtomicityMode(CacheAtomicityMode.TRANSACTIONAL);
+        cacheCfg.setIndexedTypes(Long.class, Long.class);
         this.cache = ignite.getOrCreateCache(cacheCfg);
     }
 
@@ -59,7 +58,7 @@ public class ChatPriorityDao {
      * @param chatId
      * @return
      */
-    public Long select(final SessionStorage session, IgniteUuid chatId) {
+    public Long select(final SessionStorage session, Long chatId) {
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(cacheName + " select by chatId=" + chatId);
         }
@@ -74,7 +73,7 @@ public class ChatPriorityDao {
      * @param chatId   Идентификатор чата
      * @param priority Приоритет
      */
-    public void insert(final SessionStorage session, IgniteUuid chatId, Long priority) {
+    public void insert(final SessionStorage session, Long chatId, Long priority) {
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(cacheName + " insert chatId " + chatId + " priority " + priority);
         }
@@ -89,7 +88,7 @@ public class ChatPriorityDao {
      * @param chatId   Идентификатор чата
      * @param priority Приоритет
      */
-    public void update(final SessionStorage session, IgniteUuid chatId, Long priority) {
+    public void update(final SessionStorage session, Long chatId, Long priority) {
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(cacheName + " update chatId " + chatId + " priority " + priority);
         }
@@ -103,7 +102,7 @@ public class ChatPriorityDao {
      * @param session
      * @param chatId  Идентификатор чата
      */
-    public void delete(final SessionStorage session, IgniteUuid chatId) {
+    public void delete(final SessionStorage session, Long chatId) {
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(cacheName + " delete by chatId=" + chatId);
         }
@@ -117,11 +116,12 @@ public class ChatPriorityDao {
      * @param currentChatId идентификатор чата который передвигаем
      * @param beforeChatId  идентификатор чаты перед которым нужно расположить
      */
-    public void up(final SessionStorage session, IgniteUuid currentChatId, IgniteUuid beforeChatId) {
+    public void up(final SessionStorage session, Long currentChatId, Long beforeChatId) {
         final Long currentPriority = cache.get(currentChatId);
         final Long beforePriority = cache.get(beforeChatId);
         //TODO if (currentPriority<beforePriority) {throw new IllegalArgumentException();}
-        cache.query(new SqlFieldsQuery("update ChatPriority set priority=priority+1 where priority>=? and priority<?").setArgs(beforePriority, currentPriority));
+        cache.query(new SqlFieldsQuery("update Long set _val=_val+1 where _val>=? and _val<?").setArgs(beforePriority, currentPriority));
+//        cache.query(new SqlFieldsQuery("update Long set longValue=longValue+1 where longValue>=? and longValue<?").setArgs(beforePriority, currentPriority));
         cache.put(currentChatId, beforePriority);
     }
 
@@ -132,11 +132,11 @@ public class ChatPriorityDao {
      * @param currentChatId идентификатор чата который передвигаем
      * @param afterChatId   идентификатор чаты после которого нужно расположить
      */
-    public void down(final SessionStorage session, IgniteUuid currentChatId, IgniteUuid afterChatId) {
+    public void down(final SessionStorage session, Long currentChatId, Long afterChatId) {
         final Long currentPriority = cache.get(currentChatId);
-        final Long afterPriority = cache.get(currentChatId);
+        final Long afterPriority = cache.get(afterChatId);
         //TODO if (currentPriority>beforePriority) {throw new IllegalArgumentException();}
-        cache.query(new SqlFieldsQuery("update ChatPriority set priority=priority-1 where priority>? and priority<=?").setArgs(currentPriority, afterPriority));
+        cache.query(new SqlFieldsQuery("update Long set _val=_val-1 where _val>? and _val<=?").setArgs(currentPriority, afterPriority));
         cache.put(currentChatId, afterPriority);
     }
 }

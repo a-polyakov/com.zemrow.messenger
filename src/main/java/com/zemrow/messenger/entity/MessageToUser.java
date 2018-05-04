@@ -2,7 +2,6 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.MessageStatusEnum;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Связка сообщения с пользователем. При этом наличие такой связки обеспечивает показ сообщения конкретному пользователю в чате. В случае отсутствия связки, данное сообщение не отображается пользователю
@@ -13,11 +12,11 @@ public class MessageToUser extends AbstractEntity {
     /**
      * ID сообщения
      */
-    public IgniteUuid messageId;
+    public Long messageId;
     /**
      * ID пользователя
      */
-    public IgniteUuid userId;
+    public Long userId;
     /**
      * Статус сообщения для конкретного пользователя (просмотрен/не просмотрен и т.д.)
      */
@@ -25,19 +24,19 @@ public class MessageToUser extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getMessageId() {
+    public Long getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(IgniteUuid messageId) {
+    public void setMessageId(Long messageId) {
         this.messageId = messageId;
     }
 
-    public IgniteUuid getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(IgniteUuid userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

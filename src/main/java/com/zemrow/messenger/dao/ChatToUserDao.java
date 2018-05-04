@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class ChatToUserDao extends AbstractDao<ChatToUser> {
 
     public ChatToUserDao(Ignite ignite) {
-        super(ignite, ChatToUser.class, 2);
+        super(ignite, ChatToUser.class, IdConstant.FIRST_ID_CHAT_TO_USER, 2);
     }
 }

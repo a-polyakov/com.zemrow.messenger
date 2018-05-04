@@ -2,7 +2,6 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.ChatReminders;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,11 +19,10 @@ public class ChatRemindersDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new ChatRemindersDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final ChatReminders entity = new ChatReminders();
-            entity.setChatId(IgniteUuid.randomUuid());
+            entity.setChatId(IdConstant.FIRST_ID_CHAT);
             entity.setUserId(session.getUserId());
             entity.setText("Test Reminders");
             entity.setDateTime(System.currentTimeMillis() + 60000);

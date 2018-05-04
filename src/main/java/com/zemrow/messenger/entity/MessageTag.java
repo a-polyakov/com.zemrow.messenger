@@ -1,7 +1,6 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Тег сообщения
@@ -12,11 +11,11 @@ public class MessageTag extends AbstractEntity {
     /**
      * ID сообщения
      */
-    public IgniteUuid messageId;
+    public Long messageId;
     /**
      * ID тега
      */
-    public IgniteUuid tagId;
+    public Long tagId;
     /**
      * Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
      */
@@ -24,19 +23,19 @@ public class MessageTag extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getMessageId() {
+    public Long getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(IgniteUuid messageId) {
+    public void setMessageId(Long messageId) {
         this.messageId = messageId;
     }
 
-    public IgniteUuid getTagId() {
+    public Long getTagId() {
         return tagId;
     }
 
-    public void setTagId(IgniteUuid tagId) {
+    public void setTagId(Long tagId) {
         this.tagId = tagId;
     }
 

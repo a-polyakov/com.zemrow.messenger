@@ -2,7 +2,6 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.MessageLog;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,11 +19,9 @@ public class MessageLogDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new MessageLogDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
-
+            final SessionStorage session = getSession();
             final MessageLog entity = new MessageLog();
-            entity.setMessageId(IgniteUuid.randomUuid());
+            entity.setMessageId(IdConstant.FIRST_ID_MESSAGE);
             entity.setOldText("text");
 
             System.out.println("Before insert " + entity);

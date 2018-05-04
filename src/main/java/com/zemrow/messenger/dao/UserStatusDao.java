@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class UserStatusDao extends AbstractDao<UserStatus> {
 
     public UserStatusDao(Ignite ignite) {
-        super(ignite, UserStatus.class, 2);
+        super(ignite, UserStatus.class, IdConstant.FIRST_ID_USER_STATUS, 2);
     }
 }

@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class UserFilterDao extends AbstractDao<UserFilter> {
 
     public UserFilterDao(Ignite ignite) {
-        super(ignite, UserFilter.class, 2);
+        super(ignite, UserFilter.class, IdConstant.FIRST_ID_USER_FILTER, 2);
     }
 }

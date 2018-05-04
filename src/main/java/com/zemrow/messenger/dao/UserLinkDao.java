@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class UserLinkDao extends AbstractDaoCreateAndDelete<UserLink> {
 
     public UserLinkDao(Ignite ignite) {
-        super(ignite, UserLink.class, 2);
+        super(ignite, UserLink.class, IdConstant.FIRST_ID_USER_LINK, 2);
     }
 }

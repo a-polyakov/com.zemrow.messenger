@@ -2,7 +2,6 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.UserSession;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,11 +19,10 @@ public class UserSessionDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new UserSessionDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final UserSession entity = new UserSession();
-            entity.setUserEntryPointId(IgniteUuid.randomUuid());
+            entity.setUserEntryPointId(IdConstant.FIRST_ID_USER_ENTRY_POINT);
             entity.setToken("token");
 
             System.out.println("Before insert " + entity);

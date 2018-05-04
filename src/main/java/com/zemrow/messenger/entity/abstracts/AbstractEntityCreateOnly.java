@@ -1,7 +1,6 @@
 package com.zemrow.messenger.entity.abstracts;
 
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Костяк сущности (с информацией о создании)
@@ -13,7 +12,7 @@ public abstract class AbstractEntityCreateOnly extends AbstractEntityWithoutId {
      * ID записи
      */
     @QuerySqlField(notNull = true, index = true)
-    private IgniteUuid id;
+    private Long id;
     /**
      * Дата создания записи
      */
@@ -23,15 +22,15 @@ public abstract class AbstractEntityCreateOnly extends AbstractEntityWithoutId {
      * Пользователь создавший запись
      */
     @QuerySqlField(notNull = true)
-    private IgniteUuid createdBy;
+    private Long createdBy;
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(IgniteUuid id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,11 +42,11 @@ public abstract class AbstractEntityCreateOnly extends AbstractEntityWithoutId {
         this.createTime = createTime;
     }
 
-    public IgniteUuid getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(IgniteUuid createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 

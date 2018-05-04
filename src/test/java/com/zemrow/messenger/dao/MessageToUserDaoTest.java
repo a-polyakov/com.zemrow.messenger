@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.MessageToUser;
 import com.zemrow.messenger.entity.enums.MessageStatusEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,11 +20,10 @@ public class MessageToUserDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new MessageToUserDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final MessageToUser entity = new MessageToUser();
-            entity.setMessageId(IgniteUuid.randomUuid());
+            entity.setMessageId(IdConstant.FIRST_ID_MESSAGE);
             entity.setUserId(session.getUserId());
             entity.setMessageStatus(MessageStatusEnum.SEND);
 

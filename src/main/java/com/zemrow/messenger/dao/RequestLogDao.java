@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class RequestLogDao extends AbstractDaoCreateOnly<RequestLog> {
 
     public RequestLogDao(Ignite ignite) {
-        super(ignite, RequestLog.class, 1);
+        super(ignite, RequestLog.class, IdConstant.FIRST_ID_REQUEST_LOG, 1);
     }
 }

@@ -11,7 +11,7 @@ import org.apache.ignite.Ignite;
 public class MessageLogDao extends AbstractDaoCreateOnly<MessageLog> {
 
     public MessageLogDao(Ignite ignite) {
-        super(ignite, MessageLog.class, 2);
+        super(ignite, MessageLog.class, IdConstant.FIRST_ID_MESSAGE_LOG, 2);
     }
 
     @Override

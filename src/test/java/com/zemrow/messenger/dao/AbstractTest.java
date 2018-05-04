@@ -1,5 +1,6 @@
 package com.zemrow.messenger.dao;
 
+import java.util.Arrays;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.configuration.DeploymentMode;
@@ -7,8 +8,6 @@ import org.apache.ignite.configuration.IgniteConfiguration;
 import org.apache.ignite.configuration.TransactionConfiguration;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
-
-import java.util.Arrays;
 
 /**
  * Общая часть тестов
@@ -31,10 +30,10 @@ public abstract class AbstractTest {
         // настройка критериев поиска узлов в кластере
         final TcpDiscoverySpi tcpDiscoverySpi = new TcpDiscoverySpi();
         final TcpDiscoveryVmIpFinder tcpDiscoveryVmIpFinder = new TcpDiscoveryVmIpFinder(true);
-        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList(new String[]{"127.0.0.1:47700..47710"}));
+        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList(new String[] {"127.0.0.1:47700..47701"}));
         tcpDiscoverySpi.setIpFinder(tcpDiscoveryVmIpFinder);
         tcpDiscoverySpi.setLocalPort(47700);
-        tcpDiscoverySpi.setLocalPortRange(10);
+        tcpDiscoverySpi.setLocalPortRange(1);
         cfg.setDiscoverySpi(tcpDiscoverySpi);
         // настройка хранения на диске
 //        final DataStorageConfiguration storageCfg = new DataStorageConfiguration();
@@ -47,5 +46,11 @@ public abstract class AbstractTest {
         final Ignite ignite = Ignition.start(cfg);
         ignite.cluster().active(true);
         return ignite;
+    }
+
+    protected SessionStorage getSession() {
+        final SessionStorage result = new SessionStorage();
+        result.setUserId(IdConstant.FIRST_ID_USER);
+        return result;
     }
 }

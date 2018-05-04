@@ -2,7 +2,6 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.ChatToUserTypeEnum;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Пользователи в чате
@@ -13,11 +12,11 @@ public class ChatToUser extends AbstractEntity {
     /**
      * ID чата
      */
-    public IgniteUuid chatId;
+    public Long chatId;
     /**
      * ID пользователя
      */
-    public IgniteUuid userId;
+    public Long userId;
     /**
      * Тип участника: обычный, скрытый только для чтения, скрытый полный доступ
      */
@@ -25,19 +24,19 @@ public class ChatToUser extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getChatId() {
+    public Long getChatId() {
         return chatId;
     }
 
-    public void setChatId(IgniteUuid chatId) {
+    public void setChatId(Long chatId) {
         this.chatId = chatId;
     }
 
-    public IgniteUuid getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(IgniteUuid userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

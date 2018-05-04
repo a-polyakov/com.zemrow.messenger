@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.Message;
 import com.zemrow.messenger.entity.enums.MessageTypeEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,11 +20,10 @@ public class MessageDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new MessageDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final Message entity = new Message();
-            entity.setChatId(IgniteUuid.randomUuid());
+            entity.setChatId(IdConstant.FIRST_ID_CHAT);
             entity.setText("text");
             entity.setMessageType(MessageTypeEnum.SIMPLE);
 

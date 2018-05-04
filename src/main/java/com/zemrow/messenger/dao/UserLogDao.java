@@ -11,7 +11,7 @@ import org.apache.ignite.Ignite;
 public class UserLogDao extends AbstractDaoCreateOnly<UserLog> {
 
     public UserLogDao(Ignite ignite) {
-        super(ignite, UserLog.class, 2);
+        super(ignite, UserLog.class, IdConstant.FIRST_ID_USER_LOG, 2);
     }
 
     @Override

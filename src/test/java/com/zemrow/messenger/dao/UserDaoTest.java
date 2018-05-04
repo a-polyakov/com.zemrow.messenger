@@ -4,12 +4,10 @@ import com.zemrow.messenger.entity.User;
 import com.zemrow.messenger.entity.UserStatus;
 import com.zemrow.messenger.entity.enums.UserStatusTypeEnum;
 import com.zemrow.messenger.entity.enums.UserTypeEnum;
+import java.util.HashMap;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.HashMap;
 
 /**
  * Тест для UserDao
@@ -29,8 +27,7 @@ public class UserDaoTest extends AbstractTest {
             //TODO при наличии транзакции не выполняется sql
 //            try (Transaction tx = ignite.transactions().txStart(TransactionConcurrency.PESSIMISTIC, TransactionIsolation.REPEATABLE_READ)) {
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             User entity = new User();
             entity.setId(session.getUserId());
@@ -71,11 +68,10 @@ public class UserDaoTest extends AbstractTest {
             Assert.assertNotNull(entity4);
             Assert.assertNotNull(entity4.getDeleteTime());
 
-
-            final IgniteUuid id = dao.selectIdByName(session, entity.getName());
+            final Long id = dao.selectIdByName(session, entity.getName());
             Assert.assertNull(id);
 
-            final IgniteUuid id2 = dao.selectIdByName(session, entity2.getName());
+            final Long id2 = dao.selectIdByName(session, entity2.getName());
             Assert.assertNotNull(id2);
 
 //                tx.setRollbackOnly();

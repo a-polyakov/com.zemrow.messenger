@@ -1,15 +1,14 @@
 package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityWithoutId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.cache.CacheAtomicityMode;
 import org.apache.ignite.cache.CacheMode;
 import org.apache.ignite.cache.PartitionLossPolicy;
 import org.apache.ignite.configuration.CacheConfiguration;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Универсальное DAO (data access object) реализующее базовые методы работы с хранилищем
@@ -30,6 +29,7 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
      */
     protected final String cacheName;
     protected final Class<E> entityClass;
+
     /**
      * Кеш
      */
@@ -37,6 +37,8 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
 
     /**
      * @param ignite
+     * @param keyClass Класс ключа
+     * @param entityClass Класс значения
      * @param backups Количество резервных копий на других узлах
      */
     protected AbstractDaoWithoutId(Ignite ignite, Class<K> keyClass, Class<E> entityClass, int backups) {
@@ -44,7 +46,7 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
         cacheName = entityClass.getSimpleName();
         final CacheConfiguration cacheCfg = new CacheConfiguration(cacheName + "Cache");
         cacheCfg.setSqlSchema("messenger");
-        if (backups > 0) {
+        if (backups >= 0) {
             // Способ распределения данных по кластеру
             cacheCfg.setCacheMode(CacheMode.PARTITIONED);
             // Количество резервных копий на других узлах

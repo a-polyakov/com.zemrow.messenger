@@ -2,7 +2,8 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
+import org.apache.ignite.IgniteAtomicSequence;
+import org.apache.ignite.configuration.AtomicConfiguration;
 
 /**
  * Универсальное DAO (data access object) реализующее базовые методы работы с хранилищем
@@ -13,14 +14,24 @@ import org.apache.ignite.lang.IgniteUuid;
  *
  * @author Alexandr Polyakov on 2018.04.14
  */
-public abstract class AbstractDaoCreateOnly<E extends AbstractEntityCreateOnly> extends AbstractDaoWithoutId<IgniteUuid, E> {
+public abstract class AbstractDaoCreateOnly<E extends AbstractEntityCreateOnly> extends AbstractDaoWithoutId<Long, E> {
+
+    /**
+     * Счётчик
+     */
+    protected final IgniteAtomicSequence sequence;
 
     /**
      * @param ignite
+     * @param entityClass Класс значения
+     * @param firstId Первый id для ключа
      * @param backups Количество резервных копий на других узлах
      */
-    protected AbstractDaoCreateOnly(Ignite ignite, Class<E> entityClass, int backups) {
-        super(ignite, IgniteUuid.class, entityClass, backups);
+    protected AbstractDaoCreateOnly(Ignite ignite, Class<E> entityClass, long firstId, int backups) {
+        super(ignite, Long.class, entityClass, backups);
+        final AtomicConfiguration cfg = new AtomicConfiguration();
+        cfg.setAtomicSequenceReserveSize(1_000_000);
+        sequence = ignite.atomicSequence(cacheName + "Sequence", cfg, firstId, true);
     }
 
     /**
@@ -31,7 +42,7 @@ public abstract class AbstractDaoCreateOnly<E extends AbstractEntityCreateOnly> 
      */
     public void insert(final SessionStorage session, E entity) {
         if (entity.getId() == null) {
-            entity.setId(IgniteUuid.randomUuid());
+            entity.setId(sequence.addAndGet(IdConstant.DELTA_ID));
         }
         insert(session, entity.getId(), entity);
     }

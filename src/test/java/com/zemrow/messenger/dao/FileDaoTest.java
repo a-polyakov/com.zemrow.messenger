@@ -2,12 +2,10 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.File;
 import com.zemrow.messenger.entity.enums.FileAccessTypeEnum;
+import java.util.UUID;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.UUID;
 
 /**
  * Тест для FileDao
@@ -23,8 +21,7 @@ public class FileDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new FileDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final File entity = new File();
             entity.setName("file");

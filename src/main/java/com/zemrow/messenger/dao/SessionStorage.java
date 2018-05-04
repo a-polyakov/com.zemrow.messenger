@@ -1,8 +1,6 @@
 package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.enums.UserTypeEnum;
-import org.apache.ignite.lang.IgniteUuid;
-
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -20,7 +18,7 @@ public class SessionStorage {
     /**
      * ID пользователя
      */
-    private IgniteUuid userId;
+    private Long userId;
     /**
      * Тип пользователя: физическое лицо, отдел, компания
      */
@@ -44,11 +42,11 @@ public class SessionStorage {
         this.token = token;
     }
 
-    public IgniteUuid getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(IgniteUuid userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class ChatTagGroupDao extends AbstractDao<ChatTagGroup> {
 
     public ChatTagGroupDao(Ignite ignite) {
-        super(ignite, ChatTagGroup.class, 2);
+        super(ignite, ChatTagGroup.class, IdConstant.FIRST_ID_CHAT_TAG_GROUP, 2);
     }
 }

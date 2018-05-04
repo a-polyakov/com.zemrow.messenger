@@ -2,7 +2,6 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.UserSessionFail;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,11 +19,10 @@ public class UserSessionFailDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new UserSessionFailDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final UserSessionFail entity = new UserSessionFail();
-            entity.setUserEntryPointId(IgniteUuid.randomUuid());
+            entity.setUserEntryPointId(IdConstant.FIRST_ID_USER_ENTRY_POINT);
             entity.setIpAddress("123.123.123.123");
             entity.setComment("test");
 

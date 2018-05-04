@@ -3,7 +3,6 @@ package com.zemrow.messenger.entity;
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.ChatTypeEnum;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Настройка нумирации для компании и типа чата
@@ -15,7 +14,7 @@ public class Numbering extends AbstractEntity {
      * ID пользователя (компании, отдела)
      */
     @QuerySqlField(notNull = true, index = true)
-    public IgniteUuid userId;
+    public Long userId;
     /**
      * Тип чата(документа)
      */
@@ -31,11 +30,11 @@ public class Numbering extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(IgniteUuid userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

@@ -1,7 +1,6 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateAndDelete;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Сессия пользователя
@@ -12,7 +11,7 @@ public class UserSession extends AbstractEntityCreateAndDelete {
     /**
      * Точка входа пользователя
      */
-    public IgniteUuid userEntryPointId;
+    public Long userEntryPointId;
     /**
      * Уникальный идентификатор сессии, сложный для подбора
      */
@@ -20,11 +19,11 @@ public class UserSession extends AbstractEntityCreateAndDelete {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getUserEntryPointId() {
+    public Long getUserEntryPointId() {
         return userEntryPointId;
     }
 
-    public void setUserEntryPointId(IgniteUuid userEntryPointId) {
+    public void setUserEntryPointId(Long userEntryPointId) {
         this.userEntryPointId = userEntryPointId;
     }
 

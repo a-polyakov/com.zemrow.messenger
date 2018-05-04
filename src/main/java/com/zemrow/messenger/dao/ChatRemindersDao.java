@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class ChatRemindersDao extends AbstractDaoCreateAndDelete<ChatReminders> {
 
     public ChatRemindersDao(Ignite ignite) {
-        super(ignite, ChatReminders.class, 2);
+        super(ignite, ChatReminders.class, IdConstant.FIRST_ID_CHAT_REMINDERS, 2);
     }
 }

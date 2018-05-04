@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class MessageTagDao extends AbstractDao<MessageTag> {
 
     public MessageTagDao(Ignite ignite) {
-        super(ignite, MessageTag.class, 2);
+        super(ignite, MessageTag.class, IdConstant.FIRST_ID_MESSAGE_TAG, 2);
     }
 }

@@ -1,10 +1,8 @@
 package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateAndDelete;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
-
 import java.util.logging.Level;
+import org.apache.ignite.Ignite;
 
 /**
  * Универсальное DAO (data access object) реализующее базовые методы работы с хранилищем
@@ -20,10 +18,12 @@ public abstract class AbstractDaoCreateAndDelete<E extends AbstractEntityCreateA
 
     /**
      * @param ignite
+     * @param entityClass Класс значения
+     * @param firstId Первый id для ключа
      * @param backups Количество резервных копий на других узлах
      */
-    protected AbstractDaoCreateAndDelete(Ignite ignite, Class<E> entityClass, int backups) {
-        super(ignite, entityClass, backups);
+    protected AbstractDaoCreateAndDelete(Ignite ignite, Class<E> entityClass, long firstId, int backups) {
+        super(ignite, entityClass, firstId, backups);
     }
 
     /**
@@ -32,7 +32,7 @@ public abstract class AbstractDaoCreateAndDelete<E extends AbstractEntityCreateA
      * @param session
      * @param id
      */
-    public void markAsDeleted(final SessionStorage session, IgniteUuid id) {
+    public void markAsDeleted(final SessionStorage session, Long id) {
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(cacheName + " markAsDeleted by id=" + id);
         }

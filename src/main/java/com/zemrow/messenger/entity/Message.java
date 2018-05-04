@@ -2,7 +2,6 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.MessageTypeEnum;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Сообщение
@@ -13,7 +12,7 @@ public class Message extends AbstractEntity {
     /**
      * ID чата
      */
-    public IgniteUuid chatId;
+    public Long chatId;
     /**
      * Текст
      */
@@ -21,11 +20,11 @@ public class Message extends AbstractEntity {
     /**
      * ID прикрепленного файла
      */
-    public IgniteUuid fileId;
+    public Long fileId;
     /**
      * ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
      */
-    public IgniteUuid childChatId;
+    public Long childChatId;
     /**
      * Тип сообщения
      */
@@ -33,11 +32,11 @@ public class Message extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getChatId() {
+    public Long getChatId() {
         return chatId;
     }
 
-    public void setChatId(IgniteUuid chatId) {
+    public void setChatId(Long chatId) {
         this.chatId = chatId;
     }
 
@@ -49,19 +48,19 @@ public class Message extends AbstractEntity {
         this.text = text;
     }
 
-    public IgniteUuid getFileId() {
+    public Long getFileId() {
         return fileId;
     }
 
-    public void setFileId(IgniteUuid fileId) {
+    public void setFileId(Long fileId) {
         this.fileId = fileId;
     }
 
-    public IgniteUuid getChildChatId() {
+    public Long getChildChatId() {
         return childChatId;
     }
 
-    public void setChildChatId(IgniteUuid childChatId) {
+    public void setChildChatId(Long childChatId) {
         this.childChatId = childChatId;
     }
 

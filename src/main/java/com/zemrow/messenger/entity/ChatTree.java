@@ -1,7 +1,6 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityWithoutId;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Дерево задач
@@ -12,11 +11,11 @@ public class ChatTree extends AbstractEntityWithoutId {
     /**
      * ID родительского чата
      */
-    public IgniteUuid parentChatId;
+    public Long parentChatId;
     /**
      * id дочернего чата
      */
-    public IgniteUuid childChatId;
+    public Long childChatId;
     /**
      * Разность уровней
      */
@@ -24,19 +23,19 @@ public class ChatTree extends AbstractEntityWithoutId {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getParentChatId() {
+    public Long getParentChatId() {
         return parentChatId;
     }
 
-    public void setParentChatId(IgniteUuid parentChatId) {
+    public void setParentChatId(Long parentChatId) {
         this.parentChatId = parentChatId;
     }
 
-    public IgniteUuid getChildChatId() {
+    public Long getChildChatId() {
         return childChatId;
     }
 
-    public void setChildChatId(IgniteUuid childChatId) {
+    public void setChildChatId(Long childChatId) {
         this.childChatId = childChatId;
     }
 

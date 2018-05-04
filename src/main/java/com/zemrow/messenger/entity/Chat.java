@@ -2,7 +2,6 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.ChatTypeEnum;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Чат
@@ -21,7 +20,7 @@ public class Chat extends AbstractEntity {
     /**
      * Использованый нумиратор (для определения префикса)
      */
-    public IgniteUuid numberingId;
+    public Long numberingId;
     /**
      * Номер чата(документа)
      */
@@ -45,11 +44,11 @@ public class Chat extends AbstractEntity {
         this.chatType = chatType;
     }
 
-    public IgniteUuid getNumberingId() {
+    public Long getNumberingId() {
         return numberingId;
     }
 
-    public void setNumberingId(IgniteUuid numberingId) {
+    public void setNumberingId(Long numberingId) {
         this.numberingId = numberingId;
     }
 

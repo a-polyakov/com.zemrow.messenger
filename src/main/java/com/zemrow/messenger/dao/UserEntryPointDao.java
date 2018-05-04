@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class UserEntryPointDao extends AbstractDao<UserEntryPoint> {
 
     public UserEntryPointDao(Ignite ignite) {
-        super(ignite, UserEntryPoint.class, 2);
+        super(ignite, UserEntryPoint.class, IdConstant.FIRST_ID_USER_ENTRY_POINT, 2);
     }
 }

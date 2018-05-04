@@ -2,7 +2,6 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.RequestLog;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,8 +19,7 @@ public class RequestLogDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new RequestLogDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final RequestLog entity = new RequestLog();
             entity.setToken("token");

@@ -1,7 +1,6 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Неудачные попытки войти в систему
@@ -12,7 +11,7 @@ public class UserSessionFail extends AbstractEntityCreateOnly {
     /**
      * Точка входа пользователя
      */
-    public IgniteUuid userEntryPointId;
+    public Long userEntryPointId;
     /**
      * IP адрес клиента
      */
@@ -24,11 +23,11 @@ public class UserSessionFail extends AbstractEntityCreateOnly {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getUserEntryPointId() {
+    public Long getUserEntryPointId() {
         return userEntryPointId;
     }
 
-    public void setUserEntryPointId(IgniteUuid userEntryPointId) {
+    public void setUserEntryPointId(Long userEntryPointId) {
         this.userEntryPointId = userEntryPointId;
     }
 

@@ -2,7 +2,6 @@ package com.zemrow.messenger.dao;
 
 import com.zemrow.messenger.entity.UserContact;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,15 +19,14 @@ public class UserContactDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new UserContactDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final UserContact entity = new UserContact();
-            entity.setParentUserId(IgniteUuid.randomUuid());
-            entity.setChildUserId(IgniteUuid.randomUuid());
+            entity.setParentUserId(session.getUserId());
+            entity.setChildUserId(session.getUserId() + IdConstant.DELTA_ID);
             entity.setLabel("contact");
             entity.setFavorite(false);
-            entity.setChatId(IgniteUuid.randomUuid());
+            entity.setChatId(IdConstant.FIRST_ID_CHAT);
 
             System.out.println("Before insert " + entity);
             dao.insert(session, entity);

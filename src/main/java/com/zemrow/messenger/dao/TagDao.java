@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class TagDao extends AbstractDao<Tag> {
 
     public TagDao(Ignite ignite) {
-        super(ignite, Tag.class, 2);
+        super(ignite, Tag.class, IdConstant.FIRST_ID_TAG, 2);
     }
 }

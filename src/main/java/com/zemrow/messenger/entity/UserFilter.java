@@ -3,7 +3,6 @@ package com.zemrow.messenger.entity;
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.FilterGridEnum;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Пользовательский фильтр
@@ -15,7 +14,7 @@ public class UserFilter extends AbstractEntity {
      * ID пользователя
      */
     @QuerySqlField(notNull = true, index = true)
-    public IgniteUuid userId;
+    public Long userId;
     /**
      * id части системы (грид, панель, список) для применения данного фильтра
      */
@@ -31,11 +30,11 @@ public class UserFilter extends AbstractEntity {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(IgniteUuid userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

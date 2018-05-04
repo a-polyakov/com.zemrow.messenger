@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.ChatTagGroup;
 import com.zemrow.messenger.entity.enums.TagGroupEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,13 +20,12 @@ public class ChatTagGroupDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new ChatTagGroupDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final ChatTagGroup entity = new ChatTagGroup();
-            entity.setChatId(IgniteUuid.randomUuid());
+            entity.setChatId(IdConstant.FIRST_ID_CHAT);
             entity.setTagGroup(TagGroupEnum.STATUS);
-            entity.setMessageTagId(IgniteUuid.randomUuid());
+            entity.setMessageTagId(IdConstant.FIRST_ID_MESSAGE_TAG);
 
             System.out.println("Before insert " + entity);
             dao.insert(session, entity);
@@ -40,14 +38,15 @@ public class ChatTagGroupDaoTest extends AbstractTest {
             Assert.assertEquals(entity.getMessageTagId(), entity2.getMessageTagId());
             Assert.assertNull(entity2.getDeleteTime());
 
-            entity2.setMessageTagId(IgniteUuid.randomUuid());
+            entity2.setMessageTagId(entity2.getMessageTagId() + IdConstant.DELTA_ID);
 
             dao.update(session, entity2);
             final ChatTagGroup entity3 = dao.select(session, entity.getId());
             Assert.assertNotNull(entity3);
             Assert.assertEquals(entity2.getChatId(), entity3.getChatId());
             Assert.assertEquals(entity2.getTagGroup(), entity3.getTagGroup());
-            Assert.assertNotEquals(entity2.getMessageTagId(), entity3.getMessageTagId());
+            Assert.assertEquals(entity2.getMessageTagId(), entity3.getMessageTagId());
+            Assert.assertNotEquals(entity.getMessageTagId(), entity3.getMessageTagId());
             Assert.assertNull(entity3.getDeleteTime());
 
             dao.markAsDeleted(session, entity.getId());

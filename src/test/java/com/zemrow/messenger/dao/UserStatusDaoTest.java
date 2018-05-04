@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.UserStatus;
 import com.zemrow.messenger.entity.enums.UserStatusTypeEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,8 +20,7 @@ public class UserStatusDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new UserStatusDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final UserStatus entity = new UserStatus();
             entity.setLabel("В сети");

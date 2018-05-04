@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.ChatTree;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.lang.IgniteBiTuple;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,12 +20,11 @@ public class ChatTreeDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new ChatTreeDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final ChatTree entity = new ChatTree();
-            entity.setParentChatId(IgniteUuid.randomUuid());
-            entity.setChildChatId(IgniteUuid.randomUuid());
+            entity.setParentChatId(IdConstant.FIRST_ID_CHAT);
+            entity.setChildChatId(IdConstant.FIRST_ID_CHAT + IdConstant.DELTA_ID);
             entity.setDistance(1);
 
             System.out.println("Before insert " + entity);

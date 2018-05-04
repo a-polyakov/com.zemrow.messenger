@@ -3,7 +3,6 @@ package com.zemrow.messenger.dao;
 import com.zemrow.messenger.entity.Numbering;
 import com.zemrow.messenger.entity.enums.ChatTypeEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,11 +20,10 @@ public class NumberingDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new NumberingDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final Numbering entity = new Numbering();
-            entity.setUserId(IgniteUuid.randomUuid());
+            entity.setUserId(session.getUserId());
             entity.setChatType(ChatTypeEnum.ISSUE);
             entity.setPrefix("ISSUE");
             entity.setMaxNumber(123L);

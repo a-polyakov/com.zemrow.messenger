@@ -3,7 +3,6 @@ package com.zemrow.messenger.entity;
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateAndDelete;
 import com.zemrow.messenger.entity.enums.UserLinkEnum;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Организационная структура пользователей
@@ -15,12 +14,12 @@ public class UserLink extends AbstractEntityCreateAndDelete {
      * ID пользователя родителя
      */
     @QuerySqlField(notNull = true, index = true)
-    public IgniteUuid parentUserId;
+    public Long parentUserId;
     /**
      * ID пользователя потомка
      */
     @QuerySqlField(notNull = true, index = true)
-    public IgniteUuid childUserId;
+    public Long childUserId;
     /**
      * Тип связи
      */
@@ -28,19 +27,19 @@ public class UserLink extends AbstractEntityCreateAndDelete {
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getParentUserId() {
+    public Long getParentUserId() {
         return parentUserId;
     }
 
-    public void setParentUserId(IgniteUuid parentUserId) {
+    public void setParentUserId(Long parentUserId) {
         this.parentUserId = parentUserId;
     }
 
-    public IgniteUuid getChildUserId() {
+    public Long getChildUserId() {
         return childUserId;
     }
 
-    public void setChildUserId(IgniteUuid childUserId) {
+    public void setChildUserId(Long childUserId) {
         this.childUserId = childUserId;
     }
 

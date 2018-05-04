@@ -4,7 +4,6 @@ import com.zemrow.messenger.entity.Tag;
 import com.zemrow.messenger.entity.enums.TagGroupEnum;
 import com.zemrow.messenger.entity.enums.TagTypeEnum;
 import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteUuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,8 +21,7 @@ public class TagDaoTest extends AbstractTest {
         try (final Ignite ignite = getIgnite()) {
             dao = new TagDao(ignite);
 
-            final SessionStorage session = new SessionStorage();
-            session.setUserId(IgniteUuid.randomUuid());
+            final SessionStorage session = getSession();
 
             final Tag entity = new Tag();
             entity.setTag("tag");

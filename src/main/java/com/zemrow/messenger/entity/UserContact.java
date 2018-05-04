@@ -2,7 +2,6 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
-import org.apache.ignite.lang.IgniteUuid;
 
 /**
  * Контакты пользователя
@@ -14,12 +13,12 @@ public class UserContact extends AbstractEntity {
      * ID пользователя родителя
      */
     @QuerySqlField(notNull = true, index = true)
-    public IgniteUuid parentUserId;
+    public Long parentUserId;
     /**
      * ID пользователя потомка
      */
     @QuerySqlField(notNull = true, index = true)
-    public IgniteUuid childUserId;
+    public Long childUserId;
     /**
      * Наименование контакта
      */
@@ -32,23 +31,23 @@ public class UserContact extends AbstractEntity {
      * ID чата
      */
     @QuerySqlField(notNull = true, index = true)
-    public IgniteUuid chatId;
+    public Long chatId;
 
 //================================ AUTO GENERATE ==============================
 
-    public IgniteUuid getParentUserId() {
+    public Long getParentUserId() {
         return parentUserId;
     }
 
-    public void setParentUserId(IgniteUuid parentUserId) {
+    public void setParentUserId(Long parentUserId) {
         this.parentUserId = parentUserId;
     }
 
-    public IgniteUuid getChildUserId() {
+    public Long getChildUserId() {
         return childUserId;
     }
 
-    public void setChildUserId(IgniteUuid childUserId) {
+    public void setChildUserId(Long childUserId) {
         this.childUserId = childUserId;
     }
 
@@ -68,11 +67,11 @@ public class UserContact extends AbstractEntity {
         this.favorite = favorite;
     }
 
-    public IgniteUuid getChatId() {
+    public Long getChatId() {
         return chatId;
     }
 
-    public void setChatId(IgniteUuid chatId) {
+    public void setChatId(Long chatId) {
         this.chatId = chatId;
     }
 

@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class FileDao extends AbstractDaoCreateAndDelete<File> {
 
     public FileDao(Ignite ignite) {
-        super(ignite, File.class, 2);
+        super(ignite, File.class, IdConstant.FIRST_ID_FILE, 2);
     }
 }

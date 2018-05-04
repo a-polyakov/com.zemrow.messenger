@@ -11,6 +11,6 @@ import org.apache.ignite.Ignite;
 public class NumberingDao extends AbstractDao<Numbering> {
 
     public NumberingDao(Ignite ignite) {
-        super(ignite, Numbering.class, 2);
+        super(ignite, Numbering.class, IdConstant.FIRST_ID_NUMBERING, 2);
     }
 }

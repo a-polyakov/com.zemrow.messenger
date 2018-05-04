@@ -15,8 +15,14 @@ import org.apache.ignite.Ignite;
  */
 public abstract class AbstractDao<E extends AbstractEntity> extends AbstractDaoCreateAndDelete<E> {
 
-    protected AbstractDao(Ignite ignite, Class<E> entityClass, int backups) {
-        super(ignite, entityClass, backups);
+    /**
+     * @param ignite
+     * @param entityClass Класс значения
+     * @param firstId Первый id для ключа
+     * @param backups Количество резервных копий на других узлах
+     */
+    protected AbstractDao(Ignite ignite, Class<E> entityClass, long firstId, int backups) {
+        super(ignite, entityClass, firstId, backups);
     }
 
     @Override

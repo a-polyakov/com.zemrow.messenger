@@ -11,7 +11,7 @@ import org.apache.ignite.Ignite;
 public class UserSessionFailDao extends AbstractDaoCreateOnly<UserSessionFail> {
 
     public UserSessionFailDao(Ignite ignite) {
-        super(ignite, UserSessionFail.class, 2);
+        super(ignite, UserSessionFail.class, IdConstant.FIRST_ID_USER_SESSION_FAIL, 0);
     }
 
     @Override

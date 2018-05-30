@@ -1,5 +1,6 @@
-package com.zemrow.messenger.dao;
+package com.zemrow.messenger.dao.abstracts;
 
+import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.abstracts.AbstractEntityWithoutId;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,11 +13,13 @@ import org.apache.ignite.configuration.CacheConfiguration;
 
 /**
  * Универсальное DAO (data access object) реализующее базовые методы работы с хранилищем
- * - Получить entity по id
- * - Добавление записи по id
- * - Обновление записи по id
- * - Удаление записи
  * над обектами у которых отсутствует поле id (первичный ключь состовной)
+ * <ul>
+ * <li>Получить entity по ключу</li>
+ * <li>Добавление записи по ключу</li>
+ * <li>Обновление записи по ключу</li>
+ * <li>Удаление записи</li>
+ * </ul>
  *
  * @author Alexandr Polyakov on 2018.04.14
  */
@@ -79,10 +82,20 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
     }
 
     /**
+     * Проверка наличия записи по ключу
+     * @param session
+     * @param id первичный ключ
+     * @return признак наличия записи
+     */
+    public boolean containsById(final SessionStorage session, K id){
+        return cache.containsKey(id);
+    }
+
+    /**
      * Получить entity по id
      *
      * @param session
-     * @param id
+     * @param id первичный ключ
      * @return
      */
     public E select(final SessionStorage session, K id) {
@@ -97,7 +110,7 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
      * Добавление записи
      *
      * @param session
-     * @param id
+     * @param id первичный ключ
      * @param entity
      */
     protected void insert(final SessionStorage session, K id, E entity) {
@@ -121,7 +134,7 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
      * Обновление записи по id
      *
      * @param session
-     * @param id
+     * @param id первичный ключ
      * @param entity
      */
     protected void update(final SessionStorage session, K id, E entity) {
@@ -145,7 +158,7 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
      * Удаление записи
      *
      * @param session
-     * @param id
+     * @param id первичный ключ
      */
     public void delete(final SessionStorage session, K id) {
         if (logger.isLoggable(Level.FINE)) {
@@ -159,7 +172,7 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
      * Обработка перед удалением
      *
      * @param session
-     * @param id
+     * @param id первичный ключ
      */
     protected void preDelete(SessionStorage session, K id) {
     }

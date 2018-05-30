@@ -1,5 +1,6 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.RequestLog;
 import org.apache.ignite.Ignite;
 import org.junit.Assert;

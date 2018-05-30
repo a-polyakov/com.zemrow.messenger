@@ -1,5 +1,6 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.User;
 import com.zemrow.messenger.entity.UserStatus;
 import com.zemrow.messenger.entity.enums.UserStatusTypeEnum;

@@ -1,5 +1,6 @@
-package com.zemrow.messenger.dao;
+package com.zemrow.messenger.dao.abstracts;
 
+import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateAndDelete;
 import java.util.logging.Level;
 import org.apache.ignite.Ignite;

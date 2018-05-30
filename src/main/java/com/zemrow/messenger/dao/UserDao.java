@@ -1,5 +1,8 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.dao.abstracts.AbstractDao;
+import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.User;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,19 +33,6 @@ public class UserDao extends AbstractDao<User> {
             logger.fine("selectIdByName by name " + name);
         }
         Long result = null;
-        //TODO
-//        try (final QueryCursor<Cache.Entry<Long, User>> cursor = cache.query(new SqlQuery(User.class, "name=?").setArgs(name))) {
-//            final List<Cache.Entry<Long, User>> all = cursor.getAll();
-//            if (all.size() == 1) {
-//                result = all.get(0).getValue().getId();
-//            }
-//        }
-//        try (final QueryCursor<Cache.Entry<Long, User>> cursor = cache.query(new ScanQuery<Long, User>((k, v) -> name.equals(v.getName())))) {
-//            final List<Cache.Entry<Long, User>> all = cursor.getAll();
-//            if (all.size() == 1) {
-//                result = all.get(0).getValue().getId();
-//            }
-//        }
         try (final FieldsQueryCursor<List<?>> cursor = cache.query(new SqlFieldsQuery("select id from User where name = ?").setArgs(name))) {
             final List<List<?>> all = cursor.getAll();
             if (all.size() == 1) {

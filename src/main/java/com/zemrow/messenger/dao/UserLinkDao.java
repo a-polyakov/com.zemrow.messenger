@@ -1,5 +1,7 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.dao.abstracts.AbstractDaoCreateAndDelete;
+import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.UserLink;
 import org.apache.ignite.Ignite;
 

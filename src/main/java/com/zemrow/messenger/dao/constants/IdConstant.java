@@ -1,5 +1,10 @@
-package com.zemrow.messenger.dao;
+package com.zemrow.messenger.dao.constants;
 
+/**
+ * TODO
+ *
+ * @author Alexandr Polyakov on 2018.05.02
+ */
 public class IdConstant {
 
     public static final long FIRST_ID_USER = 1L;

@@ -1,5 +1,7 @@
-package com.zemrow.messenger.dao;
+package com.zemrow.messenger.dao.abstracts;
 
+import com.zemrow.messenger.dao.constants.IdConstant;
+import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteAtomicSequence;
@@ -37,7 +39,7 @@ public abstract class AbstractDaoCreateOnly<E extends AbstractEntityCreateOnly> 
     /**
      * Добавление записи
      *
-     * @param session
+     * @param session - SessionStorage
      * @param entity
      */
     public void insert(final SessionStorage session, E entity) {

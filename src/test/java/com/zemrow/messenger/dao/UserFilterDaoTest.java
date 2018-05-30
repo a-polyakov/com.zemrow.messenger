@@ -1,5 +1,6 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.UserFilter;
 import com.zemrow.messenger.entity.enums.FilterGridEnum;
 import org.apache.ignite.Ignite;

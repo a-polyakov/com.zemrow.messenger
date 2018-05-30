@@ -1,6 +1,7 @@
 package com.zemrow.messenger.dao;
 
-import com.zemrow.messenger.entity.ChatPriority;
+import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.dao.constants.IdConstant;
 import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,34 +24,28 @@ public class ChatPriorityDaoTest extends AbstractTest {
 
             final Long id1 = IdConstant.FIRST_ID_CHAT;
 
-            final ChatPriority entity1 = new ChatPriority();
-            entity1.setId(id1);
-            entity1.setPriority(1L);
+            System.out.println("Before insert " + id1);
+            dao.insert(session, id1);
+            System.out.println("After insert " + id1);
 
-            System.out.println("Before insert " + entity1);
-            dao.insert(session, id1, entity1.getPriority());
-            System.out.println("After insert " + entity1);
-
-            final Long priority2 = dao.select(session, id1);
+            final long priority2 = dao.select(session, id1);
             Assert.assertNotNull(priority2);
-            Assert.assertEquals(entity1.getPriority(), priority2);
+            Assert.assertEquals(1L, priority2);
 
-            entity1.setPriority(entity1.getPriority() + 1);
-
-            dao.update(session, id1, entity1.getPriority());
-            final Long priority3 = dao.select(session, id1);
+            dao.update(session, id1, 2L);
+            final long priority3 = dao.select(session, id1);
             Assert.assertNotNull(priority3);
-            Assert.assertEquals(entity1.getPriority(), priority3);
+            Assert.assertEquals(2L, priority3);
 
             dao.update(session, id1, 1L);
             final Long id2 = id1 + IdConstant.DELTA_ID;
-            dao.insert(session, id2, 2L);
+            Assert.assertEquals(2L, dao.insert(session, id2));
             final Long id3 = id2 + IdConstant.DELTA_ID;
-            dao.insert(session, id3, 3L);
+            Assert.assertEquals(3L, dao.insert(session, id3));
             final Long id4 = id3 + IdConstant.DELTA_ID;
-            dao.insert(session, id4, 4L);
+            Assert.assertEquals(4L, dao.insert(session, id4));
             final Long id5 = id4 + IdConstant.DELTA_ID;
-            dao.insert(session, id5, 5L);
+            Assert.assertEquals(5L, dao.insert(session, id5));
 
             dao.up(session, id5, id1);
             Assert.assertEquals(1L, (long)dao.select(session, id5));

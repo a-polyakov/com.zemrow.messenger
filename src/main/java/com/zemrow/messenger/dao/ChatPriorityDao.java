@@ -1,8 +1,10 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.ignite.Ignite;
+import org.apache.ignite.IgniteAtomicLong;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.cache.CacheAtomicityMode;
 import org.apache.ignite.cache.CacheMode;
@@ -24,6 +26,8 @@ public class ChatPriorityDao {
      * Наименование кеша
      */
     protected static final String cacheName = "ChatPriorityCache";
+
+    private final IgniteAtomicLong sequence;
     /**
      * Кеш
      */
@@ -33,6 +37,8 @@ public class ChatPriorityDao {
      * @param ignite
      */
     public ChatPriorityDao(Ignite ignite) {
+        sequence=ignite.atomicLong(cacheName+"Sequence", 0, true);
+
         final CacheConfiguration cacheCfg = new CacheConfiguration(cacheName);
         cacheCfg.setSqlSchema("messenger");
         // Способ распределения данных по кластеру
@@ -71,13 +77,14 @@ public class ChatPriorityDao {
      *
      * @param session
      * @param chatId   Идентификатор чата
-     * @param priority Приоритет
      */
-    public void insert(final SessionStorage session, Long chatId, Long priority) {
+    public long insert(final SessionStorage session, Long chatId) {
         if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " insert chatId " + chatId + " priority " + priority);
+            logger.fine(cacheName + " insert chatId " + chatId);
         }
+        final long priority = sequence.incrementAndGet();
         cache.put(chatId, priority);
+        return priority;
     }
 
 
@@ -88,7 +95,8 @@ public class ChatPriorityDao {
      * @param chatId   Идентификатор чата
      * @param priority Приоритет
      */
-    public void update(final SessionStorage session, Long chatId, Long priority) {
+    @Deprecated
+    void update(final SessionStorage session, Long chatId, Long priority) {
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(cacheName + " update chatId " + chatId + " priority " + priority);
         }
@@ -102,7 +110,8 @@ public class ChatPriorityDao {
      * @param session
      * @param chatId  Идентификатор чата
      */
-    public void delete(final SessionStorage session, Long chatId) {
+    @Deprecated
+    void delete(final SessionStorage session, Long chatId) {
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(cacheName + " delete by chatId=" + chatId);
         }
@@ -121,7 +130,6 @@ public class ChatPriorityDao {
         final Long beforePriority = cache.get(beforeChatId);
         //TODO if (currentPriority<beforePriority) {throw new IllegalArgumentException();}
         cache.query(new SqlFieldsQuery("update Long set _val=_val+1 where _val>=? and _val<?").setArgs(beforePriority, currentPriority));
-//        cache.query(new SqlFieldsQuery("update Long set longValue=longValue+1 where longValue>=? and longValue<?").setArgs(beforePriority, currentPriority));
         cache.put(currentChatId, beforePriority);
     }
 

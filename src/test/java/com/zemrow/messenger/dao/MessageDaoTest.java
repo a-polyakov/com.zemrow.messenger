@@ -1,5 +1,7 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.Message;
 import com.zemrow.messenger.entity.enums.MessageTypeEnum;
 import org.apache.ignite.Ignite;

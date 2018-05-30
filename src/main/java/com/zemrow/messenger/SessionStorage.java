@@ -1,4 +1,4 @@
-package com.zemrow.messenger.dao;
+package com.zemrow.messenger;
 
 import com.zemrow.messenger.entity.enums.UserTypeEnum;
 import java.util.Locale;

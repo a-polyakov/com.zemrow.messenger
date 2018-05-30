@@ -1,5 +1,7 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.UserTree;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.lang.IgniteBiTuple;

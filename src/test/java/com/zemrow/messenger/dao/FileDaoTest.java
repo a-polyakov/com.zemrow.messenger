@@ -1,5 +1,6 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.File;
 import com.zemrow.messenger.entity.enums.FileAccessTypeEnum;
 import java.util.UUID;

@@ -1,5 +1,6 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.UserEntryPoint;
 import com.zemrow.messenger.entity.enums.EntryPointTypeEnum;
 import org.apache.ignite.Ignite;

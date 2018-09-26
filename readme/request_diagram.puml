@@ -1,0 +1,39 @@
+@startuml
+actor User
+collections Client
+collections Server
+collections Controller
+collections Service
+collections Logic
+collections Dao
+database Ignite
+autonumber
+User -> Client
+Client -> Server: Requers
+Server -> Controller : Routing
+Controller -> Service : Transform
+Service -> Service : Checks before transaction
+group Transaction
+Service -> Logic : step 1
+Logic -> Dao
+Dao -> Ignite
+Dao <- Ignite
+Logic <- Dao
+Service <- Logic
+Service -> Logic : step n
+Logic -> Dao
+Dao -> Ignite
+Dao <- Ignite
+Logic <- Dao
+Logic -> Dao
+Dao -> Ignite
+Dao <- Ignite
+Logic <- Dao
+Service <- Logic
+end
+Controller <- Service :
+Server <- Controller : Transform
+Server <- Controller
+Client <- Server: Response
+Client <- Server: Aiming response
+@enduml

@@ -1,0 +1,194 @@
+@startuml
+    class User{
+        Long avatarId
+        String name
+        UserTypeEnum userType
+        Map<String, String> info
+        Long userStatusId
+        Locale locale
+        TimeZone timeZone
+    }
+    class Chat{
+        String label
+        ChatTypeEnum chatType
+        Long numberingId
+        Long orderNumber
+    }
+    class Message {
+        Long chatId
+        String text
+        Long fileId
+        Long childChatId
+        MessageTypeEnum messageType
+    }
+    class File{
+    	String name
+    	String mimeType
+    	Long fileSize
+    	String path
+    	FileAccessTypeEnum fileAccessType
+    	Integer crc32
+    	Long lastOpenTime
+    	Boolean gzipOn
+    }
+    class MessageLog {
+        Long messageId
+        String oldText
+    }
+    class MessageTag {
+        Long messageId
+        Long tagId
+        String value
+    }
+    class MessageToUser {
+        Long messageId
+        Long userId
+        MessageStatusEnum messageStatus
+    }
+
+class Tag{
+    String tag
+    TagTypeEnum tagType
+    String description
+    Boolean leftMenuShow
+    Boolean headerShow
+    TagGroupEnum tagGroup
+}
+    class UserContact{
+        Long parentUserId
+        Long childUserId
+        String label
+        boolean favorite
+        Long chatId
+    }
+    class UserFilter {
+         Long userId
+         FilterGridEnum gridId
+         String filterId
+         String data
+    }
+    class UserLink {
+         Long parentUserId
+         Long childUserId
+         UserLinkEnum userLinkType
+    }
+    class UserLog {
+    	Long userId
+        public String fieldName
+        public String fieldOldValue
+        public String fieldNewValue
+        public String comment
+    }
+    class UserStatus  {
+        String label
+        UserStatusTypeEnum userStatusType
+        Integer weight
+         Integer color
+    }
+    class UserTree {
+         Long parentUserId
+         Long childUserId
+         Integer distance
+    }
+    class ChatToUser{
+        Long chatId
+        Long userId
+        ChatToUserTypeEnum chatToUserType
+    }
+    class ChatTree{
+        Long parentChatId
+        Long childChatId
+        Integer distance
+    }
+    class ChatWork{
+        Long chatId
+        Long userId
+        Long startTime
+        Long endTime
+    }
+    class ChatReminders{
+        Long chatId
+        Long userId
+        String text
+        Long dateTime
+    }
+    class ChatTagGroup {
+        Long chatId
+        TagGroupEnum tagGroup
+        Long messageTagId
+    }
+    class Numbering {
+        Long userId
+        ChatTypeEnum chatType
+        String prefix
+        Long maxNumberLong maxNumber
+    }
+    class UserEntryPoint {
+        Long userId
+        Boolean validate
+        EntryPointTypeEnum entryPointType
+        String clientId
+        String credential
+	}
+    class UserSession  {
+        Long userEntryPointId
+        String token
+    }
+    class UserSessionFail  {
+        Long userEntryPointId
+        String ipAddress
+        String comment
+    }
+    class RequestLog {
+        String token
+        String serviceId
+        String action
+        Long startInvoke
+        Long endInvoke
+        String errorStackTrace
+    }
+
+User -[#00FF00]- UserContact
+User -[#00FF00]left-{ UserEntryPoint
+User -[#00FF00]-{ UserFilter
+User -[#00FF00]-{ UserLink
+User -[#00FF00]-{ UserLog
+User -[#00FF00]-{ UserTree
+User -[#00FF00]-{ UserStatus
+User -[#00FF00]-{ ChatWork
+User -[#00FF00]-{ ChatReminders
+User -[#00FF00]-{ ChatToUser
+User -[#00FF00]-{ MessageToUser
+User -[#00FF00]-{ Numbering
+
+User -[#000000]right-{ Chat
+
+Chat -[#FF0000]-{ ChatReminders
+Chat -[#FF0000]-{ ChatTagGroup
+Chat -[#FF0000]-{ ChatToUser
+Chat -[#FF0000]-{ ChatTree
+Chat -[#FF0000]-{ ChatWork
+Chat -[#FF0000]-{ UserContact
+
+Chat -[#000000]right-{ Message
+
+Message -[#0000FF]- Message : hierarchy
+Message -[#0000FF]-{ MessageToUser
+Message -[#0000FF]-{ MessageLog
+Message -[#0000FF]-{ MessageTag
+Message -[#000000]- File
+
+MessageTag -[#000000]- Tag
+UserEntryPoint -[#000000]down-{ UserSession
+UserSession -[#000000]down-{ RequestLog
+UserEntryPoint -[#000000]-{ UserSessionFail
+
+UserLink -[hidden]down- UserTree
+UserStatus -[hidden]down- UserLog
+UserLog -[hidden]down- UserFilter
+UserFilter -[hidden]down- Numbering
+UserContact -[hidden]down- ChatWork
+ChatWork -[hidden]down- ChatReminders
+ChatTagGroup -[hidden]down- ChatTree
+
+@enduml

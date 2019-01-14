@@ -1,8 +1,8 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,8 +17,8 @@ public class ChatPriorityDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new ChatPriorityDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new ChatPriorityDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -28,12 +28,12 @@ public class ChatPriorityDaoTest extends AbstractTest {
             dao.insert(session, id1);
             System.out.println("After insert " + id1);
 
-            final long priority2 = dao.select(session, id1);
+            final long priority2 = dao.select(id1);
             Assert.assertNotNull(priority2);
             Assert.assertEquals(1L, priority2);
 
             dao.update(session, id1, 2L);
-            final long priority3 = dao.select(session, id1);
+            final long priority3 = dao.select(id1);
             Assert.assertNotNull(priority3);
             Assert.assertEquals(2L, priority3);
 
@@ -48,11 +48,11 @@ public class ChatPriorityDaoTest extends AbstractTest {
             Assert.assertEquals(5L, dao.insert(session, id5));
 
             dao.up(session, id5, id1);
-            Assert.assertEquals(1L, (long)dao.select(session, id5));
-            Assert.assertEquals(2L, (long)dao.select(session, id1));
-            Assert.assertEquals(3L, (long)dao.select(session, id2));
-            Assert.assertEquals(4L, (long)dao.select(session, id3));
-            Assert.assertEquals(5L, (long)dao.select(session, id4));
+            Assert.assertEquals(1L, (long) dao.select(id5));
+            Assert.assertEquals(2L, (long) dao.select(id1));
+            Assert.assertEquals(3L, (long) dao.select(id2));
+            Assert.assertEquals(4L, (long) dao.select(id3));
+            Assert.assertEquals(5L, (long) dao.select(id4));
 
             // reset
             dao.update(session, id1, 1L);
@@ -62,11 +62,11 @@ public class ChatPriorityDaoTest extends AbstractTest {
             dao.update(session, id5, 5L);
 
             dao.up(session, id5, id2);
-            Assert.assertEquals(1L, (long)dao.select(session, id1));
-            Assert.assertEquals(2L, (long)dao.select(session, id5));
-            Assert.assertEquals(3L, (long)dao.select(session, id2));
-            Assert.assertEquals(4L, (long)dao.select(session, id3));
-            Assert.assertEquals(5L, (long)dao.select(session, id4));
+            Assert.assertEquals(1L, (long) dao.select(id1));
+            Assert.assertEquals(2L, (long) dao.select(id5));
+            Assert.assertEquals(3L, (long) dao.select(id2));
+            Assert.assertEquals(4L, (long) dao.select(id3));
+            Assert.assertEquals(5L, (long) dao.select(id4));
 
             // reset
             dao.update(session, id1, 1L);
@@ -76,11 +76,11 @@ public class ChatPriorityDaoTest extends AbstractTest {
             dao.update(session, id5, 5L);
 
             dao.up(session, id3, id1);
-            Assert.assertEquals(1L, (long)dao.select(session, id3));
-            Assert.assertEquals(2L, (long)dao.select(session, id1));
-            Assert.assertEquals(3L, (long)dao.select(session, id2));
-            Assert.assertEquals(4L, (long)dao.select(session, id4));
-            Assert.assertEquals(5L, (long)dao.select(session, id5));
+            Assert.assertEquals(1L, (long) dao.select(id3));
+            Assert.assertEquals(2L, (long) dao.select(id1));
+            Assert.assertEquals(3L, (long) dao.select(id2));
+            Assert.assertEquals(4L, (long) dao.select(id4));
+            Assert.assertEquals(5L, (long) dao.select(id5));
 
             // reset
             dao.update(session, id1, 1L);
@@ -90,11 +90,11 @@ public class ChatPriorityDaoTest extends AbstractTest {
             dao.update(session, id5, 5L);
 
             dao.up(session, id3, id2);
-            Assert.assertEquals(1L, (long)dao.select(session, id1));
-            Assert.assertEquals(2L, (long)dao.select(session, id3));
-            Assert.assertEquals(3L, (long)dao.select(session, id2));
-            Assert.assertEquals(4L, (long)dao.select(session, id4));
-            Assert.assertEquals(5L, (long)dao.select(session, id5));
+            Assert.assertEquals(1L, (long) dao.select(id1));
+            Assert.assertEquals(2L, (long) dao.select(id3));
+            Assert.assertEquals(3L, (long) dao.select(id2));
+            Assert.assertEquals(4L, (long) dao.select(id4));
+            Assert.assertEquals(5L, (long) dao.select(id5));
 
             // reset
             dao.update(session, id1, 1L);
@@ -104,11 +104,11 @@ public class ChatPriorityDaoTest extends AbstractTest {
             dao.update(session, id5, 5L);
 
             dao.down(session, id3, id4);
-            Assert.assertEquals(1L, (long)dao.select(session, id1));
-            Assert.assertEquals(2L, (long)dao.select(session, id2));
-            Assert.assertEquals(3L, (long)dao.select(session, id4));
-            Assert.assertEquals(4L, (long)dao.select(session, id3));
-            Assert.assertEquals(5L, (long)dao.select(session, id5));
+            Assert.assertEquals(1L, (long) dao.select(id1));
+            Assert.assertEquals(2L, (long) dao.select(id2));
+            Assert.assertEquals(3L, (long) dao.select(id4));
+            Assert.assertEquals(4L, (long) dao.select(id3));
+            Assert.assertEquals(5L, (long) dao.select(id5));
 
             // reset
             dao.update(session, id1, 1L);
@@ -118,11 +118,11 @@ public class ChatPriorityDaoTest extends AbstractTest {
             dao.update(session, id5, 5L);
 
             dao.down(session, id3, id5);
-            Assert.assertEquals(1L, (long)dao.select(session, id1));
-            Assert.assertEquals(2L, (long)dao.select(session, id2));
-            Assert.assertEquals(3L, (long)dao.select(session, id4));
-            Assert.assertEquals(4L, (long)dao.select(session, id5));
-            Assert.assertEquals(5L, (long)dao.select(session, id3));
+            Assert.assertEquals(1L, (long) dao.select(id1));
+            Assert.assertEquals(2L, (long) dao.select(id2));
+            Assert.assertEquals(3L, (long) dao.select(id4));
+            Assert.assertEquals(4L, (long) dao.select(id5));
+            Assert.assertEquals(5L, (long) dao.select(id3));
 
             // reset
             dao.update(session, id1, 1L);
@@ -132,11 +132,11 @@ public class ChatPriorityDaoTest extends AbstractTest {
             dao.update(session, id5, 5L);
 
             dao.down(session, id1, id2);
-            Assert.assertEquals(1L, (long)dao.select(session, id2));
-            Assert.assertEquals(2L, (long)dao.select(session, id1));
-            Assert.assertEquals(3L, (long)dao.select(session, id3));
-            Assert.assertEquals(4L, (long)dao.select(session, id4));
-            Assert.assertEquals(5L, (long)dao.select(session, id5));
+            Assert.assertEquals(1L, (long) dao.select(id2));
+            Assert.assertEquals(2L, (long) dao.select(id1));
+            Assert.assertEquals(3L, (long) dao.select(id3));
+            Assert.assertEquals(4L, (long) dao.select(id4));
+            Assert.assertEquals(5L, (long) dao.select(id5));
 
             // reset
             dao.update(session, id1, 1L);
@@ -146,11 +146,11 @@ public class ChatPriorityDaoTest extends AbstractTest {
             dao.update(session, id5, 5L);
 
             dao.down(session, id1, id5);
-            Assert.assertEquals(1L, (long)dao.select(session, id2));
-            Assert.assertEquals(2L, (long)dao.select(session, id3));
-            Assert.assertEquals(3L, (long)dao.select(session, id4));
-            Assert.assertEquals(4L, (long)dao.select(session, id5));
-            Assert.assertEquals(5L, (long)dao.select(session, id1));
+            Assert.assertEquals(1L, (long) dao.select(id2));
+            Assert.assertEquals(2L, (long) dao.select(id3));
+            Assert.assertEquals(3L, (long) dao.select(id4));
+            Assert.assertEquals(4L, (long) dao.select(id5));
+            Assert.assertEquals(5L, (long) dao.select(id1));
         }
     }
 }

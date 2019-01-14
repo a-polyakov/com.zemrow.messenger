@@ -2,6 +2,7 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.MessageTypeEnum;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Сообщение
@@ -12,22 +13,27 @@ public class Message extends AbstractEntity {
     /**
      * ID чата
      */
+    @QuerySqlField(notNull = true, index = true)
     public Long chatId;
     /**
      * Текст
      */
+    @QuerySqlField
     public String text;
     /**
      * ID прикрепленного файла
      */
+    @QuerySqlField
     public Long fileId;
     /**
      * ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
      */
+    @QuerySqlField
     public Long childChatId;
     /**
      * Тип сообщения
      */
+    @QuerySqlField
     public MessageTypeEnum messageType;
 
 //================================ AUTO GENERATE ==============================
@@ -70,14 +76,6 @@ public class Message extends AbstractEntity {
 
     public void setMessageType(MessageTypeEnum messageType) {
         this.messageType = messageType;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Message{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

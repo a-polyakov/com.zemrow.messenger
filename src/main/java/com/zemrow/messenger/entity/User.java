@@ -2,8 +2,9 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.UserTypeEnum;
-import java.util.Map;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
+
+import java.util.Map;
 
 /**
  * Пользователь
@@ -12,11 +13,12 @@ import org.apache.ignite.cache.query.annotations.QuerySqlField;
  */
 public class User extends AbstractEntity {
     /**
-     * ссылка на таблицу file где хранится аватар
+     * Ссылка на File где хранится аватар.
      */
+    @QuerySqlField()
     private Long avatarId;
     /**
-     * Наименование пользователя
+     * Наименование пользователя.
      */
     @QuerySqlField(notNull = true, index = true)
     private String name;
@@ -27,7 +29,9 @@ public class User extends AbstractEntity {
     private UserTypeEnum userType;
     /**
      * Дополнительные поля
+     * TODO разграничение доступа: какую информацию может видеть лубой человек какую из списка контактов
      */
+    @QuerySqlField
     private Map<String, String> info;
     /**
      * Состояние пользователя: Не в сети, В сети, Не беспокоить
@@ -83,14 +87,6 @@ public class User extends AbstractEntity {
 
     public void setUserStatusId(Long userStatusId) {
         this.userStatusId = userStatusId;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

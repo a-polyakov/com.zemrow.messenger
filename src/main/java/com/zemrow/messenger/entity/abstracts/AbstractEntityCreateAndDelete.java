@@ -1,18 +1,22 @@
 package com.zemrow.messenger.entity.abstracts;
 
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
+
 /**
  * Костяк сущности (с информацией о создании и удалении)
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public abstract class AbstractEntityCreateAndDelete extends AbstractEntityCreateOnly {
+public abstract class AbstractEntityCreateAndDelete extends AbstractEntityWithId {
     /**
      * Дата удаления записи
      */
+    @QuerySqlField()
     private Long deleteTime;
     /**
      * Пользователь удаливший запись
      */
+    @QuerySqlField()
     private Long deletedBy;
 
 //================================ AUTO GENERATE ==============================
@@ -31,14 +35,6 @@ public abstract class AbstractEntityCreateAndDelete extends AbstractEntityCreate
 
     public void setDeletedBy(Long deletedBy) {
         this.deletedBy = deletedBy;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("AbstractEntityCreateAndDelete{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

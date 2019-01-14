@@ -1,10 +1,10 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.UserTree;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteBiTuple;
+import com.zemrow.messenger.entity.UserTreeKey;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,8 +19,8 @@ public class UserTreeDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new UserTreeDao(ignite);
+        try (final DataBase DataBase = getDataBase()) {
+            dao = new UserTreeDao(DataBase);
 
             final SessionStorage session = getSession();
 
@@ -33,15 +33,15 @@ public class UserTreeDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final IgniteBiTuple id = new IgniteBiTuple(entity.getParentUserId(), entity.getChildUserId());
-            final UserTree entity2 = dao.select(session, id);
+            final UserTreeKey id = entity.getKey();
+            final UserTree entity2 = dao.select(id);
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getParentUserId(), entity2.getParentUserId());
             Assert.assertEquals(entity.getChildUserId(), entity2.getChildUserId());
             Assert.assertEquals(entity.getDistance(), entity2.getDistance());
 
             dao.delete(session, id);
-            final UserTree entity3 = dao.select(session, id);
+            final UserTree entity3 = dao.select(id);
             Assert.assertNull(entity3);
         }
     }

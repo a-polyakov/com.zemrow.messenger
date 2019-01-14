@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messenger</title>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #body_table {
+            width: 100%;
+            height: 100%;
+        }
+
+        table, tbody, tr, dt {
+            border-collapse: collapse;
+            padding: 0;
+            margin: 0;
+        }
+
+        .left_panel {
+            width: 300px;
+            background-color: #ECF1F4;
+        }
+
+        .left_panel > table {
+            width: 100%;
+            height: 100%;
+        }
+
+        .user_info_row {
+            height: 50px;
+        }
+
+        .user_info_panel {
+            width: 100%;
+        }
+
+        .user_info_icon {
+            width: 50px;
+        }
+
+        .user_info_name {
+        }
+
+        .user_info_menu {
+            width: 20px;
+            cursor: pointer;
+        }
+
+        .user_info_menu:hover {
+            transform: scale(1.1, 1.1);
+        }
+
+        .find_row {
+            height: 30px;
+        }
+
+        .find_panel {
+            width: 100%;
+        }
+
+        .find_textfield {
+            width: 100%;
+        }
+
+        .find_textfield input {
+            width: 100%;
+            height: 24px;
+        }
+
+        .find_button {
+            width: 20px;
+            cursor: pointer;
+        }
+
+        .find_button:hover {
+            transform: scale(1.1, 1.1);
+        }
+
+        .tab_row {
+            height: 30px;
+        }
+
+        .find_panel table {
+            width: 100%;
+        }
+
+        .chat_tabs {
+
+        }
+
+        .contact_tabs {
+            display: none;
+        }
+
+        .tabs tr td {
+            padding: 5px 10px;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+        }
+
+        .tabs tr td.current {
+            background-color: lightblue;
+        }
+
+        .tabs tr td:hover {
+            background-color: lightskyblue;
+        }
+
+        .left_panel_content {
+            overflow-y: scroll;
+            height: 100%;
+        }
+
+        .tab_panel {
+            overflow-y: scroll;
+        }
+
+        .chat_list_panel {
+
+        }
+
+        .chat_tree_panel {
+            display: none;
+        }
+
+        .chat_outbox_panel {
+            display: none;
+        }
+
+        .chat_inbox_panel {
+            display: none;
+        }
+
+        .contact_list_panel {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .contact_split {
+            background-color: grey;
+            height: 20px;
+        }
+
+        .contact_item {
+            cursor: pointer;
+            height: 25px;
+        }
+
+        .contact_item.current {
+            background-color: lightblue;
+        }
+
+        .contact_item:hover {
+            background-color: lightskyblue;
+        }
+
+        .contact_tree_panel {
+            display: none;
+        }
+
+        .tiled_contact, .tiled_chat {
+            table-layout: fixed;
+            width: 280px;
+            height: 50px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 5px lightblue;
+        }
+
+        .tiled_contact.current, .tiled_chat.current {
+            background-color: lightblue;
+        }
+
+        .tiled_contact:hover, .tiled_chat:hover {
+            background-color: lightskyblue;
+        }
+
+        .tiled_contact_icon {
+
+        }
+
+        .tiled_name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tiled_status {
+
+        }
+
+        .tiled_last_message {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tiled_last_message_date {
+            font-size: 12px;
+        }
+
+        .tiled_last_message_time {
+
+        }
+
+        .tiled_unread_count {
+            text-align: right;
+        }
+
+        .tiled_chat_number {
+            white-space: nowrap;
+        }
+
+        .tiled_chat_executor {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tiled_chat_deadline {
+            font-size: 12px
+        }
+
+        .tiled_chat_work_now {
+
+        }
+
+        .open_close_left_panel {
+            width: 3px;
+            cursor: pointer;
+        }
+
+        .chat_info {
+            height: 100px;
+            border-bottom: 1px solid lightblue;
+        }
+
+        .chat_info_panel {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chat_info_icon {
+            width: 75px;
+            height: 75px;
+        }
+
+        .chat_info_name {
+        }
+
+        .chat_info_action {
+            width: 20px;
+        }
+
+        .chat_info_users {
+        }
+
+        .chat_messages {
+            vertical-align: top;
+            overflow-y: scroll;
+        }
+
+        .chat_messages_panel {
+            width: 100%;
+
+        }
+
+        .message {
+            background-color: rgba(73, 9, 225, 0.15);
+            border: 1px dotted lightblue;
+        }
+
+        .message_read_button {
+            cursor: pointer;
+        }
+
+        .message_edit_button {
+            cursor: pointer;
+        }
+
+        .message_delete_button {
+            cursor: pointer;
+        }
+
+        .send_message_row {
+            height: 50px;
+            border-top: 1px solid lightblue;
+        }
+
+        .send_message_panel {
+            width: 100%;
+            height: 100%;
+        }
+
+        .send_message_attach_file_width {
+            width: 50px;
+        }
+
+        .send_message_tag_width {
+            width: 50px;
+        }
+
+        .send_message_panel_textfield {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .send_message_button {
+            width: 50px;
+        }
+
+        .open_close_right_panel {
+            width: 3px;
+            cursor: pointer;
+        }
+
+        .right_panel {
+            display: none;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+        }
+
+        .align_right {
+            horiz-align: right;
+            text-align: right;
+        }
+
+        .login {
+            display: none;
+        }
+
+        .login table.shadow {
+            border-collapse: separate;
+            padding: 15px;
+        }
+
+        .registration {
+            display: none;
+        }
+
+        .registration table.shadow {
+            border-collapse: separate;
+            padding: 15px;
+        }
+
+        .user_info_menu_dialog {
+            display: none;
+            position: fixed;
+            top: 50px;
+            left: 5px;
+            width: 290px;
+            background-color: white;
+            line-height: 32px;
+        }
+
+        .user_info_menu_dialog ul, .user_info_menu_dialog li {
+            margin: 0;
+            padding: 5px;
+            list-style: none;
+        }
+
+        .user_info_menu_dialog .item:hover {
+            background-color: lightskyblue;
+            cursor: pointer;
+        }
+
+        .finding_area_dialog {
+            display: none;
+            position: fixed;
+            top: 55px;
+            left: 300px;
+            width: 290px;
+            background-color: white;
+            line-height: 32px;
+        }
+
+        .finding_area_dialog label {
+            display: block;
+        }
+
+        .search_user_dialog {
+            display: none;
+            position: fixed;
+            top: 27px;
+            left: 3px;
+            width: 600px;
+            height: 400px;
+            background-color: white;
+        }
+
+        .dialog_title {
+            width: 100%;
+            height: 24px;
+            text-align: center;
+        }
+
+        .dialog_close {
+            text-align: right;
+            vertical-align: top;
+            font-weight: bold;
+        }
+
+        .dialog_close:hover {
+            cursor: pointer;
+            transform: scale(1.1, 1.1);
+        }
+
+        .dialog_body {
+            /*padding: 10px 0px 10px 10px;*/
+            /*width: 100%;*/
+            /*height: 100%;*/
+        }
+
+
+        .search_user_dialog_list {
+            height: 100%;
+            line-height: 32px;
+            overflow-y: scroll;
+        }
+
+        .user_info_dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 400px;
+            margin-top: -200px; /*set to a negative number 1/2 of your height*/
+            margin-left: -300px;
+            background-color: white;
+        }
+
+
+        input.error {
+            background-color: #ff8888;
+        }
+
+        .shadow {
+            box-shadow: 0 0 5px lightblue;
+        }
+
+    </style>
+    <!--TODO по возможности не использовать jquery-ui -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+    <script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
+    <!--TODO по возможности не использовать jquery-ui -->
+    <script type="text/javascript"
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        var ui = {
+            body: {
+                on_load: function () {
+                    api.user.current();
+                    //TODO
+                    //ui.left_panel.tabs.chat_tab.tabs.chat_list_tab.;
+                }
+            },
+            left_panel: {
+                get: function () {
+                    return $(".left_panel");
+                },
+                user_info: {
+                    user_id: {
+                        get: function () {
+                            $(".user_info_panel").prop("user_id");
+                        },
+                        set: function (user_id) {
+                            $(".user_info_panel").prop("user_id", user_id);
+                        }
+                    },
+                    user_name: {
+                        get: function () {
+                            $(".user_info_panel .user_info_name").text();
+                        },
+                        set: function (user_name) {
+                            $(".user_info_panel .user_info_name").text(user_name);
+                        }
+                    },
+                    menu: {
+                        show: function () {
+                            $('.user_info_menu_dialog').animate({opacity: 'show'}, 300);
+                        },
+                        hide: function () {
+                            $('.user_info_menu_dialog').animate({opacity: 'hide'}, 300);
+                        },
+                        toggle: function () {
+                            if ($('.user_info_menu_dialog').is(":visible")) {
+                                ui.left_panel.user_info.menu.hide();
+                            } else {
+                                ui.left_panel.user_info.menu.show();
+                            }
+                        },
+                        exit: {
+                            onclick: function () {
+                                ui.left_panel.user_info.menu.hide();
+                                api.userSession.delete();
+                                // TODO ws close автоматически или вручную
+                                ui.dialog.login.show();
+                            }
+                        }
+                    }
+                },
+                find_panel: {
+                    textfield: {
+                        get: function () {
+                            return $(".find_panel .find_textfield input").val();
+                        },
+                        set: function (s) {
+                            $(".find_panel .find_textfield input").val(s);
+                        },
+                        onkeydown: function (e) {
+                            //console.log(e);
+                            if (e.keyCode == 9 || e.keyCode == 13) {
+                                ui.left_panel.find_panel.button.onclick();
+                            } else if (e.keyCode == 27) {
+                                ui.left_panel.find_panel.textfield.set('');
+                                ui.left_panel.find_panel.findingArea.hide();
+                            } else if (e.keyCode != 16) {
+                                ui.left_panel.find_panel.findingArea.show();
+                            }
+                        }
+                    },
+                    button: {
+                        onclick: function () {
+                            ui.left_panel.find_panel.findingArea.hide();
+                            var s = ui.left_panel.find_panel.textfield.get();
+                            ui.dialog.search_user_dialog.textfield.set(s)
+                            ui.dialog.search_user_dialog.find();
+                            ui.dialog.search_user_dialog.show();
+                        }
+                    },
+                    findingArea: {
+                        show: function () {
+                            $(".finding_area_dialog").animate({opacity: 'show'}, 300);
+                        },
+                        hide: function () {
+                            $(".finding_area_dialog").animate({opacity: 'hide'}, 300);
+                        }
+                    }
+                },
+                tabs: {
+                    chat_tab: {
+                        get: function () {
+                            return $(".chat_tab");
+                        },
+                        tabs: {
+                            get: function () {
+                                return $(".chat_tabs");
+                            },
+                            select: function (tab) {
+                                $(".chat_tabs .current").removeClass("current");
+                                $(".tab_panel>table:visible, .tab_panel>div:visible").hide();
+                                if (tab) {
+                                    tab.get().addClass("current");
+                                    tab.panel.get().show();
+                                }
+                            },
+                            chat_list_tab: {
+                                get: function () {
+                                    return $(".chat_list_tab");
+                                },
+                                panel: {
+                                    //TODO добавить: текущая страница и отслеживание прокрутки (life load)
+                                    get: function () {
+                                        return $(".chat_list_panel");
+                                    },
+                                    setPage: function (pageNavigationDto) {
+                                        //TODO
+                                        if (pageNavigationDto.offset == 0) {
+                                            var s = '';
+                                            for (var chatTiledDto of pageNavigationDto.page) {
+                                                s += '<tr>' +
+                                                    '<td class="chat_item">';
+                                                if (chatTiledDto.userContactId) {
+                                                    s += ui.tempate.tiled.contact(chatTiledDto);
+                                                } else {
+                                                    s += ui.tempate.tiled.chat(chatTiledDto);
+                                                }
+                                                s += '</td>' +
+                                                    '</tr>';
+                                            }
+                                            $(".chat_list_panel").html(s);
+                                        }
+                                    },
+                                },
+                                on_click: function () {
+                                    ui.left_panel.tabs.chat_tab.tabs.select(ui.left_panel.tabs.chat_tab.tabs.chat_list_tab);
+                                    api.chat.listLast(0, 10);
+                                },
+                            },
+                            chat_tree_tab: {
+                                get: function () {
+                                    return $(".chat_tree_tab");
+                                },
+                                panel: {
+                                    get: function () {
+                                        return $(".chat_tree_panel");
+                                    }
+                                },
+                                on_click: function () {
+                                    ui.left_panel.tabs.chat_tab.tabs.select(ui.left_panel.tabs.chat_tab.tabs.chat_tree_tab);
+                                }
+                            },
+                            chat_outbox_tab: {
+                                get: function () {
+                                    return $(".chat_outbox_tab");
+                                },
+                                panel: {
+                                    get: function () {
+                                        return $(".chat_outbox_panel");
+                                    }
+                                },
+                                on_click: function () {
+                                    ui.left_panel.tabs.chat_tab.tabs.select(ui.left_panel.tabs.chat_tab.tabs.chat_outbox_tab);
+                                }
+                            },
+                            chat_inbox_tab: {
+                                get: function () {
+                                    return $(".chat_inbox_tab");
+                                },
+                                panel: {
+                                    get: function () {
+                                        return $(".chat_inbox_panel");
+                                    }
+                                },
+                                on_click: function () {
+                                    ui.left_panel.tabs.chat_tab.tabs.select(ui.left_panel.tabs.chat_tab.tabs.chat_inbox_tab);
+                                }
+                            }
+                        },
+                        on_click: function () {
+                            ui.left_panel.tabs.contact_tab.get().removeClass("current");
+                            ui.left_panel.tabs.contact_tab.tabs.get().hide();
+                            ui.left_panel.tabs.chat_tab.get().addClass("current");
+                            ui.left_panel.tabs.chat_tab.tabs.get().show();
+                            // TODO panel show
+                            ui.left_panel.tabs.chat_tab.tabs.select(ui.left_panel.tabs.chat_tab.tabs.chat_list_tab);
+                        }
+                    },
+                    contact_tab: {
+                        get: function () {
+                            return $(".contact_tab");
+                        },
+                        tabs: {
+                            get: function () {
+                                return $(".contact_tabs");
+                            },
+                            select: function (tab) {
+                                $(".contact_tabs .current").removeClass("current");
+                                $(".tab_panel>table:visible, .tab_panel>div:visible").hide();
+                                if (tab) {
+                                    tab.get().addClass("current");
+                                    tab.panel.get().show();
+                                }
+                            },
+                            contact_list_tab: {
+                                get: function () {
+                                    return $(".contact_list_tab");
+                                },
+                                panel: {
+                                    get: function () {
+                                        return $(".contact_list_panel");
+                                    }
+                                },
+                                on_click: function () {
+                                    ui.left_panel.tabs.contact_tab.tabs.select(ui.left_panel.tabs.contact_tab.tabs.contact_list_tab);
+                                }
+                            },
+                            contact_tree_tab: {
+                                get: function () {
+                                    return $(".contact_tree_tab");
+                                },
+                                panel: {
+                                    get: function () {
+                                        return $(".contact_tree_panel");
+                                    }
+                                },
+                                on_click: function () {
+                                    ui.left_panel.tabs.contact_tab.tabs.select(ui.left_panel.tabs.contact_tab.tabs.contact_tree_tab);
+                                }
+                            }
+                        },
+                        on_click: function () {
+                            ui.left_panel.tabs.chat_tab.get().removeClass("current");
+                            ui.left_panel.tabs.chat_tab.tabs.get().hide();
+                            ui.left_panel.tabs.contact_tab.get().addClass("current");
+                            ui.left_panel.tabs.contact_tab.tabs.get().show();
+                            // TODO panel show
+                            ui.left_panel.tabs.contact_tab.tabs.select(ui.left_panel.tabs.contact_tab.tabs.contact_list_tab);
+                        }
+                    },
+                    reload: function () {
+                        if ($(".chat_tabs .current").hasClass("chat_tab")) {
+                            ui.left_panel.tabs.chat_tab.on_click()
+                        } else if ($(".chat_tabs .current").hasClass("contact_tab")) {
+                            ui.left_panel.tabs.contact_tab.on_click()
+                        }
+                    }
+                },
+                open_close_button: {
+                    on_click: function () {
+                        ui.left_panel.get().toggle(300);
+                    }
+                }
+            },
+            chat_panel: {},
+            right_panel: {
+                get: function () {
+                    return $(".right_panel");
+                },
+                open_close_button: {
+                    on_click: function () {
+                        ui.right_panel.get().toggle(300);
+                    }
+                }
+            },
+            dialog: {
+                login: {
+                    show: function () {
+                        $('.login').animate({opacity: 'show'}, 300);
+                    },
+                    hide: function () {
+                        $('.login').animate({opacity: 'hide'}, 300);
+                    },
+                    onsubmit: function () {
+                        var loginTable = $('.login');
+                        var usernameInput = loginTable.find('input[name=username]');
+                        var username = usernameInput.val();
+                        var passwordInput = loginTable.find('input[name=password]');
+                        var password = passwordInput.val();
+
+                        if (username != '') {
+                            usernameInput.removeClass("error");
+                            if (password != '') {
+                                passwordInput.removeClass("error");
+                                api.userSession.insert(username, password,
+                                    function (data) {
+                                        if (data.statusCode().status == 200) {
+                                            passwordInput.val('');
+                                            ui.dialog.login.hide();
+                                            api.user.current();
+                                            ui.left_panel.tabs.reload();
+                                            // TODO перезапросить данные на которых возникла ошибка авторизации
+                                        } else {
+                                            //TODO обработка ошибки входа
+                                        }
+                                    }
+                                );
+                            } else {
+                                passwordInput.addClass("error");
+                            }
+                        } else {
+                            usernameInput.addClass("error");
+                        }
+                    },
+                    registration: {
+                        onclick: function () {
+                            ui.dialog.login.hide();
+                            ui.dialog.registration.show();
+                        }
+                    }
+                },
+                registration: {
+                    show: function () {
+                        $('.registration').animate({opacity: 'show'}, 300);
+                    },
+                    hide: function () {
+                        $('.registration').animate({opacity: 'hide'}, 300);
+                    },
+                    onsubmit: function () {
+                        var loginTable = $('.registration');
+                        var usernameInput = loginTable.find('input[name=username]');
+                        var username = usernameInput.val();
+                        var passwordInput = loginTable.find('input[name=password]');
+                        var password = passwordInput.val();
+                        var confirmPasswordInput = loginTable.find('input[name=confirmPassword]');
+                        var confirmPassword = confirmPasswordInput.val();
+
+                        if (username != '') {
+                            usernameInput.removeClass("error");
+                            if (password != '' && password == confirmPassword) {
+                                passwordInput.removeClass("error");
+                                confirmPasswordInput.removeClass("error");
+                                api.user.insert(username, password,
+                                    function (data) {
+                                        if (data.statusCode().status == 200) {
+                                            passwordInput.val('');
+                                            confirmPasswordInput.val('');
+                                            ui.dialog.registration.hide();
+                                            api.user.current();
+                                            ui.left_panel.tabs.chat_tab.tabs.chat_list_tab.on_click();
+                                            ui.left_panel.tabs.chat_tab.on_click();
+
+
+                                            // TODO перезапросить данные на которых возникла ошибка авторизации
+                                        } else {
+                                            //TODO обработка ошибки регистрации
+                                        }
+                                    }
+                                );
+                            } else {
+                                passwordInput.addClass("error");
+                                confirmPasswordInput.addClass("error");
+                            }
+                        } else {
+                            usernameInput.addClass("error");
+                        }
+                    },
+                    login: {
+                        onclick: function () {
+                            ui.dialog.registration.hide();
+                            ui.dialog.login.show();
+                        }
+                    }
+                },
+                search_user_dialog: {
+                    show: function () {
+                        $('.search_user_dialog').animate({opacity: 'show'}, 300);
+                        $('.search_user_dialog .find_textfield input').focus();
+                    },
+                    hide: function () {
+                        $('.search_user_dialog').animate({opacity: 'hide'}, 300);
+                    },
+                    textfield: {
+                        timerId: 0,
+                        oldVal: '',
+                        get: function () {
+                            return $(".search_user_dialog .find_textfield input").val();
+                        },
+                        set: function (s) {
+                            $(".search_user_dialog .find_textfield input").val(s);
+                        },
+                        onkeydown: function (e) {
+                            // console.log(e);
+                            if (e.keyCode == 9 || e.keyCode == 13) {
+                                ui.dialog.search_user_dialog.find();
+                            } else if (e.keyCode == 27) {
+                                ui.dialog.search_user_dialog.hide();
+                            } else {
+                                clearTimeout(ui.dialog.search_user_dialog.textfield.timerId);
+                                ui.dialog.search_user_dialog.textfield.timerId = setTimeout(ui.dialog.search_user_dialog.find, 300);
+                            }
+                        }
+                    },
+                    find: function () {
+                        var s = ui.dialog.search_user_dialog.textfield.get();
+                        if (ui.dialog.search_user_dialog.textfield.oldVal != s) {
+                            ui.dialog.search_user_dialog.list.clear();
+                            ui.dialog.search_user_dialog.textfield.oldVal = s;
+                            api.user.find(s, 0, 10);
+                        }
+                    },
+                    list: {
+                        //TODO добавить: текущая страница и отслеживание прокрутки (life load)
+                        clear: function () {
+                            $(".search_user_dialog_list>table").html('');
+                        },
+                        setPage: function (pageNavigationDto) {
+                            //TODO
+                            if (pageNavigationDto.offset == 0) {
+                                var s = '';
+                                for (var userTiledDto of pageNavigationDto.page) {
+                                    s += '<tr>' +
+                                        '<td>' + userTiledDto.avatarId + '</td>' +
+                                        '<td><a href="#" onclick="api.user.select(\'' + userTiledDto.userId + '\')">' + userTiledDto.username + '</a></td>' +
+                                        '<td>' + userTiledDto.userContactId + '</td>' +
+                                        '<td><input type="button" value="+" title="Добавить в контакты" onclick="api.userContact.insert(\'' + userTiledDto.userId + '\')"></td>' +
+                                        '</tr>';
+                                }
+                                $(".search_user_dialog_list>table").html(s);
+                            }
+                        },
+
+                    }
+                },
+                user_info_dialog: {
+                    show: function (user) {
+                        $('.user_info_dialog .username').text(user.username);
+                        //TODO
+                        $('.user_info_dialog').animate({opacity: 'show'}, 300);
+                    },
+                    hide: function () {
+                        $('.user_info_dialog').animate({opacity: 'hide'}, 300);
+                    },
+                }
+            },
+            tempate: {
+                tiled: {
+                    contact: function (chatTiledDto) {
+                        if (!chatTiledDto.lastMessageText) {
+                            chatTiledDto.lastMessageText = '';
+                        }
+                        // TODO chatTiledDto.lastMessageText предобработка: удалить теги
+                        var tiled_last_message_date = ''
+                        var tiled_last_message_time = ''
+                        if (chatTiledDto.lastMessageTime) {
+                            tiled_last_message_date = ui.utils.date.getDate(chatTiledDto.lastMessageTime);
+                            tiled_last_message_time = ui.utils.date.getTime(chatTiledDto.lastMessageTime);
+                        }
+                        return "<table class=\"tiled_contact\">\n" +
+                            "    <colgroup style=\"width: 50px;\"/>\n" +
+                            "    <colgroup style=\"width: 210px;\"/>\n" +
+                            "    <colgroup style=\"width: 20px;\"/>\n" +
+                            "    <tr>\n" +
+                            "        <td rowspan=\"3\" class=\"tiled_contact_icon\">TODO</td>\n" +
+                            "        <td class=\"tiled_name\">" + chatTiledDto.label + "</td>\n" +
+                            //TODO
+                            "        <td title=\"Статус: В сети\" style=\"color: red;\" class=\"tiled_status\">&#9873\n" +
+                            "        </td>\n" +
+                            "    </tr>\n" +
+                            "    <tr>\n" +
+                            "        <td title=\"Последнее сообщение: " + chatTiledDto.lastMessageText + "\"\n" +
+                            "            colspan=\"2\" class=\"tiled_last_message\">" + chatTiledDto.lastMessageText + "</td>\n" +
+                            "    </tr>\n" +
+                            "    <tr>\n" +
+                            "        <td title=\"Последнее сообщение\"><span class=\"tiled_last_message_date\">" + tiled_last_message_date + "</span>\n" +
+                            "            <span class=\"tiled_last_message_time\">" + tiled_last_message_time + "</span></td>\n" +
+                            "        <td title=\"Непрочитано: " + chatTiledDto.unreadMessageCount + "\" class=\"tiled_unread_count\">" + chatTiledDto.unreadMessageCount + "</td>\n" +
+                            "    </tr>\n" +
+                            "</table>";
+                    },
+                    chat: function (chatDto) {
+                        return "<table class=\"tiled_chat\">\n" +
+                            "    <colgroup style=\"width: 100px;\"/>\n" +
+                            "    <colgroup style=\"width: 80px;\"/>\n" +
+                            "    <colgroup style=\"width: 60px;\"/>\n" +
+                            "    <colgroup style=\"width: 20px;\"/>\n" +
+                            "    <colgroup style=\"width: 20px;\"/>\n" +
+                            "    <tr>\n" +
+                            "        <td title=\"Номер задачи\" class=\"tiled_chat_number\">IGNITE-10102</td>\n" +
+                            "        <td title=\"Наименование задачи\" colspan=\"3\"  class=\"tiled_name\">наименование задачи</td>\n" +
+                            "        <td title=\"Статус: Закрыто\" style=\"color: red;\" class=\"tiled_status\">&#9873</td>\n" +
+                            "    </tr>\n" +
+                            "    <tr>\n" +
+                            "        <td title=\"Последнее сообщение\"><span class=\"tiled_last_message_date\">2018.12.12</span> <span class=\"tiled_last_message_time\">10:00</span></td>\n" +
+                            "        <td title=\"Последнее сообщение: последнее сообщение может быть очень длинным\" colspan=\"4\" class=\"tiled_last_message\">последнее сообщение может быть очень длинным</td>\n" +
+                            "    </tr>\n" +
+                            "    <tr>\n" +
+                            "        <td title=\"Исполнитель\" colspan=\"2\" class=\"tiled_chat_executor\">Иванов Иван Иванович</td>\n" +
+                            "        <td title=\"Плановая дата завершения\" class=\"tiled_chat_deadline\">2019.02.01</td>\n" +
+                            "        <td title=\"Признак работы над задачей\" class=\"tiled_chat_work_now\">&#9658;</td>\n" +
+                            "        <td title=\"Непрочитано: 15\" colspan=\"2\" class=\"tiled_unread_count\">15</td>\n" +
+                            "    </tr>\n" +
+                            "</table>";
+                    }
+                }
+            },
+            utils: {
+                date: {
+                    getDate: function (timestamp) {
+                        var date = new Date(timestamp);
+                        return date.getFullYear() + "." + date.getMonth() + "." + date.getDate();
+                    },
+                    getTime: function (timestamp) {
+                        var date = new Date(timestamp);
+                        var hours = date.getHours();
+                        if (hours < 10) {
+                            hours = "0" + hours;
+                        }
+                        var minutes = date.getMinutes();
+                        if (minutes < 10) {
+                            minutes = "0" + minutes;
+                        }
+                        return hours + ":" + minutes;
+                    }
+                },
+                speak: function (text) {
+                    var url = 'https://tts.voicetech.yandex.net/generate?' +
+                        'key=069b6659-984b-4c5f-880e-aaedcfd84102' +
+                        '&text=' + encodeURI(text) +
+                        '&format=opus' +
+                        '&lang=ru-RU' +
+                        '&speed=1.1' +
+                        '&speaker=oksana';
+
+                    var audio = document.getElementById('audio');
+                    audio.src = url;
+                    audio.onloadeddata = function () {
+                        audio.play();
+                    };
+                    audio.load();
+                }
+            }
+        };
+
+        /**
+         * WebSocket
+         */
+        var ws;
+
+        var api = {
+            /**
+             * Отправка запроса на сервер через WebSocket
+             */
+            sendJson: function (obj) {
+                obj['requestId'] = Math.random().toString(16).substring(2);
+                if (ws && ws.send && ws.readyState === 1) {
+                    // TODO какой метод(json->string) лучше
+                    ws.send(JSON.stringify(obj));
+                } else {
+                    if (ws == null || ws.readyState > 1) {
+                        webSocketOpen(function () {
+                            api.sendJson(obj);
+                        });
+                    }
+                }
+            },
+            user: {
+                /**
+                 * Регистрация пользователя.
+                 * @param username Имя пользователя.
+                 * @param password Пароль пользователя.
+                 * @param alwaysFunction Функция которую необходимо вызвать по завершению
+                 */
+                insert: function (username, password, alwaysFunction) {
+                    // TODO
+                    $.ajax({
+                        url: "/api/user", type: "POST",
+                        data: JSON.stringify({username: username, password: password}),
+                        dataType: 'json',
+                        complete: alwaysFunction
+                    });
+                },
+                /**
+                 * Получить информацию о пользователе.
+                 * @param userId идентификатор пользователя.
+                 */
+                select: function (userId) {
+                    api.sendJson({
+                        eventId: "user_select",
+                        userId: userId
+                    });
+                },
+                /**
+                 * Получить информацию о текущем пользователе.
+                 */
+                current: function () {
+                    api.sendJson({
+                        eventId: "user_current"
+                    });
+                },
+                /**
+                 * Сменить статус пользователя.
+                 * @param userId идентификатор пользователя.
+                 * @param statusId идендификатор статуса.
+                 */
+                updateStatus: function (userId, statusId) {
+                    api.sendJson({
+                        eventId: "user_updateStatus",
+                        userId: userId, statusId: statusId
+                    });
+                },
+                /**
+                 * Наити пользователей
+                 * @param userLike TODO
+                 * @param offset TODO
+                 * @param limit TODO
+                 */
+                find: function (userLike, offset, limit) {
+                    api.sendJson({
+                        eventId: "user_find",
+                        userLike: userLike, offset: offset, limit: limit
+                    });
+                }
+            },
+            userStatus: {
+                // Получить список доступных статусов
+                select: function () {
+                    api.sendJson({eventId: "userStatus_select"});
+                }
+            },
+            userContact: {
+                /**
+                 * Текущему пользователю добавить контак на указанного пользователя
+                 * @param userId
+                 */
+                insert: function (userId) {
+                    api.sendJson({
+                        eventId: "userContact_insert",
+                        userId: userId
+                    });
+                },
+                // Получить список контактов пользователя отсортированых по алфавиту.
+                select: function (offset, limit) {
+                    api.sendJson({
+                        eventId: "userContact_select",
+                        offset: offset, limit: limit
+                    });
+                },
+            },
+            chat: {
+                // получить список чатов пользователя отсортированых по последнему сообщению
+                listLast: function (offset, limit) {
+                    api.sendJson({
+                        eventId: "chat_listLast",
+                        offset: offset, limit: limit
+                    });
+                },
+                /**
+                 * Получить информацию о чате.
+                 * @param chatId идентификатор чата.
+                 */
+                selectById: function (chatId) {
+                    api.sendJson({
+                        eventId: "chat_selectById",
+                        chatId: chatId
+                    });
+                }
+            },
+            message: {
+                /**
+                 * Получить сообщения чата отсортированые по дате получения
+                 * @param chatId идентификатор чата.
+                 * @param offset
+                 * @param limit
+                 */
+                select: function (chatId, offset, limit) {
+                    api.sendJson({
+                        eventId: "message_select",
+                        chatId: chatId, offset: offset, limit: limit
+                    });
+                },
+                /**
+                 * Отправить сообщение
+                 * @param requestId
+                 * @param chatId идентификатор чата.
+                 * @param messageText текст сообщения.
+                 */
+                insert: function (requestId, chatId, messageText) {
+                    api.sendJson({
+                        eventId: "message_insert",
+                        requestId: requestId, chatId: chatId, text: messageText
+                    });
+                },
+                /**
+                 * Отметить сообщение как прочитаное
+                 * @param messageId
+                 */
+                setStatusRead: function (messageId) {
+                    api.sendJson({
+                        eventId: "message_updateStatus",
+                        messageId: messageId, status: "READ"
+                    });
+                },
+                /**
+                 * Отредактировать текст сообщения
+                 * @param messageId
+                 * @param messageText
+                 */
+                update: function (messageId, messageText) {
+                    api.sendJson({
+                        eventId: "message_update",
+                        messageId: messageId, messageText: messageText
+                    });
+                },
+                /**
+                 * Удалить сообщение
+                 * @param messageId
+                 */
+                delete: function (messageId) {
+                    api.sendJson({
+                        eventId: "message_delete",
+                        messageId: messageId
+                    });
+                }
+            },
+            tag: {
+                /**
+                 * Получить список доступных тегов
+                 */
+                select: function () {
+                    api.sendJson({
+                        eventId: "tag_select"
+                    });
+                }
+            },
+            userSession: {
+                /**
+                 * Вход в сисему
+                 * @param username Имя пользователя.
+                 * @param password Пароль пользователя.
+                 * @param alwaysFunction Функция которую неоюходимо возвать по завершению
+                 */
+                insert: function (username, password, alwaysFunction) {
+                    $.ajax({
+                        url: "/api/userSession", type: "POST",
+                        data: JSON.stringify({username: username, password: password}),
+                        complete: alwaysFunction
+                    });
+                },
+                /**
+                 * Выход из системы (только текущую сессию)
+                 */
+                delete: function () {
+                    api.sendJson({
+                        eventId: "userSession_delete"
+                    });
+                }
+            }
+        };
+
+        var wsListener = {
+            user: {
+                current: function (user) {
+                    ui.left_panel.user_info.user_id.set(user.userId)
+                    ui.left_panel.user_info.user_name.set(user.userName);
+                    //TODO status
+                    //ui.left_panel.user_info.user_status.set(user.status_id);
+                },
+                select: function (user) {
+                    ui.dialog.user_info_dialog.show(user)
+                },
+                update: function (user) {
+                    //TODO
+                    debugger;
+                    console.log(user.id);
+                    console.log(user.name);
+                    console.log(user.status_id);
+                },
+                find: function (page) {
+                    ui.dialog.search_user_dialog.list.setPage(page);
+                }
+            },
+            userStatus: {
+                select: function (list) {
+                    debugger;
+                    //TODO показать список статусов пользователя
+                    console.log(list.offset);
+                    console.log(list.limit);
+                    console.log(list.total);
+                    console.log(list.items);
+                }
+            },
+            userContact: {
+                insert: function (userContact) {
+                    debugger;
+                    // TODO добавить чат в списки
+                    // TODO открыть чат
+                    // TODO загрузить шапку чата
+                    // TODO загрузить сообщения чата
+                },
+                select: function (list) {
+                    debugger;
+                    //TODO показать список контактов
+                    console.log(list.offset);
+                    console.log(list.limit);
+                    console.log(list.total);
+                    console.log(list.items);
+                }
+            },
+            chat: {
+                select: function (list) {
+                    debugger;
+                    //TODO показать список чатов
+                    console.log(list.offset);
+                    console.log(list.limit);
+                    console.log(list.total);
+                    console.log(list.items);
+                    // var uiList = "";
+                    // for (var i in data.data.data) {
+                    //     var chat = data.data.data[i];
+                    //     uiList += uiRender.left_panel.tab.chat_tab.chat_tab_list.chat_item.create(chat);
+                    // }
+                    // $('.chat_tab_list').html(uiList);
+                },
+                update: function (chat) {
+                    debugger;
+                    // TODO обновить шапку чата
+                    console.log(chat.chat_type);
+                    console.log(chat.number);
+                    console.log(chat.label);
+                },
+                listLast: function (page) {
+                    ui.left_panel.tabs.chat_tab.tabs.chat_list_tab.panel.setPage(page);
+                }
+            },
+            message: {
+                select: function (list) {
+                    debugger;
+                    //TODO
+                    console.log(list.offset);
+                    console.log(list.limit);
+                    console.log(list.total);
+                    console.log(list.items);
+//                        debugger;
+//                     var uiList = "";
+//                     var user_id = uiRender.left_panel.user_info.user_id.get();
+//                     for (var i = data.data.data.length - 1; i >= 0; i--) {
+//                         var message = data.data.data[i];
+//                         uiList += uiRender.home_panel.chat_panel.chat_messenge_list.message.create(
+//                             message.id,
+//                             message.text,
+//                             message.create_time,
+//                             message.created_by,
+//                             message.message_status,
+//                             user_id,
+//                             message.update_time,
+//                             message.delete_time);
+//                     }
+//                     $('.chat_messenge_list').html(uiList);
+//                     $('.send_message_panel_textfield').prop('disabled', false);
+//                     $('.send_message_panel_submit').prop('disabled', false);
+//                     $('.send_message_panel_textfield').focus();
+                },
+                update: function (message) {
+                    debugger;
+//                    TODO
+//                     var chat_id = uiRender.home_panel.chat_panel.chat_info.chat_id.get();
+                    // изменение списка прочитавших
+//                     TODO количество изменить
+                    // if (data.data.chat_id == chat_id) {
+                    //     uiRender.home_panel.chat_panel.chat_messenge_list.message.mark_read(data.data.id);
+                    // }
+                    // TODO изменение текста
+                    // $('[message_id=' + message.id + ']').find('p:first').text(message.text);
+                    // $('[message_id=' + message.id + ']').attr("is_edit", "true");
+                },
+                insert: function (message) {
+                    debugger;
+                    //TODO
+                    // var chat_id = uiRender.home_panel.chat_panel.chat_info.chat_id.get();
+                    // var user_id = uiRender.left_panel.user_info.user_id.get();
+                    // if (message.chat_id == chat_id) {
+                    //     $('.chat_messenge_list').append(uiRender.home_panel.chat_panel.chat_messenge_list.message.create(
+                    //         message.id,
+                    //         message.text,
+                    //         message.create_time,
+                    //         message.created_by,
+                    //         message.message_status,
+                    //         user_id,
+                    //         message.update_time,
+                    //         message.delete_time));
+                    // }
+                    // if (message.created_by == user_id) {
+                    //     $('.send_message_panel_textfield').val('');
+                    //     $('.send_message_panel_textfield').prop('disabled', false);
+                    //     $('.send_message_panel_submit').prop('disabled', false);
+                    //     $('.send_message_panel_textfield').focus();
+                    // }
+                },
+                delete: function (data) {
+                    debugger;
+                    var message = data.data;
+                    $('[message_id=' + message.id + ']').attr("is_deleted", "true");
+                }
+            },
+            tag: {
+                select: function (list) {
+                    debugger;
+                    //TODO
+                    console.log(list.offset);
+                    console.log(list.limit);
+                    console.log(list.total);
+                    console.log(list.items);
+                }
+            },
+            userSession: {
+                delete: function () {
+                    debugger;
+                    ws.close();
+                    // TODO проследить что на сервере токен закрывается (проставляется deleteTime)
+                    ui.dialog.login.show();
+                }
+            }
+        };
+
+        function webSocketOpen(callback) {
+            if (window.WebSocket) {
+                if (ws) {
+                    debugger;
+                    ws.close();
+                }
+                ws = new WebSocket('ws://' + document.domain + ':' + location.port + '/websocket/');
+                ws.onopen = function () {
+                    console.log('WebSocket opened');
+                    if (callback) {
+                        callback.call();
+                    }
+                };
+                ws.onmessage = function (e) {
+                    console.log('WebSocket message');
+                    var listener = null;
+                    var jsonResponse = null;
+                    // debugger; // все входящие сообщения
+                    if (e && e.data) {
+                        jsonResponse = JSON.parse(e.data);
+                        // глобальная проверка ошибок
+                        if ('400' == jsonResponse.status_code) {
+                            errorShow(jsonResponse.data);
+                        } else if ('401' == jsonResponse.status_code) {
+                            // TODO
+                            alert("401")
+                            ui.dialog.login.show();
+                        } else {
+                            if (jsonResponse && jsonResponse.eventId) {
+                                var i = jsonResponse.eventId.indexOf('_');
+                                var eventEntity = jsonResponse.eventId.substring(0, i);
+                                var serviceListener = wsListener[eventEntity];
+                                if (serviceListener) {
+                                    var eventAction = jsonResponse.eventId.substring(i + 1);
+                                    listener = serviceListener[eventAction];
+                                }
+                            }
+                        }
+                    }
+                    if (listener) {
+                        listener(jsonResponse);
+                    } else {
+                        debugger;
+                        console.loo("enevtId not implement");
+                        console.log(e);
+                        console.log(e.data);
+                    }
+                };
+                ws.onclose = function (data) {
+                    console.log('WebSocket closed');
+                    if (data && data.code == 401) {
+                        ui.dialog.login.show();
+                    } else {
+                        //TODO переподключение
+                    }
+                };
+            } else {
+                //TODO
+                alert("Your browser does not support WebSockets.");
+            }
+        };
+
+        function errorShow(data) {
+            //TODO
+            debugger;
+            console.log(data)
+            $('.help_panel').append(data);
+        }
+
+        function speak(text) {
+            var url = 'https://tts.voicetech.yandex.net/generate?' +
+                'key=069b6659-984b-4c5f-880e-aaedcfd84102' +
+                '&text=' + encodeURI(text) +
+                '&format=opus' +
+                '&lang=ru-RU' +
+                '&speed=1.1' +
+                '&speaker=oksana';
+
+            // -levitan
+            // ermilov 1.3
+            // -zahar
+            // silaerkan 1.0
+            // + oksana 1.1
+            // -jane
+            // -omazh
+            // kolya
+            // kostya
+            // -nastya
+            // sasha
+            // nick
+            // +erkanyavas
+            // zhenya
+            // tanya
+            // ermil
+            // anton_samokhvalov
+            // tatyana_abramova
+            // voicesearch
+            // +alyss
+            // ermil_with_tuning
+            // robot
+            // +dude
+            // +zombie
+            // smoky
+
+            var audio = document.getElementById('audio');
+            audio.src = url;
+            audio.onloadeddata = function () {
+                audio.play();
+            };
+            audio.load();
+        }
+
+    </script>
+</head>
+<body onload="ui.body.on_load()">
+<table id="body_table">
+    <tr>
+        <td class="left_panel" rowspan="3">
+            <table>
+                <tr class="user_info_row">
+                    <td>
+                        <table class="user_info_panel">
+                            <tr>
+                                <td class="user_info_icon">
+                                    icon
+                                </td>
+                                <td class="user_info_name"></td>
+                                <td class="user_info_menu"
+                                    onclick="ui.left_panel.user_info.menu.toggle()">
+                                    <svg version="1.1" width="20" height="20">
+                                        <circle cx="4" cy="10" r="2" fill="DimGray"/>
+                                        <circle cx="10" cy="10" r="2" fill="DimGray"/>
+                                        <circle cx="16" cy="10" r="2" fill="DimGray"/>
+                                    </svg>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="find_row">
+                    <td>
+                        <table class="find_panel">
+                            <tr>
+                                <td class="find_textfield">
+                                    <input type="text" onkeydown="ui.left_panel.find_panel.textfield.onkeydown(event)"
+                                           onfocusout="ui.left_panel.find_panel.findingArea.hide()"/>
+                                </td>
+                                <td class="find_button" onclick="ui.left_panel.find_panel.button.onclick()">
+                                    <svg version="1.1" width="20" height="20">
+                                        <circle cx="9" cy="8" r="5" fill="DimGray "/>
+                                        <line x1="14" y1="13" x2="19" y2="18" stroke-width="2" stroke="DimGray"/>
+                                    </svg>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="tab_row">
+                    <td>
+                        <table class="tabs">
+                            <tr>
+                                <td class="chat_tab current" onclick="ui.left_panel.tabs.chat_tab.on_click()">Портфель
+                                </td>
+                                <td class="contact_tab" onclick="ui.left_panel.tabs.contact_tab.on_click()">
+                                    Контакты
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="tab_row">
+                    <td>
+                        <table class="tabs chat_tabs">
+                            <tr>
+                                <td class="chat_list_tab current"
+                                    onclick="ui.left_panel.tabs.chat_tab.tabs.chat_list_tab.on_click()">last
+                                </td>
+                                <td class="chat_tree_tab"
+                                    onclick="ui.left_panel.tabs.chat_tab.tabs.chat_tree_tab.on_click()">tree
+                                </td>
+                                <td class="chat_outbox_tab"
+                                    onclick="ui.left_panel.tabs.chat_tab.tabs.chat_outbox_tab.on_click()">outbox
+                                </td>
+                                <td class="chat_inbox_tab"
+                                    onclick="ui.left_panel.tabs.chat_tab.tabs.chat_inbox_tab.on_click()">inbox
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="tabs contact_tabs">
+                            <tr>
+                                <td class="contact_list_tab current"
+                                    onclick="ui.left_panel.tabs.contact_tab.tabs.contact_list_tab.on_click()">list
+                                </td>
+                                <td class="contact_tree_tab"
+                                    onclick="ui.left_panel.tabs.contact_tab.tabs.contact_tree_tab.on_click()">tree
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tab_panel">
+                        <table class="chat_list_panel">
+
+                        </table>
+
+                        <div class="chat_tree_panel">
+                            chat tree TODO
+                        </div>
+
+                        <table class="chat_outbox_panel">
+                            <!--TODO-->
+                            <tr>
+                                <td class="chat_item">outbox chat1</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">outbox chat2</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">outbox chat3</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">outbox chat4</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">outbox chat5</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">outbox chat6</td>
+                            </tr>
+                        </table>
+
+                        <table class="chat_inbox_panel">
+                            <!--TODO-->
+                            <tr>
+                                <td class="chat_item">inbox chat1</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">inbox chat2</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">inbox chat3</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">inbox chat4</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">inbox chat5</td>
+                            </tr>
+                            <tr>
+                                <td class="chat_item">inbox chat6</td>
+                            </tr>
+                        </table>
+
+                        <table class="contact_list_panel">
+                            <!--TODO-->
+                            <tr>
+                                <td class="contact_split">В сети</td>
+                            </tr>
+                            <tr>
+                                <td class="contact_item">user1</td>
+                            </tr>
+                            <tr>
+                                <td class="contact_item">user2</td>
+                            </tr>
+                            <tr>
+                                <td class="contact_item">user3</td>
+                            </tr>
+                            <tr>
+                                <td class="contact_item">user4</td>
+                            </tr>
+                            <tr>
+                                <td class="contact_split">Не в сети</td>
+                            </tr>
+                            <tr>
+                                <td class="contact_item">user5</td>
+                            </tr>
+                            <tr>
+                                <td class="contact_item">user6</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+
+                        <div class="contact_tree_panel">
+                            user tree TODO
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td class="open_close_left_panel" rowspan="3" onclick="ui.left_panel.open_close_button.on_click()"></td>
+        <td class="chat_info">
+            <table class="chat_info_panel">
+                <tr>
+                    <td class="chat_info_icon">icon</td>
+                    <td class="chat_info_name">Username</td>
+                    <td class="chat_info_action">action</td>
+                </tr>
+                <tr>
+                    <td class="chat_info_users" colspan="3">
+                        users
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td class="open_close_right_panel" rowspan="3" onclick="ui.right_panel.open_close_button.on_click()"></td>
+        <td class="right_panel" rowspan="3">
+            3
+        </td>
+    </tr>
+    <tr>
+        <td class="chat_messages">
+            <table class="chat_messages_panel">
+                <tr>
+                    <td>2018.01.01</td>
+                </tr>
+                <tr>
+                    <td class="message">
+                        <table>
+                            <tr>
+                                <td rowspan="2">icon</td>
+                                <td>username</td>
+                                <td>time</td>
+                                <td>menu</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">message</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="message">
+                        <table>
+                            <tr>
+                                <td rowspan="2">icon</td>
+                                <td>username</td>
+                                <td>time</td>
+                                <td>menu</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">message2</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="message">
+                        <table>
+                            <tr>
+                                <td rowspan="2">icon</td>
+                                <td>username</td>
+                                <td>time</td>
+                                <td>menu</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">message3</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="message">
+                        <table>
+                            <tr>
+                                <td>time</td>
+                                <td>menu</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">my message1</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="message">
+                        <table>
+                            <tr>
+                                <td rowspan="2">icon</td>
+                                <td>username</td>
+                                <td>time</td>
+                                <td>menu</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">message3</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="message">
+                        <table>
+                            <tr>
+                                <td>time</td>
+                                <td>menu</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">my message2</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="message">
+                        <table>
+                            <tr>
+                                <td>time</td>
+                                <td>menu</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">my message3</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="send_message_row">
+            <table class="send_message_panel">
+                <tr>
+                    <td class="send_message_attach_file_width">
+                        <svg version="1.1"
+                             viewBox="0 0 64 64"
+                             width="50" height="50">
+                            <path d="M 40,50 l-23-23 c0,0 -6,-6 0,-12 6,-6 12,0 12,0 l 27,25 c0,0 7,10 0,17 -9,9 -18,1 -18,1 L8,28 c0,0 -10,-13 0,-23 10,-9 22,0 22,0 l27,27"
+                                  fill="none"
+                                  stroke="DimGray" stroke-width="3px"/>
+                        </svg>
+                    </td>
+                    <td class="send_message_tag_width">
+                        <svg version="1.1"
+                             viewBox="0 0 120 120"
+                             width="50" height="50">
+                            <path d="m15 57 c-1,3 1,7 3,9 l45 45 c6,5 15,5 21,0 L111 85 c5,-6 5,-15 0,-21 L66 19 C64,16 61,15 57,15 L24 17 C21,17 18,20 18,24 Z"
+                                  fill="none"
+                                  stroke="DimGray" stroke-width="3px"/>
+                            <path d="M32,32 C28,38 18,37 12,32 6,25 4,16 10,9 15,4 25,5 32,12"
+                                  fill="none"
+                                  stroke="DimGray" stroke-width="5px"/>
+                        </svg>
+                    </td>
+                    <td>
+                        <textarea class="send_message_panel_textfield"></textarea>
+                    </td>
+                    <td class="send_message_button" onclick="ui.utils.speak('Привет')">
+                        <svg version="1.1"
+                             viewBox="0 0 66 64"
+                             width="50" height="50">
+                            <path d="M32,2 c-2,0 -4,2 -4,4 v16 c0,2 -2,2 -2,2 h-20 c-2,0 -4,2 -4,4 v29 c0,2 2,4 4,4 h53 c2,0 4,-2 4,-4 v-51 c0,-2 -2,-4 -4,-4 Z"
+                                  fill="none"
+                                  stroke="DimGray" stroke-width="3px"/>
+                            <path d="m45,17 v25 c0,2 -2,2 -2,2 h-25 v3 l-3-3 l3-3 v3"
+                                  fill="none"
+                                  stroke="DimGray" stroke-width="3px"/>
+                        </svg>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<audio src="" id="audio"></audio>
+
+<!--DIALOG-->
+<table class="login modal">
+    <tr>
+        <td align="center" valign="middle">
+            <form action="#" method="post" onsubmit="ui.dialog.login.onsubmit(); return false;">
+                <table class="shadow">
+                    <tr>
+                        <td colspan="3">Войдите на сайт под своей учетной записью</td>
+                    </tr>
+                    <tr>
+                        <td class="align_right">Username</td>
+                        <td colspan="2"><input name="username" type="text" tabindex="1"/></td>
+                    </tr>
+                    <tr>
+                        <td class="align_right">Password</td>
+                        <td colspan="2"><input name="password" type="password" tabindex="2"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input name="toRegistration" type="button" value="Регистрация"
+                                   onclick="ui.dialog.login.registration.onclick()">
+                        </td>
+                        <td class="align_right">
+                            <input type="submit" value="Вход" tabindex="3"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </td>
+    </tr>
+</table>
+
+<table class="registration modal">
+    <tr>
+        <td align="center" valign="middle">
+            <form action="#" method="post" onsubmit="ui.dialog.registration.onsubmit(); return false;">
+                <table class="shadow">
+                    <tr>
+                        <td colspan="2">Регистрация пользователя</td>
+                    </tr>
+                    <tr>
+                        <td class="align_right">Username</td>
+                        <td><input name="username" type="text" tabindex="1"/></td>
+                    </tr>
+                    <tr>
+                        <td class="align_right">Password</td>
+                        <td><input name="password" type="password" tabindex="2"/></td>
+                    </tr>
+                    <tr>
+                        <td class="align_right">Confirm Password</td>
+                        <td><input name="confirmPassword" type="password" tabindex="3"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" value="Вход" onclick="ui.dialog.registration.login.onclick()"/></td>
+                        <td class="align_right"><input type="submit" value="Регистрация" tabindex="4"/></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<div class="user_info_menu_dialog shadow" onmouseleave="ui.left_panel.user_info.menu.hide();">
+    <ul>
+        <li class="item">Редактировать профиль TODO</li>
+        <li class="item">Разрешить уведомления TODO</li>
+        <li>
+            Сменить статус
+            <ul>
+                <li class="item">ACTIVE TODO</li>
+                <li class="item">INACTIVE TODO</li>
+            </ul>
+        </li>
+        <li class="item" onclick="ui.left_panel.user_info.menu.exit.onclick()">Выход</li>
+    </ul>
+</div>
+
+<div class="finding_area_dialog shadow">
+    <label><input type="radio" name="findingArea" value="user" checked="checked">Искать среди пользователей</label>
+    <label><input type="radio" name="findingArea" value="contact">Искать в моих контактах</label>
+    <label><input type="radio" name="findingArea" value="chat">Искать в текущей переписке TODO</label>
+    <label><input type="radio" name="findingArea" value="all_message">Искать по всем сообщениям TODO</label>
+</div>
+
+<table class="search_user_dialog shadow">
+    <tr>
+        <td class="dialog_title">Поиск пользователя</td>
+        <td></td>
+        <td class="dialog_close" onclick="ui.dialog.search_user_dialog.hide()">X</td>
+    </tr>
+    <tr class="find_row">
+        <td class="find_textfield">
+            <input type="text" onkeydown="ui.dialog.search_user_dialog.textfield.onkeydown(event)"/>
+        </td>
+        <td class="find_button" onclick="ui.dialog.search_user_dialog.find()">
+            <svg version="1.1" width="20" height="20">
+                <circle cx="9" cy="8" r="5" fill="DimGray "/>
+                <line x1="14" y1="13" x2="19" y2="18" stroke-width="2" stroke="DimGray"/>
+            </svg>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="3" class="dialog_body">
+            <div class="search_user_dialog_list">
+                <table>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<table class="user_info_dialog shadow">
+    <tr>
+        <td class="dialog_title">Профиль пользователя</td>
+        <td class="dialog_close" onclick="ui.dialog.user_info_dialog.hide()">X</td>
+    </tr>
+    <tr>
+        <td colspan="2" class="dialog_body">
+            <table>
+                <tr>
+                    <td colspan="2">icon</td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td class="username">Izan</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

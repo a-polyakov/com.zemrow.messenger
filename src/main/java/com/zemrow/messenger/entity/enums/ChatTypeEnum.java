@@ -7,6 +7,10 @@ package com.zemrow.messenger.entity.enums;
  */
 public enum ChatTypeEnum {
     /**
+     * Личная переписка одного пользователя с другим пользователем
+     */
+    CONTACT,
+    /**
      * Чат - обычная переписка
      */
     CHAT,

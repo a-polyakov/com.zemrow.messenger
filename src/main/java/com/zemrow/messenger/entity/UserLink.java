@@ -23,6 +23,7 @@ public class UserLink extends AbstractEntityCreateAndDelete {
     /**
      * Тип связи
      */
+    @QuerySqlField(notNull = true)
     public UserLinkEnum userLinkType;
 
 //================================ AUTO GENERATE ==============================
@@ -49,14 +50,6 @@ public class UserLink extends AbstractEntityCreateAndDelete {
 
     public void setUserLinkType(UserLinkEnum userLinkType) {
         this.userLinkType = userLinkType;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("UserLink{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

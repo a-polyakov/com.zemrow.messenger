@@ -18,14 +18,17 @@ public class Numbering extends AbstractEntity {
     /**
      * Тип чата(документа)
      */
+    @QuerySqlField
     public ChatTypeEnum chatType;
     /**
      * Префикс
      */
+    @QuerySqlField
     public String prefix;
     /**
      * Последний выданный номер
      */
+    @QuerySqlField(notNull = true)
     public Long maxNumber;
 
 //================================ AUTO GENERATE ==============================
@@ -60,14 +63,6 @@ public class Numbering extends AbstractEntity {
 
     public void setMaxNumber(Long maxNumber) {
         this.maxNumber = maxNumber;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Numbering{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

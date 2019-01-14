@@ -1,9 +1,9 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.UserEntryPoint;
 import com.zemrow.messenger.entity.enums.EntryPointTypeEnum;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class UserEntryPointDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new UserEntryPointDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new UserEntryPointDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -34,7 +34,7 @@ public class UserEntryPointDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final UserEntryPoint entity2 = dao.select(session, entity.getId());
+            final UserEntryPoint entity2 = dao.select(entity.getId());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getUserId(), entity2.getUserId());
             Assert.assertEquals(entity.getValidate(), entity2.getValidate());
@@ -46,7 +46,7 @@ public class UserEntryPointDaoTest extends AbstractTest {
             entity2.setCredential(entity2.getCredential() + "1");
 //
             dao.update(session, entity2);
-            final UserEntryPoint entity3 = dao.select(session, entity.getId());
+            final UserEntryPoint entity3 = dao.select(entity.getId());
             Assert.assertNotNull(entity3);
             Assert.assertEquals(entity2.getUserId(), entity3.getUserId());
             Assert.assertEquals(entity2.getValidate(), entity3.getValidate());
@@ -55,10 +55,22 @@ public class UserEntryPointDaoTest extends AbstractTest {
             Assert.assertEquals(entity2.getCredential(), entity3.getCredential());
             Assert.assertNull(entity3.getDeleteTime());
 
-            dao.markAsDeleted(session, entity.getId());
-            final UserEntryPoint entity4 = dao.select(session, entity.getId());
+            UserEntryPoint entity4 = dao.selectByLoginAndPassword(entity.getClientId(), entity.getCredential());
+            Assert.assertNull(entity4);
+
+            entity4 = dao.selectByLoginAndPassword(entity2.getClientId(), entity2.getCredential());
             Assert.assertNotNull(entity4);
-            Assert.assertNotNull(entity4.getDeleteTime());
+            Assert.assertEquals(entity2.getId(), entity4.getId());
+            Assert.assertEquals(entity2.getValidate(), entity4.getValidate());
+            Assert.assertEquals(entity2.getEntryPointType(), entity4.getEntryPointType());
+            Assert.assertEquals(entity2.getClientId(), entity4.getClientId());
+            Assert.assertEquals(entity2.getCredential(), entity4.getCredential());
+            Assert.assertNull(entity4.getDeleteTime());
+
+            dao.markAsDeleted(session, entity.getId());
+            final UserEntryPoint entity5 = dao.select(entity.getId());
+            Assert.assertNotNull(entity5);
+            Assert.assertNotNull(entity5.getDeleteTime());
         }
     }
 }

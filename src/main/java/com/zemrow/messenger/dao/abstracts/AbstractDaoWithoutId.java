@@ -1,15 +1,17 @@
 package com.zemrow.messenger.dao.abstracts;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.dao.helper.DaoHelper;
 import com.zemrow.messenger.entity.abstracts.AbstractEntityWithoutId;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.ignite.Ignite;
+import com.zemrow.messenger.entity.abstracts.AbstractKey;
 import org.apache.ignite.IgniteCache;
-import org.apache.ignite.cache.CacheAtomicityMode;
-import org.apache.ignite.cache.CacheMode;
-import org.apache.ignite.cache.PartitionLossPolicy;
-import org.apache.ignite.configuration.CacheConfiguration;
+import org.apache.ignite.cache.query.FieldsQueryCursor;
+import org.apache.ignite.cache.query.SqlFieldsQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Универсальное DAO (data access object) реализующее базовые методы работы с хранилищем
@@ -23,9 +25,9 @@ import org.apache.ignite.configuration.CacheConfiguration;
  *
  * @author Alexandr Polyakov on 2018.04.14
  */
-public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId> {
+public abstract class AbstractDaoWithoutId<K extends AbstractKey, E extends AbstractEntityWithoutId<K>> {
 
-    protected Logger logger = Logger.getLogger(AbstractDaoWithoutId.class.getSimpleName());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Наименование кеша
@@ -39,32 +41,15 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
     protected final IgniteCache<K, E> cache;
 
     /**
-     * @param ignite
-     * @param keyClass Класс ключа
+     * @param dataBase TODO
+     * @param keyClass    Класс ключа
      * @param entityClass Класс значения
-     * @param backups Количество резервных копий на других узлах
+     * @param backups     Количество резервных копий на других узлах
      */
-    protected AbstractDaoWithoutId(Ignite ignite, Class<K> keyClass, Class<E> entityClass, int backups) {
+    protected AbstractDaoWithoutId(DataBase dataBase, Class<K> keyClass, Class<E> entityClass, int backups) {
         this.entityClass = entityClass;
         cacheName = entityClass.getSimpleName();
-        final CacheConfiguration cacheCfg = new CacheConfiguration(cacheName + "Cache");
-        cacheCfg.setSqlSchema("messenger");
-        if (backups >= 0) {
-            // Способ распределения данных по кластеру
-            cacheCfg.setCacheMode(CacheMode.PARTITIONED);
-            // Количество резервных копий на других узлах
-            cacheCfg.setBackups(backups);
-        } else {
-            // Все узлы должны содержать полный набор записей
-            cacheCfg.setCacheMode(CacheMode.REPLICATED);
-        }
-        // остановить запись если из кластера порерялись данные (умерли основные ноды и ноды с копиями)
-        cacheCfg.setPartitionLossPolicy(PartitionLossPolicy.READ_ONLY_SAFE);
-        // TODO можно попробывать обработать эту ситуацию
-        // ignite.events().localListen( , EventType.EVT_CACHE_REBALANCE_PART_DATA_LOST);
-        cacheCfg.setIndexedTypes(keyClass, entityClass);
-        cacheCfg.setAtomicityMode(CacheAtomicityMode.TRANSACTIONAL);
-        this.cache = ignite.getOrCreateCache(cacheCfg);
+        cache = DaoHelper.createCache(dataBase, cacheName, keyClass, entityClass, backups);
     }
 
     /**
@@ -82,26 +67,23 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
     }
 
     /**
-     * Проверка наличия записи по ключу
-     * @param session
-     * @param id первичный ключ
-     * @return признак наличия записи
+     * Проверка наличия записи по ключу.
+     *
+     * @param id Первичный ключ.
+     * @return Признак наличия записи.
      */
-    public boolean containsById(final SessionStorage session, K id){
+    protected boolean containsById(K id) {
         return cache.containsKey(id);
     }
 
     /**
-     * Получить entity по id
+     * Получить entity по id.
      *
-     * @param session
-     * @param id первичный ключ
-     * @return
+     * @param id Первичный ключ.
+     * @return Entity.
      */
-    public E select(final SessionStorage session, K id) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " select by id=" + id);
-        }
+    protected E select(final K id) {
+        logger.debug("{} select by id={}", cacheName, id);
         final E result = cache.get(id);
         return result;
     }
@@ -109,23 +91,20 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
     /**
      * Добавление записи
      *
-     * @param session
-     * @param id первичный ключ
-     * @param entity
+     * @param session TODO
+     * @param entity  TODO
      */
-    protected void insert(final SessionStorage session, K id, E entity) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " insert " + entity);
-        }
+    protected void insert(final SessionStorage session, E entity) {
+        logger.debug("{} insert {}", cacheName, entity);
         preInsert(session, entity);
-        cache.put(id, entity);
+        cache.put(entity.getKey(), entity);
     }
 
     /**
      * Обработка перед записью нового значения
      *
-     * @param session
-     * @param entity
+     * @param session TODO
+     * @param entity  TODO
      */
     protected void preInsert(SessionStorage session, E entity) {
     }
@@ -133,23 +112,20 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
     /**
      * Обновление записи по id
      *
-     * @param session
-     * @param id первичный ключ
-     * @param entity
+     * @param session TODO
+     * @param entity  TODO
      */
-    protected void update(final SessionStorage session, K id, E entity) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " update " + entity);
-        }
+    protected void update(final SessionStorage session, E entity) {
+        logger.debug("{} update {}", cacheName, entity);
         preUpdate(session, entity);
-        cache.put(id, entity);
+        cache.put(entity.getKey(), entity);
     }
 
     /**
      * Обработка перед обновлением
      *
-     * @param session
-     * @param entity
+     * @param session TODO
+     * @param entity  TODO
      */
     protected void preUpdate(SessionStorage session, E entity) {
     }
@@ -157,13 +133,11 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
     /**
      * Удаление записи
      *
-     * @param session
-     * @param id первичный ключ
+     * @param session TODO
+     * @param id      первичный ключ
      */
-    public void delete(final SessionStorage session, K id) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " delete by id=" + id);
-        }
+    protected void delete(final SessionStorage session, K id) {
+        logger.debug("{} delete by id={}", cacheName, id);
         preDelete(session, id);
         cache.remove(id);
     }
@@ -172,8 +146,30 @@ public abstract class AbstractDaoWithoutId<K, E extends AbstractEntityWithoutId>
      * Обработка перед удалением
      *
      * @param session
-     * @param id первичный ключ
+     * @param id      первичный ключ
      */
     protected void preDelete(SessionStorage session, K id) {
+    }
+
+    /**
+     * Выполнить запрос, результат которого должен быть один элемент
+     *
+     * @param query Запрос.
+     * @param args  SQL arguments.
+     * @param <T>
+     * @return
+     */
+    protected <T> T query(String query, Object... args) {
+        T result = null;
+        try (final FieldsQueryCursor<List<?>> cursor = cache.query(new SqlFieldsQuery(query).setArgs(args))) {
+            final List<List<?>> all = cursor.getAll();
+            if (all.size() == 1) {
+                final List<?> row = all.get(0);
+                if (row.size() == 1) {
+                    result = (T) (row.get(0));
+                }
+            }
+        }
+        return result;
     }
 }

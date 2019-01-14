@@ -2,6 +2,7 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateAndDelete;
 import com.zemrow.messenger.entity.enums.FileAccessTypeEnum;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Файл
@@ -12,34 +13,42 @@ public class File extends AbstractEntityCreateAndDelete {
     /**
      * Наименование файла
      */
+    @QuerySqlField(notNull = true)
     public String name;
     /**
      * MIME-тип файла
      */
+    @QuerySqlField(notNull = true)
     public String mimeType;
     /**
      * Размер файла
      */
+    @QuerySqlField(notNull = true)
     public Long fileSize;
     /**
      * Место хранения в файловой системе, на основе UUID
      */
+    @QuerySqlField(notNull = true)
     public String path;
     /**
      * Тип доступа
      */
+    @QuerySqlField(notNull = true)
     public FileAccessTypeEnum fileAccessType;
     /**
      * Контрольная сумма, для поиска дубликатов
      */
+    @QuerySqlField(notNull = true)
     public Integer crc32;
     /**
      * Дата последнего скачивания файла, для архивирования редко используемых
      */
+    @QuerySqlField(notNull = true)
     public Long lastOpenTime;
     /**
      * Файл заархивирован
      */
+    @QuerySqlField(notNull = true)
     public Boolean gzipOn;
 
 //================================ AUTO GENERATE ==============================
@@ -106,14 +115,6 @@ public class File extends AbstractEntityCreateAndDelete {
 
     public void setGzipOn(Boolean gzipOn) {
         this.gzipOn = gzipOn;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("File{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateAndDelete;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
@@ -13,19 +14,23 @@ public class ChatReminders extends AbstractEntityCreateAndDelete {
      * ID чата
      */
     @QuerySqlField(notNull = true, index = true)
+    @AffinityKeyMapped
     public Long chatId;
     /**
      * ID пользователя
      */
     @QuerySqlField(notNull = true, index = true)
+    //TODO org.apache.ignite.cache.query.annotations.QuerySqlField#groups (chatId, userId) для индекса
     public Long userId;
     /**
      * Текст напоминания
      */
+    @QuerySqlField
     public String text;
     /**
      * Дата напоминания
      */
+    @QuerySqlField(notNull = true)
     public Long dateTime;
 
 //================================ AUTO GENERATE ==============================
@@ -60,14 +65,6 @@ public class ChatReminders extends AbstractEntityCreateAndDelete {
 
     public void setDateTime(Long dateTime) {
         this.dateTime = dateTime;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("ChatReminders{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

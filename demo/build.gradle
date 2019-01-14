@@ -1,0 +1,16 @@
+group 'com.zemrow.messenger'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile group: 'com.github.webdriverextensions', name: 'webdriverextensions', version: '3.10.0'
+}

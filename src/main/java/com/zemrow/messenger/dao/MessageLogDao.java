@@ -1,10 +1,10 @@
 package com.zemrow.messenger.dao;
 
-import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.dao.abstracts.AbstractDaoCreateOnly;
 import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.MessageLog;
-import org.apache.ignite.Ignite;
+import com.zemrow.messenger.entity.SimpleKey;
 
 /**
  * DAO (data access object) для работы с историей сообщений
@@ -13,12 +13,15 @@ import org.apache.ignite.Ignite;
  */
 public class MessageLogDao extends AbstractDaoCreateOnly<MessageLog> {
 
-    public MessageLogDao(Ignite ignite) {
-        super(ignite, MessageLog.class, IdConstant.FIRST_ID_MESSAGE_LOG, 2);
+    public MessageLogDao(DataBase dataBase) {
+        super(dataBase, MessageLog.class, IdConstant.FIRST_ID_MESSAGE_LOG, 2);
     }
 
+    /**
+     * TODO
+     */
     @Override
-    protected void preUpdate(SessionStorage session, MessageLog entity) {
-        throw new UnsupportedOperationException("TODO");
+    protected MessageLog select(SimpleKey id) {
+        return super.select(id);
     }
 }

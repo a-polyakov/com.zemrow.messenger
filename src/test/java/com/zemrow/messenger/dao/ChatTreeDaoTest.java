@@ -1,10 +1,10 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.ChatTree;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.lang.IgniteBiTuple;
+import com.zemrow.messenger.entity.ChatTreeKey;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,8 +19,8 @@ public class ChatTreeDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new ChatTreeDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new ChatTreeDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -33,15 +33,15 @@ public class ChatTreeDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final IgniteBiTuple id = new IgniteBiTuple(entity.getParentChatId(), entity.getChildChatId());
-            final ChatTree entity2 = dao.select(session, id);
+            final ChatTreeKey id = new ChatTreeKey(entity.getParentChatId(), entity.getChildChatId());
+            final ChatTree entity2 = dao.select(id);
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getParentChatId(), entity2.getParentChatId());
             Assert.assertEquals(entity.getChildChatId(), entity2.getChildChatId());
             Assert.assertEquals(entity.getDistance(), entity2.getDistance());
 
             dao.delete(session, id);
-            final ChatTree entity3 = dao.select(session, id);
+            final ChatTree entity3 = dao.select(id);
             Assert.assertNull(entity3);
         }
     }

@@ -1,12 +1,13 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.File;
 import com.zemrow.messenger.entity.enums.FileAccessTypeEnum;
-import java.util.UUID;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.UUID;
 
 /**
  * Тест для FileDao
@@ -19,8 +20,8 @@ public class FileDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new FileDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new FileDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -38,7 +39,7 @@ public class FileDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final File entity2 = dao.select(session, entity.getId());
+            final File entity2 = dao.select(entity.getId());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getName(), entity2.getName());
             Assert.assertEquals(entity.getMimeType(), entity2.getMimeType());
@@ -53,7 +54,7 @@ public class FileDaoTest extends AbstractTest {
             entity2.setName(entity2.getName() + "1");
 
             dao.update(session, entity2);
-            final File entity3 = dao.select(session, entity.getId());
+            final File entity3 = dao.select(entity.getId());
             Assert.assertNotNull(entity3);
             Assert.assertEquals(entity2.getName(), entity3.getName());
             Assert.assertEquals(entity2.getMimeType(), entity3.getMimeType());
@@ -66,7 +67,7 @@ public class FileDaoTest extends AbstractTest {
             Assert.assertNull(entity3.getDeleteTime());
 
             dao.markAsDeleted(session, entity.getId());
-            final File entity4 = dao.select(session, entity.getId());
+            final File entity4 = dao.select(entity.getId());
             Assert.assertNotNull(entity4);
             Assert.assertNotNull(entity4.getDeleteTime());
         }

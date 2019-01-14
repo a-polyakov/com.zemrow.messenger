@@ -1,0 +1,5 @@
+rootProject.name = 'com.zemrow.messenger.demo'
+
+include ":com.zemrow.messenger";
+project(":com.zemrow.messenger").projectDir = file("../");
+

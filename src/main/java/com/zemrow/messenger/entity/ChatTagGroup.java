@@ -2,6 +2,8 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.TagGroupEnum;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Групповые теги чата (для упрощения поиска последнего тега из группы)
@@ -12,14 +14,18 @@ public class ChatTagGroup extends AbstractEntity {
     /**
      * ID чата
      */
+    @QuerySqlField(notNull = true, index = true)
+    @AffinityKeyMapped
     public Long chatId;
     /**
      * Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
+    @QuerySqlField(notNull = true, index = true)
     public TagGroupEnum tagGroup;
     /**
      * id тега из сообщения
      */
+    @QuerySqlField
     public Long messageTagId;
 
 //================================ AUTO GENERATE ==============================
@@ -46,14 +52,6 @@ public class ChatTagGroup extends AbstractEntity {
 
     public void setMessageTagId(Long messageTagId) {
         this.messageTagId = messageTagId;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("ChatTagGroup{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

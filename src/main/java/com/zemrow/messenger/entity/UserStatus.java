@@ -23,10 +23,12 @@ public class UserStatus extends AbstractEntity {
     /**
      * Вес статуса
      */
+    @QuerySqlField(notNull = true)
     private Integer weight;
     /**
      * Цвет статуса
      */
+    @QuerySqlField(notNull = true)
     private Integer color;
 
 //================================ AUTO GENERATE ==============================
@@ -61,14 +63,6 @@ public class UserStatus extends AbstractEntity {
 
     public void setColor(Integer color) {
         this.color = color;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("UserStatus{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

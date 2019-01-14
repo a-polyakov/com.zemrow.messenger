@@ -1,20 +1,25 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
+import com.zemrow.messenger.entity.abstracts.AbstractEntityWithId;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * История сообщения
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public class MessageLog extends AbstractEntityCreateOnly {
+public class MessageLog extends AbstractEntityWithId {
     /**
      * ID сообщения
      */
+    @QuerySqlField(notNull = true)
+    @AffinityKeyMapped
     public Long messageId;
     /**
      * Предыдущий текст
      */
+    @QuerySqlField
     private String oldText;
 
 //================================ AUTO GENERATE ==============================
@@ -33,14 +38,6 @@ public class MessageLog extends AbstractEntityCreateOnly {
 
     public void setOldText(String oldText) {
         this.oldText = oldText;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("MessageLog{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

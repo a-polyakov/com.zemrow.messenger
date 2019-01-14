@@ -1,9 +1,10 @@
 package com.zemrow.messenger.dao.abstracts;
 
-import com.zemrow.messenger.dao.constants.IdConstant;
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
-import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
-import org.apache.ignite.Ignite;
+import com.zemrow.messenger.dao.constants.IdConstant;
+import com.zemrow.messenger.entity.SimpleKey;
+import com.zemrow.messenger.entity.abstracts.AbstractEntityWithId;
 import org.apache.ignite.IgniteAtomicSequence;
 import org.apache.ignite.configuration.AtomicConfiguration;
 
@@ -16,7 +17,7 @@ import org.apache.ignite.configuration.AtomicConfiguration;
  *
  * @author Alexandr Polyakov on 2018.04.14
  */
-public abstract class AbstractDaoCreateOnly<E extends AbstractEntityCreateOnly> extends AbstractDaoWithoutId<Long, E> {
+public abstract class AbstractDaoCreateOnly<E extends AbstractEntityWithId> extends AbstractDaoWithoutId<SimpleKey, E> {
 
     /**
      * Счётчик
@@ -24,16 +25,16 @@ public abstract class AbstractDaoCreateOnly<E extends AbstractEntityCreateOnly> 
     protected final IgniteAtomicSequence sequence;
 
     /**
-     * @param ignite
+     * @param dataBase
      * @param entityClass Класс значения
-     * @param firstId Первый id для ключа
-     * @param backups Количество резервных копий на других узлах
+     * @param firstId     Первый id для ключа
+     * @param backups     Количество резервных копий на других узлах
      */
-    protected AbstractDaoCreateOnly(Ignite ignite, Class<E> entityClass, long firstId, int backups) {
-        super(ignite, Long.class, entityClass, backups);
+    protected AbstractDaoCreateOnly(DataBase dataBase, Class<E> entityClass, long firstId, int backups) {
+        super(dataBase, SimpleKey.class, entityClass, backups);
         final AtomicConfiguration cfg = new AtomicConfiguration();
-        cfg.setAtomicSequenceReserveSize(1_000_000);
-        sequence = ignite.atomicSequence(cacheName + "Sequence", cfg, firstId, true);
+        cfg.setAtomicSequenceReserveSize(1_000);
+        sequence = dataBase.getIgnite().atomicSequence(cacheName + "Sequence", cfg, firstId, true);
     }
 
     /**
@@ -46,22 +47,12 @@ public abstract class AbstractDaoCreateOnly<E extends AbstractEntityCreateOnly> 
         if (entity.getId() == null) {
             entity.setId(sequence.addAndGet(IdConstant.DELTA_ID));
         }
-        insert(session, entity.getId(), entity);
+        super.insert(session, entity);
     }
 
     @Override
     protected void preInsert(SessionStorage session, E entity) {
         entity.setCreateTime(System.currentTimeMillis());
         entity.setCreatedBy(session.getUserId());
-    }
-
-    /**
-     * Обновление записи по id
-     *
-     * @param session
-     * @param entity
-     */
-    public void update(final SessionStorage session, E entity) {
-        update(session, entity.getId(), entity);
     }
 }

@@ -3,6 +3,7 @@ package com.zemrow.messenger.entity;
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.TagGroupEnum;
 import com.zemrow.messenger.entity.enums.TagTypeEnum;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Полный перечень тегов
@@ -13,26 +14,32 @@ public class Tag extends AbstractEntity {
     /**
      * Тег
      */
+    @QuerySqlField(notNull = true, index = true)
     public String tag;
     /**
      * Тип тега для связки наименование тега с логикой
      */
+    @QuerySqlField
     public TagTypeEnum tagType;
     /**
      * Описание тега для автокомплита
      */
+    @QuerySqlField
     public String description;
     /**
      * показывать ли в левом меню
      */
+    @QuerySqlField(notNull = true)
     public Boolean leftMenuShow;
     /**
      * Показывать ли в хеадере
      */
+    @QuerySqlField(notNull = true)
     public Boolean headerShow;
     /**
      * Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
+    @QuerySqlField
     public TagGroupEnum tagGroup;
 
 //================================ AUTO GENERATE ==============================
@@ -83,14 +90,6 @@ public class Tag extends AbstractEntity {
 
     public void setTagGroup(TagGroupEnum tagGroup) {
         this.tagGroup = tagGroup;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Tag{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

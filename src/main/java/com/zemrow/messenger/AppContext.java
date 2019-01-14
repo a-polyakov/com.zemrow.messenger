@@ -1,154 +1,220 @@
 package com.zemrow.messenger;
 
-import com.zemrow.messenger.controller.UserController;
-import com.zemrow.messenger.dao.ChatDao;
-import com.zemrow.messenger.dao.ChatPriorityDao;
-import com.zemrow.messenger.dao.ChatRemindersDao;
-import com.zemrow.messenger.dao.ChatTagGroupDao;
-import com.zemrow.messenger.dao.ChatToUserDao;
-import com.zemrow.messenger.dao.ChatTreeDao;
-import com.zemrow.messenger.dao.ChatWorkDao;
-import com.zemrow.messenger.dao.FileDao;
-import com.zemrow.messenger.dao.MessageDao;
-import com.zemrow.messenger.dao.MessageLogDao;
-import com.zemrow.messenger.dao.MessageTagDao;
-import com.zemrow.messenger.dao.MessageToUserDao;
-import com.zemrow.messenger.dao.NumberingDao;
-import com.zemrow.messenger.dao.RequestLogDao;
-import com.zemrow.messenger.dao.TagDao;
-import com.zemrow.messenger.dao.UserContactDao;
-import com.zemrow.messenger.dao.UserDao;
-import com.zemrow.messenger.dao.UserEntryPointDao;
-import com.zemrow.messenger.dao.UserFilterDao;
-import com.zemrow.messenger.dao.UserLinkDao;
-import com.zemrow.messenger.dao.UserLogDao;
-import com.zemrow.messenger.dao.UserSessionDao;
-import com.zemrow.messenger.dao.UserSessionFailDao;
-import com.zemrow.messenger.dao.UserStatusDao;
-import com.zemrow.messenger.dao.UserTreeDao;
-import com.zemrow.messenger.logic.UserLogic;
-import com.zemrow.messenger.logic.UserSessionLogic;
-import com.zemrow.messenger.service.UserService;
-import java.util.Arrays;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.Ignition;
-import org.apache.ignite.configuration.DataStorageConfiguration;
-import org.apache.ignite.configuration.DeploymentMode;
-import org.apache.ignite.configuration.IgniteConfiguration;
-import org.apache.ignite.configuration.TransactionConfiguration;
-import org.apache.ignite.configuration.WALMode;
-import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
-import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zemrow.messenger.controller.*;
+import com.zemrow.messenger.dao.*;
+import com.zemrow.messenger.logic.*;
+import com.zemrow.messenger.service.*;
+import com.zemrow.messenger.web.MessengerRout;
+import com.zemrow.messenger.web.WebServer;
+import com.zemrow.messenger.web.websocket.MessengerWebSocketListener;
+import org.slf4j.bridge.SLF4JBridgeHandler;
+
+import java.io.Closeable;
 
 /**
  * TODO
  *
  * @author Alexandr Polyakov on 2018.05.26
  */
-public class AppContext {
+public class AppContext implements Closeable {
 
-    private final Ignite ignite;
+    private final DataBase dataBase;
 
-    private final RequestLogDao requestLogDao;
-    private final UserLogDao userLogDao;
-    private final TagDao tagDao;
-    private final UserSessionDao userSessionDao;
-    private final UserLinkDao userLinkDao;
-    private final ChatRemindersDao chatRemindersDao;
-    private final MessageTagDao messageTagDao;
-    private final UserFilterDao userFilterDao;
-    private final ChatTagGroupDao chatTagGroupDao;
-    private final UserStatusDao userStatusDao;
-    private final ChatTreeDao chatTreeDao;
-    private final NumberingDao numberingDao;
-    private final ChatWorkDao chatWorkDao;
-    private final UserTreeDao userTreeDao;
-    private final UserContactDao userContactDao;
-    private final MessageToUserDao messageToUserDao;
-    private final MessageDao messageDao;
-    private final UserDao userDao;
-    private final ChatPriorityDao chatPriorityDao;
-    private final ChatToUserDao chatToUserDao;
-    private final UserSessionFailDao userSessionFailDao;
-    private final UserEntryPointDao userEntryPointDao;
-    private final MessageLogDao messageLogDao;
     private final ChatDao chatDao;
+    private final ChatPriorityDao chatPriorityDao;
+    private final ChatRemindersDao chatRemindersDao;
+    private final ChatTagGroupDao chatTagGroupDao;
+    private final ChatToUserDao chatToUserDao;
+    private final ChatToUserLastMessageDao chatToUserLastMessageDao;
+    private final ChatTreeDao chatTreeDao;
+    private final ChatWorkDao chatWorkDao;
+    private final DbVersionDao dbVersionDao;
     private final FileDao fileDao;
+    private final MessageDao messageDao;
+    private final MessageLogDao messageLogDao;
+    private final MessageTagDao messageTagDao;
+    private final MessageToUserDao messageToUserDao;
+    private final NumberingDao numberingDao;
+    private final RequestLogDao requestLogDao;
+    private final TagDao tagDao;
+    private final UserContactDao userContactDao;
+    private final UserDao userDao;
+    private final UserEntryPointDao userEntryPointDao;
+    private final UserFilterDao userFilterDao;
+    private final UserLinkDao userLinkDao;
+    private final UserLogDao userLogDao;
+    private final UserSessionDao userSessionDao;
+    private final UserSessionFailDao userSessionFailDao;
+    private final UserStatusDao userStatusDao;
+    private final UserTreeDao userTreeDao;
 
+    private final ChatLogic chatLogic;
+    private final DbVersionLogic dbVersionLogic;
+    private final PasswordLogic passwordLogic;
+    private final UserContactLogic userContactLogic;
+    private final UserEntryPointLogic userEntryPointLogic;
     private final UserLogic userLogic;
     private final UserSessionLogic userSessionLogic;
+    private final UserStatusLogic userStatusLogic;
 
+    private final ChatService chatService;
+    private final DbVersionService dbVersionService;
+    private final MessageService messageService;
+    private final NumberingService numberingService;
+    private final TagService tagService;
+    private final UserContactService userContactService;
     private final UserService userService;
+    private final UserSessionService userSessionService;
+    private final UserStatusService userStatusService;
 
+    private final ChatController chatController;
+    private final MessageController messageController;
+    private final NumberingController numberingController;
+    private final TagController tagController;
+    private final UserContactController userContactController;
     private final UserController userController;
+    private final UserSessionController userSessionController;
+    private final UserStatusController userStatusController;
 
-    public AppContext() {
-        final IgniteConfiguration cfg = new IgniteConfiguration();
-        cfg.setClientMode(false);
-        // подгрузка классав (в теории одна новая нода должна обновить все остальные)
-        cfg.setPeerClassLoadingEnabled(true);
-        // метод распространения новой версии класса
-        cfg.setDeploymentMode(DeploymentMode.ISOLATED); // https://apacheignite.readme.io/docs/deployment-modes
+    private final MessengerRout rout;
+    private final ObjectMapper jsonMapper;
+    private final MessengerWebSocketListener webSocketListener;
+    private final WebServer webServer;
 
-//        cfg.setIncludeEventTypes(EventType.EVTS_TASK_EXECUTION);
-//        cfg.setIncludeEventTypes(EventType.EVTS_CACHE);
+    public AppContext(AppConfiguration appConfiguration) {
+        try {
+            // Инициализация логера
+            SLF4JBridgeHandler.install();
 
-        // настройка критериев поиска узлов в кластере
-        final TcpDiscoverySpi tcpDiscoverySpi = new TcpDiscoverySpi();
-        final TcpDiscoveryVmIpFinder tcpDiscoveryVmIpFinder = new TcpDiscoveryVmIpFinder(true);
-        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList(new String[] {"127.0.0.1:47700..47701"}));
-        tcpDiscoverySpi.setIpFinder(tcpDiscoveryVmIpFinder);
-        tcpDiscoverySpi.setLocalPort(47700);
-        tcpDiscoverySpi.setLocalPortRange(1);
-        cfg.setDiscoverySpi(tcpDiscoverySpi);
-        // настройка хранения на диске
-        final DataStorageConfiguration storageCfg = new DataStorageConfiguration();
-        storageCfg.setStoragePath("C:\\temp\\ignite\\data");
-        storageCfg.setWalPath("C:\\temp\\ignite\\wal");
-        storageCfg.setWalArchivePath("C:\\temp\\ignite\\walArchive");
-        storageCfg.getDefaultDataRegionConfiguration().setPersistenceEnabled(true);
-        // данные не потеряются, но требует записи лога на диск
-        storageCfg.setWalMode(WALMode.BACKGROUND); // https://apacheignite.readme.io/docs/write-ahead-log
-        cfg.setDataStorageConfiguration(storageCfg);
+            jsonMapper = new ObjectMapper();
+            jsonMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+            jsonMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 
-        cfg.setTransactionConfiguration(new TransactionConfiguration());
+            dataBase = new DataBase(appConfiguration);
 
-        ignite = Ignition.start(cfg);
+            chatDao = new ChatDao(dataBase);
+            chatPriorityDao = new ChatPriorityDao(dataBase);
+            chatRemindersDao = new ChatRemindersDao(dataBase);
+            chatTagGroupDao = new ChatTagGroupDao(dataBase);
+            chatToUserDao = new ChatToUserDao(dataBase);
+            chatToUserLastMessageDao = new ChatToUserLastMessageDao(dataBase);
+            chatTreeDao = new ChatTreeDao(dataBase);
+            chatWorkDao = new ChatWorkDao(dataBase);
+            dbVersionDao = new DbVersionDao(dataBase);
+            fileDao = new FileDao(dataBase);
+            messageDao = new MessageDao(dataBase);
+            messageLogDao = new MessageLogDao(dataBase);
+            messageTagDao = new MessageTagDao(dataBase);
+            messageToUserDao = new MessageToUserDao(dataBase);
+            numberingDao = new NumberingDao(dataBase);
+            requestLogDao = new RequestLogDao(dataBase);
+            tagDao = new TagDao(dataBase);
+            userContactDao = new UserContactDao(dataBase);
+            userDao = new UserDao(dataBase);
+            userEntryPointDao = new UserEntryPointDao(dataBase);
+            userFilterDao = new UserFilterDao(dataBase);
+            userLinkDao = new UserLinkDao(dataBase);
+            userLogDao = new UserLogDao(dataBase);
+            userSessionDao = new UserSessionDao(dataBase);
+            userSessionFailDao = new UserSessionFailDao(dataBase);
+            userStatusDao = new UserStatusDao(dataBase);
+            userTreeDao = new UserTreeDao(dataBase);
 
-        requestLogDao = new RequestLogDao(ignite);
-        userLogDao = new UserLogDao(ignite);
-        tagDao = new TagDao(ignite);
-        userSessionDao = new UserSessionDao(ignite);
-        userLinkDao = new UserLinkDao(ignite);
-        chatRemindersDao = new ChatRemindersDao(ignite);
-        messageTagDao = new MessageTagDao(ignite);
-        userFilterDao = new UserFilterDao(ignite);
-        chatTagGroupDao = new ChatTagGroupDao(ignite);
-        userStatusDao = new UserStatusDao(ignite);
-        chatTreeDao = new ChatTreeDao(ignite);
-        numberingDao = new NumberingDao(ignite);
-        chatWorkDao = new ChatWorkDao(ignite);
-        userTreeDao = new UserTreeDao(ignite);
-        userContactDao = new UserContactDao(ignite);
-        messageToUserDao = new MessageToUserDao(ignite);
-        messageDao = new MessageDao(ignite);
-        userDao = new UserDao(ignite);
-        chatPriorityDao = new ChatPriorityDao(ignite);
-        chatToUserDao = new ChatToUserDao(ignite);
-        userSessionFailDao = new UserSessionFailDao(ignite);
-        userEntryPointDao = new UserEntryPointDao(ignite);
-        messageLogDao = new MessageLogDao(ignite);
-        chatDao = new ChatDao(ignite);
-        fileDao = new FileDao(ignite);
+            chatLogic = new ChatLogic(chatDao, chatPriorityDao, chatToUserDao, chatTreeDao);
+            dbVersionLogic = new DbVersionLogic(dbVersionDao);
+            passwordLogic = new PasswordLogic();
+            userContactLogic = new UserContactLogic(userContactDao, userDao);
+            userEntryPointLogic = new UserEntryPointLogic(userEntryPointDao);
+            userLogic = new UserLogic(userDao, userTreeDao, userStatusDao);
+            userSessionLogic = new UserSessionLogic(userSessionDao);
+            userStatusLogic = new UserStatusLogic(userStatusDao);
 
-        userLogic=new UserLogic(userDao, userTreeDao, userStatusDao);
-        userSessionLogic=new UserSessionLogic();
+            chatService = new ChatService(chatLogic);
+            dbVersionService = new DbVersionService(dbVersionLogic, userDao, userSessionLogic, userStatusLogic);
+            messageService = new MessageService();
+            numberingService = new NumberingService();
+            tagService = new TagService();
+            userContactService = new UserContactService(chatLogic, userContactLogic);
+            userService = new UserService(chatLogic, passwordLogic, userContactLogic, userEntryPointLogic, userLogic, userSessionLogic, userStatusLogic);
+            userSessionService = new UserSessionService(passwordLogic, userEntryPointLogic, userLogic, userSessionLogic);
+            userStatusService = new UserStatusService();
 
-        userService=new UserService(userLogic, userSessionLogic);
+            chatController = new ChatController(jsonMapper, chatService);
+            messageController = new MessageController(messageService);
+            numberingController = new NumberingController(numberingService);
+            tagController = new TagController(tagService);
+            userContactController = new UserContactController(jsonMapper, userContactService);
+            userController = new UserController(jsonMapper, userService);
+            userSessionController = new UserSessionController(jsonMapper, userSessionService);
+            userStatusController = new UserStatusController(userStatusService);
 
-        userController=new UserController();
+            rout = new MessengerRout(chatController, messageController, numberingController,
+                    tagController, userContactController, userController,
+                    userSessionController, userStatusController);
+
+            webSocketListener = new MessengerWebSocketListener(jsonMapper, rout, userSessionController);
+            webServer = new WebServer(appConfiguration, jsonMapper, rout, webSocketListener);
+        } catch (Throwable e) {
+            close();
+            throw e;
+        }
+
+        //TODO
+//        new Timer(true).schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//            }
+//        }, 5000, 5000);
+    }
+
+    @Override
+    public void close() {
+        if (webServer != null) {
+            webServer.close();
+        }
+        if (dataBase != null) {
+            dataBase.close();
+        }
     }
 
 //================================ AUTO GENERATE ==============================
 
+
+    public ChatService getChatService() {
+        return chatService;
+    }
+
+    public DbVersionService getDbVersionService() {
+        return dbVersionService;
+    }
+
+    public MessageService getMessageService() {
+        return messageService;
+    }
+
+    public NumberingService getNumberingService() {
+        return numberingService;
+    }
+
+    public TagService getTagService() {
+        return tagService;
+    }
+
+    public UserContactService getUserContactService() {
+        return userContactService;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public UserSessionService getUserSessionService() {
+        return userSessionService;
+    }
+
+    public UserStatusService getUserStatusService() {
+        return userStatusService;
+    }
 }

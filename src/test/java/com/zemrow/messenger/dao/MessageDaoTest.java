@@ -1,10 +1,10 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.Message;
 import com.zemrow.messenger.entity.enums.MessageTypeEnum;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,8 +19,8 @@ public class MessageDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new MessageDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new MessageDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -33,7 +33,7 @@ public class MessageDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final Message entity2 = dao.select(session, entity.getId());
+            final Message entity2 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getChatId(), entity2.getChatId());
             Assert.assertEquals(entity.getText(), entity2.getText());
@@ -43,7 +43,7 @@ public class MessageDaoTest extends AbstractTest {
             entity2.setText(entity2.getText() + "1");
 
             dao.update(session, entity2);
-            final Message entity3 = dao.select(session, entity.getId());
+            final Message entity3 = dao.select(entity.getKey());
             Assert.assertNotNull(entity3);
             Assert.assertEquals(entity2.getChatId(), entity3.getChatId());
             Assert.assertEquals(entity2.getText(), entity3.getText());
@@ -51,7 +51,7 @@ public class MessageDaoTest extends AbstractTest {
             Assert.assertNull(entity3.getDeleteTime());
 
             dao.markAsDeleted(session, entity.getId());
-            final Message entity4 = dao.select(session, entity.getId());
+            final Message entity4 = dao.select(entity.getKey());
             Assert.assertNotNull(entity4);
             Assert.assertNotNull(entity4.getDeleteTime());
         }

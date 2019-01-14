@@ -1,8 +1,9 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
-import java.util.Arrays;
+import com.zemrow.messenger.entity.enums.UserTypeEnum;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.configuration.DeploymentMode;
@@ -11,6 +12,8 @@ import org.apache.ignite.configuration.TransactionConfiguration;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
 
+import java.util.Arrays;
+
 /**
  * Общая часть тестов
  *
@@ -18,7 +21,7 @@ import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
  */
 public abstract class AbstractTest {
 
-    protected Ignite getIgnite() {
+    protected DataBase getDataBase() {
         final IgniteConfiguration cfg = new IgniteConfiguration();
         cfg.setClientMode(false);
         // подгрузка классав (в теории одна новая нода должна обновить все остальные)
@@ -47,12 +50,12 @@ public abstract class AbstractTest {
         cfg.setTransactionConfiguration(new TransactionConfiguration());
         final Ignite ignite = Ignition.start(cfg);
         ignite.cluster().active(true);
-        return ignite;
+        return new DataBase(ignite);
     }
 
     protected SessionStorage getSession() {
-        final SessionStorage result = new SessionStorage();
-        result.setUserId(IdConstant.FIRST_ID_USER);
+        final SessionStorage result = new SessionStorage(IdConstant.FIRST_ID_USER);
+        result.setUserType(UserTypeEnum.ADMIN);
         return result;
     }
 }

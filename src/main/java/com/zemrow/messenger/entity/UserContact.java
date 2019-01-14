@@ -1,6 +1,7 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
@@ -13,6 +14,7 @@ public class UserContact extends AbstractEntity {
      * ID пользователя родителя
      */
     @QuerySqlField(notNull = true, index = true)
+    @AffinityKeyMapped
     public Long parentUserId;
     /**
      * ID пользователя потомка
@@ -20,13 +22,16 @@ public class UserContact extends AbstractEntity {
     @QuerySqlField(notNull = true, index = true)
     public Long childUserId;
     /**
+     * Прошел ли подтверждение запрос на добавление
+     * TODO Добавить логику черного списка
+     */
+    @QuerySqlField(notNull = true)
+    public Boolean validate;
+    /**
      * Наименование контакта
      */
+    @QuerySqlField(notNull = true)
     public String label;
-    /**
-     * Избранный контакт
-     */
-    private boolean favorite;
     /**
      * ID чата
      */
@@ -51,20 +56,20 @@ public class UserContact extends AbstractEntity {
         this.childUserId = childUserId;
     }
 
+    public Boolean getValidate() {
+        return validate;
+    }
+
+    public void setValidate(Boolean validate) {
+        this.validate = validate;
+    }
+
     public String getLabel() {
         return label;
     }
 
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
     }
 
     public Long getChatId() {
@@ -76,20 +81,12 @@ public class UserContact extends AbstractEntity {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("UserContact{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
-    }
-
-    @Override
     protected void toString(StringBuilder sb) {
         super.toString(sb);
         sb.append(", parentUserId='").append(parentUserId).append('\'');
         sb.append(", childUserId='").append(childUserId).append('\'');
+        sb.append(", validate=").append(validate);
         sb.append(", label='").append(label).append('\'');
-        sb.append(", favorite=").append(favorite);
         sb.append(", chatId='").append(chatId).append('\'');
     }
 }

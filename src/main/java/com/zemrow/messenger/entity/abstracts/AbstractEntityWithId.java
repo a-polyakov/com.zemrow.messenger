@@ -1,5 +1,6 @@
 package com.zemrow.messenger.entity.abstracts;
 
+import com.zemrow.messenger.entity.SimpleKey;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
@@ -7,11 +8,10 @@ import org.apache.ignite.cache.query.annotations.QuerySqlField;
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public abstract class AbstractEntityCreateOnly extends AbstractEntityWithoutId {
+public abstract class AbstractEntityWithId extends AbstractEntityWithoutId<SimpleKey> {
     /**
      * ID записи
      */
-    @QuerySqlField(notNull = true, index = true)
     private Long id;
     /**
      * Дата создания записи
@@ -50,17 +50,14 @@ public abstract class AbstractEntityCreateOnly extends AbstractEntityWithoutId {
         this.createdBy = createdBy;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("AbstractEntityCreateOnly{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
-    }
-
     protected void toString(StringBuilder sb) {
         sb.append("id='").append(id).append('\'');
         sb.append(", createTime=").append(createTime);
         sb.append(", createdBy='").append(createdBy).append('\'');
+    }
+
+    @Override
+    public SimpleKey getKey() {
+        return new SimpleKey(id);
     }
 }

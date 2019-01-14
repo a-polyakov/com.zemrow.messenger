@@ -1,13 +1,14 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntityWithoutId;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Дерево задач
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public class ChatTree extends AbstractEntityWithoutId {
+public class ChatTree extends AbstractEntityWithoutId<ChatTreeKey> {
     /**
      * ID родительского чата
      */
@@ -19,6 +20,7 @@ public class ChatTree extends AbstractEntityWithoutId {
     /**
      * Разность уровней
      */
+    @QuerySqlField(notNull = true)
     public Integer distance;
 
 //================================ AUTO GENERATE ==============================
@@ -48,12 +50,14 @@ public class ChatTree extends AbstractEntityWithoutId {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("ChatTree{");
+    protected void toString(StringBuilder sb) {
         sb.append("parentChatId='").append(parentChatId).append('\'');
         sb.append(", childChatId='").append(childChatId).append('\'');
         sb.append(", distance=").append(distance);
-        sb.append('}');
-        return sb.toString();
+    }
+
+    @Override
+    public ChatTreeKey getKey() {
+        return new ChatTreeKey(parentChatId, childChatId);
     }
 }

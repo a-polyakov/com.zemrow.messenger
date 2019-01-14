@@ -1,6 +1,8 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Тег сообщения
@@ -11,14 +13,18 @@ public class MessageTag extends AbstractEntity {
     /**
      * ID сообщения
      */
+    @QuerySqlField(notNull = true)
+    @AffinityKeyMapped
     public Long messageId;
     /**
      * ID тега
      */
+    @QuerySqlField(notNull = true)
     public Long tagId;
     /**
      * Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
      */
+    @QuerySqlField
     public String value;
 
 //================================ AUTO GENERATE ==============================
@@ -45,14 +51,6 @@ public class MessageTag extends AbstractEntity {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("MessageTag{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

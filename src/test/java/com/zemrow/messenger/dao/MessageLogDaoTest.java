@@ -1,9 +1,9 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.MessageLog;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class MessageLogDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new MessageLogDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new MessageLogDao(dataBase);
 
             final SessionStorage session = getSession();
             final MessageLog entity = new MessageLog();
@@ -30,7 +30,7 @@ public class MessageLogDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final MessageLog entity2 = dao.select(session, entity.getId());
+            final MessageLog entity2 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getMessageId(), entity2.getMessageId());
             Assert.assertEquals(entity.getOldText(), entity2.getOldText());

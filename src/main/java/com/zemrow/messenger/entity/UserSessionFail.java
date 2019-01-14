@@ -1,24 +1,28 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
+import com.zemrow.messenger.entity.abstracts.AbstractEntityWithId;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Неудачные попытки войти в систему
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public class UserSessionFail extends AbstractEntityCreateOnly {
+public class UserSessionFail extends AbstractEntityWithId {
     /**
      * Точка входа пользователя
      */
+    @QuerySqlField(notNull = true)
     public Long userEntryPointId;
     /**
      * IP адрес клиента
      */
+    @QuerySqlField(notNull = true)
     public String ipAddress;
     /**
      * Сообщение об ошибке
      */
+    @QuerySqlField(notNull = true)
     public String comment;
 
 //================================ AUTO GENERATE ==============================
@@ -45,14 +49,6 @@ public class UserSessionFail extends AbstractEntityCreateOnly {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("UserSessionFail{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

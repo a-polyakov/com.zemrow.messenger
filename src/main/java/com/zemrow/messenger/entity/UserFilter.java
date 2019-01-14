@@ -18,14 +18,17 @@ public class UserFilter extends AbstractEntity {
     /**
      * id части системы (грид, панель, список) для применения данного фильтра
      */
+    @QuerySqlField(notNull = true)
     private FilterGridEnum gridId;
     /**
      * id (название) фильтра
      */
+    @QuerySqlField
     private String filterId;
     /**
      * Данные фильтра в формате JSON
      */
+    @QuerySqlField
     private String data;
 
 //================================ AUTO GENERATE ==============================
@@ -60,14 +63,6 @@ public class UserFilter extends AbstractEntity {
 
     public void setFilterId(String filterId) {
         this.filterId = filterId;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("UserFilter{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

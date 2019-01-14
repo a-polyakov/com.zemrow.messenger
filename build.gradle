@@ -1,9 +1,12 @@
+import java.text.SimpleDateFormat
+
 group 'com.zemrow.messenger'
-version '1.0-SNAPSHOT'
+version '20190114'
 
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenLocal()
@@ -11,6 +14,49 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.apache.ignite', name: 'ignite-indexing', version: '2.4.0'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // WEB сервер
+    compile group: 'io.undertow', name: 'undertow-websockets-jsr', version: '2.0.13.Final'
+    // Работа с JSON
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
+    // База данных
+    compile group: 'org.apache.ignite', name: 'ignite-indexing', version: '2.7.0'
+    // TODO настроить логирование
+    compile group: 'org.apache.ignite', name: 'ignite-slf4j', version: '2.7.0'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.25'
+//    compile 'org.slf4j:slf4j-api:1.7.2'
+//    compile 'org.slf4j:jcl-over-slf4j:1.7.2'
+//    compile 'org.slf4j:slf4j-log4j12:1.7.2'
+    
+    // Тестирование
+    testCompile group: 'junit', name:'junit', version: '4.12'
+}
+
+jar {
+    manifest {
+        attributes('Messanger-Version': version,
+                'Main-Class': 'com.zemrow.messenger.RunWebServer',
+                'Git-Version': 'git rev-list --count HEAD'.execute().text.trim(),
+                'Build-Time': new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis())
+        )
+    }
+
+    archiveName = 'messanger.jar';
+
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it).matching {
+                exclude 'META-INF/LICENSE*';
+                exclude 'META-INF/NOTICE*';
+                exclude 'META-INF/INDEX*';
+                exclude 'META-INF/DEPENDENCIES*';
+                exclude 'META-INF/README';
+            }
+        }
+    }
+    
+// TODO    
+//    from('src/main/webapp'){
+//        into 'META-INF/webapp'
+//    }
 }

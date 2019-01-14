@@ -1,8 +1,8 @@
 package com.zemrow.messenger.dao.abstracts;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
-import org.apache.ignite.Ignite;
 
 /**
  * Универсальное DAO (data access object) реализующее базовые методы работы с хранилищем
@@ -17,13 +17,13 @@ import org.apache.ignite.Ignite;
 public abstract class AbstractDao<E extends AbstractEntity> extends AbstractDaoCreateAndDelete<E> {
 
     /**
-     * @param ignite
+     * @param dataBase
      * @param entityClass Класс значения
      * @param firstId Первый id для ключа
      * @param backups Количество резервных копий на других узлах
      */
-    protected AbstractDao(Ignite ignite, Class<E> entityClass, long firstId, int backups) {
-        super(ignite, entityClass, firstId, backups);
+    protected AbstractDao(DataBase dataBase, Class<E> entityClass, long firstId, int backups) {
+        super(dataBase, entityClass, firstId, backups);
     }
 
     @Override

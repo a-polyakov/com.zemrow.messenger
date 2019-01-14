@@ -1,10 +1,10 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.UserLink;
 import com.zemrow.messenger.entity.enums.UserLinkEnum;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,8 +19,8 @@ public class UserLinkDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new UserLinkDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new UserLinkDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -33,7 +33,7 @@ public class UserLinkDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final UserLink entity2 = dao.select(session, entity.getId());
+            final UserLink entity2 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getParentUserId(), entity2.getParentUserId());
             Assert.assertEquals(entity.getChildUserId(), entity2.getChildUserId());
@@ -43,7 +43,7 @@ public class UserLinkDaoTest extends AbstractTest {
             entity2.setUserLinkType(UserLinkEnum.SECRETARY);
 //
             dao.update(session, entity2);
-            final UserLink entity3 = dao.select(session, entity.getId());
+            final UserLink entity3 = dao.select(entity.getKey());
             Assert.assertNotNull(entity3);
             Assert.assertEquals(entity2.getParentUserId(), entity3.getParentUserId());
             Assert.assertEquals(entity2.getChildUserId(), entity3.getChildUserId());
@@ -51,7 +51,7 @@ public class UserLinkDaoTest extends AbstractTest {
             Assert.assertNull(entity3.getDeleteTime());
 
             dao.markAsDeleted(session, entity.getId());
-            final UserLink entity4 = dao.select(session, entity.getId());
+            final UserLink entity4 = dao.select(entity.getKey());
             Assert.assertNotNull(entity4);
             Assert.assertNotNull(entity4.getDeleteTime());
         }

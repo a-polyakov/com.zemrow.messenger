@@ -1,10 +1,10 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.ChatTagGroup;
 import com.zemrow.messenger.entity.enums.TagGroupEnum;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,8 +19,8 @@ public class ChatTagGroupDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new ChatTagGroupDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new ChatTagGroupDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -33,7 +33,7 @@ public class ChatTagGroupDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final ChatTagGroup entity2 = dao.select(session, entity.getId());
+            final ChatTagGroup entity2 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getChatId(), entity2.getChatId());
             Assert.assertEquals(entity.getTagGroup(), entity2.getTagGroup());
@@ -43,7 +43,7 @@ public class ChatTagGroupDaoTest extends AbstractTest {
             entity2.setMessageTagId(entity2.getMessageTagId() + IdConstant.DELTA_ID);
 
             dao.update(session, entity2);
-            final ChatTagGroup entity3 = dao.select(session, entity.getId());
+            final ChatTagGroup entity3 = dao.select(entity.getKey());
             Assert.assertNotNull(entity3);
             Assert.assertEquals(entity2.getChatId(), entity3.getChatId());
             Assert.assertEquals(entity2.getTagGroup(), entity3.getTagGroup());
@@ -52,7 +52,7 @@ public class ChatTagGroupDaoTest extends AbstractTest {
             Assert.assertNull(entity3.getDeleteTime());
 
             dao.markAsDeleted(session, entity.getId());
-            final ChatTagGroup entity4 = dao.select(session, entity.getId());
+            final ChatTagGroup entity4 = dao.select(entity.getKey());
             Assert.assertNotNull(entity4);
             Assert.assertNotNull(entity4.getDeleteTime());
         }

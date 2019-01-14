@@ -1,8 +1,8 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.Chat;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,8 +17,8 @@ public class ChatDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new ChatDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new ChatDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -29,7 +29,7 @@ public class ChatDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final Chat entity2 = dao.select(session, entity.getId());
+            final Chat entity2 = dao.select(entity.getId());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getLabel(), entity2.getLabel());
             Assert.assertNull(entity2.getDeleteTime());
@@ -37,13 +37,13 @@ public class ChatDaoTest extends AbstractTest {
             entity2.setLabel(entity2.getLabel() + "1");
 
             dao.update(session, entity2);
-            final Chat entity3 = dao.select(session, entity.getId());
+            final Chat entity3 = dao.select(entity.getId());
             Assert.assertNotNull(entity3);
             Assert.assertEquals(entity2.getLabel(), entity3.getLabel());
             Assert.assertNull(entity3.getDeleteTime());
 
             dao.markAsDeleted(session, entity.getId());
-            final Chat entity4 = dao.select(session, entity.getId());
+            final Chat entity4 = dao.select(entity.getId());
             Assert.assertNotNull(entity4);
             Assert.assertNotNull(entity4.getDeleteTime());
         }

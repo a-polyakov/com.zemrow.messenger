@@ -1,6 +1,8 @@
 package com.zemrow.messenger;
 
+import com.zemrow.messenger.constants.UserSessionConst;
 import com.zemrow.messenger.entity.enums.UserTypeEnum;
+
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -18,7 +20,7 @@ public class SessionStorage {
     /**
      * ID пользователя
      */
-    private Long userId;
+    private final long userId;
     /**
      * Тип пользователя: физическое лицо, отдел, компания
      */
@@ -34,6 +36,11 @@ public class SessionStorage {
 
 //================================ AUTO GENERATE ==============================
 
+
+    public SessionStorage(long userId) {
+        this.userId = userId;
+    }
+
     public String getToken() {
         return token;
     }
@@ -42,12 +49,8 @@ public class SessionStorage {
         this.token = token;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public UserTypeEnum getUserType() {
@@ -77,7 +80,7 @@ public class SessionStorage {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("SessionStorage{");
-        sb.append("token='").append(token).append('\'');
+        sb.append(UserSessionConst.TOKEN + "='").append(token).append('\'');
         sb.append(", userId=").append(userId);
         sb.append(", userType=").append(userType);
         sb.append(", locale=").append(locale);

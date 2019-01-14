@@ -1,9 +1,9 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.UserFilter;
 import com.zemrow.messenger.entity.enums.FilterGridEnum;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class UserFilterDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new UserFilterDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new UserFilterDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -33,7 +33,7 @@ public class UserFilterDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final UserFilter entity2 = dao.select(session, entity.getId());
+            final UserFilter entity2 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getUserId(), entity2.getUserId());
             Assert.assertEquals(entity.getGridId(), entity2.getGridId());
@@ -44,7 +44,7 @@ public class UserFilterDaoTest extends AbstractTest {
             entity2.setData("{status:'ACTIVE'}");
 //
             dao.update(session, entity2);
-            final UserFilter entity3 = dao.select(session, entity.getId());
+            final UserFilter entity3 = dao.select(entity.getKey());
             Assert.assertNotNull(entity3);
             Assert.assertEquals(entity2.getUserId(), entity3.getUserId());
             Assert.assertEquals(entity2.getGridId(), entity3.getGridId());
@@ -53,7 +53,7 @@ public class UserFilterDaoTest extends AbstractTest {
             Assert.assertNull(entity3.getDeleteTime());
 
             dao.markAsDeleted(session, entity.getId());
-            final UserFilter entity4 = dao.select(session, entity.getId());
+            final UserFilter entity4 = dao.select(entity.getKey());
             Assert.assertNotNull(entity4);
             Assert.assertNotNull(entity4.getDeleteTime());
         }

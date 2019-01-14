@@ -1,9 +1,9 @@
 package com.zemrow.messenger.dao.abstracts;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.SimpleKey;
 import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateAndDelete;
-import java.util.logging.Level;
-import org.apache.ignite.Ignite;
 
 /**
  * Универсальное DAO (data access object) реализующее базовые методы работы с хранилищем
@@ -18,13 +18,13 @@ import org.apache.ignite.Ignite;
 public abstract class AbstractDaoCreateAndDelete<E extends AbstractEntityCreateAndDelete> extends AbstractDaoCreateOnly<E> {
 
     /**
-     * @param ignite
+     * @param dataBase
      * @param entityClass Класс значения
-     * @param firstId Первый id для ключа
-     * @param backups Количество резервных копий на других узлах
+     * @param firstId     Первый id для ключа
+     * @param backups     Количество резервных копий на других узлах
      */
-    protected AbstractDaoCreateAndDelete(Ignite ignite, Class<E> entityClass, long firstId, int backups) {
-        super(ignite, entityClass, firstId, backups);
+    protected AbstractDaoCreateAndDelete(DataBase dataBase, Class<E> entityClass, long firstId, int backups) {
+        super(dataBase, entityClass, firstId, backups);
     }
 
     /**
@@ -33,11 +33,9 @@ public abstract class AbstractDaoCreateAndDelete<E extends AbstractEntityCreateA
      * @param session
      * @param id
      */
-    public void markAsDeleted(final SessionStorage session, Long id) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " markAsDeleted by id=" + id);
-        }
-        final E entity = cache.get(id);
+    public void markAsDeleted(final SessionStorage session, long id) {
+        logger.debug("{} markAsDeleted by id={}", cacheName, id);
+        final E entity = cache.get(new SimpleKey(id));
         markAsDeleted(session, entity);
     }
 
@@ -48,12 +46,10 @@ public abstract class AbstractDaoCreateAndDelete<E extends AbstractEntityCreateA
      * @param entity
      */
     public void markAsDeleted(final SessionStorage session, E entity) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " markAsDeleted " + entity);
-        }
+        logger.debug("{} markAsDeleted {}", cacheName, entity);
         entity.setDeleteTime(System.currentTimeMillis());
         entity.setDeletedBy(session.getUserId());
-        cache.put(entity.getId(), entity);
+        cache.put(entity.getKey(), entity);
     }
 
 }

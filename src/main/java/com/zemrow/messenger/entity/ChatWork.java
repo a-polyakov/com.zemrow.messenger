@@ -1,6 +1,7 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Отметка пользователя о затраченом времени
@@ -11,18 +12,22 @@ public class ChatWork extends AbstractEntity {
     /**
      * ID чата
      */
+    @QuerySqlField(notNull = true)
     public Long chatId;
     /**
      * ID пользователя
      */
+    @QuerySqlField(notNull = true)
     public Long userId;
     /**
      * Дата начала работы
      */
+    @QuerySqlField(notNull = true)
     public Long startTime;
     /**
      * Дата окончания работы
      */
+    @QuerySqlField
     public Long endTime;
 
 //================================ AUTO GENERATE ==============================
@@ -57,14 +62,6 @@ public class ChatWork extends AbstractEntity {
 
     public void setEndTime(Long endTime) {
         this.endTime = endTime;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("ChatWork{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

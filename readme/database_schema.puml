@@ -95,6 +95,10 @@ class Tag{
         Long userId
         ChatToUserTypeEnum chatToUserType
     }
+    class ChatToUserLastMessage{
+        Long chatToUserId
+        Long messageId
+    }
     class ChatTree{
         Long parentChatId
         Long childChatId
@@ -176,9 +180,10 @@ Message -[#0000FF]- Message : hierarchy
 Message -[#0000FF]-{ MessageToUser
 Message -[#0000FF]-{ MessageLog
 Message -[#0000FF]-{ MessageTag
-Message -[#000000]- File
+Message -[#0000FF]-{ ChatToUserLastMessage
+Message }-[#000000]- File
 
-MessageTag -[#000000]- Tag
+MessageTag }-[#000000]- Tag
 UserEntryPoint -[#000000]down-{ UserSession
 UserSession -[#000000]down-{ RequestLog
 UserEntryPoint -[#000000]-{ UserSessionFail
@@ -190,5 +195,6 @@ UserFilter -[hidden]down- Numbering
 UserContact -[hidden]down- ChatWork
 ChatWork -[hidden]down- ChatReminders
 ChatTagGroup -[hidden]down- ChatTree
+ChatToUser -down- ChatToUserLastMessage
 
 @enduml

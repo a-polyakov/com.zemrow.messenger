@@ -1,36 +1,39 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
+import com.zemrow.messenger.constants.UserSessionConst;
+import com.zemrow.messenger.entity.abstracts.AbstractEntityWithId;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Логи вызовов сервисов
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public class RequestLog extends AbstractEntityCreateOnly {
+public class RequestLog extends AbstractEntityWithId {
     /**
      * Уникальный идентификатор сессии пользователя
      */
+    @QuerySqlField(notNull = true)
     public String token;
     /**
      * Идентификатор сервиса
      */
-    public String serviceId;
-    /**
-     * Имя метода
-     */
-    public String action;
+    @QuerySqlField(notNull = true)
+    public String eventId;
     /**
      * Время запуска
      */
+    @QuerySqlField(notNull = true)
     public Long startInvoke;
     /**
      * Время окончания
      */
+    @QuerySqlField
     public Long endInvoke;
     /**
      * Ошибка если была (stacktrace)
      */
+    @QuerySqlField
     public String errorStackTrace;
 
 //================================ AUTO GENERATE ==============================
@@ -43,20 +46,12 @@ public class RequestLog extends AbstractEntityCreateOnly {
         this.token = token;
     }
 
-    public String getServiceId() {
-        return serviceId;
+    public String getEventId() {
+        return eventId;
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public Long getStartInvoke() {
@@ -84,19 +79,10 @@ public class RequestLog extends AbstractEntityCreateOnly {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("RequestLog{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
-    }
-
-    @Override
     protected void toString(StringBuilder sb) {
         super.toString(sb);
-        sb.append(", token='").append(token).append('\'');
-        sb.append(", serviceId='").append(serviceId).append('\'');
-        sb.append(", action='").append(action).append('\'');
+        sb.append(", " + UserSessionConst.TOKEN + "='").append(token).append('\'');
+        sb.append(", eventId='").append(eventId).append('\'');
         sb.append(", startInvoke=").append(startInvoke);
         sb.append(", endInvoke=").append(endInvoke);
         sb.append(", errorStackTrace='").append(errorStackTrace).append('\'');

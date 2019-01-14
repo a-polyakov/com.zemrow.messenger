@@ -1,31 +1,29 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.ignite.Ignite;
+import com.zemrow.messenger.dao.helper.DaoHelper;
 import org.apache.ignite.IgniteAtomicLong;
 import org.apache.ignite.IgniteCache;
-import org.apache.ignite.cache.CacheAtomicityMode;
-import org.apache.ignite.cache.CacheMode;
 import org.apache.ignite.cache.query.SqlFieldsQuery;
-import org.apache.ignite.configuration.CacheConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * DAO (data access object) для работы с приоритетом чата
  * <p>
- * TODO проверить как выполнить выборку чатов итсортированых по приоритету
+ * TODO проверить как выполнить выборку чатов отсортированых по приоритету
  *
  * @author Alexandr Polyakov on 2018.04.15
  */
 public class ChatPriorityDao {
 
-    protected Logger logger = Logger.getLogger(ChatPriorityDao.class.getSimpleName());
+    protected Logger logger = LoggerFactory.getLogger(ChatPriorityDao.class);
 
     /**
      * Наименование кеша
      */
-    protected static final String cacheName = "ChatPriorityCache";
+    private static final String cacheName = "ChatPriorityCache";
 
     private final IgniteAtomicLong sequence;
     /**
@@ -34,40 +32,21 @@ public class ChatPriorityDao {
     protected final IgniteCache<Long, Long> cache;
 
     /**
-     * @param ignite
+     * @param dataBase
      */
-    public ChatPriorityDao(Ignite ignite) {
-        sequence=ignite.atomicLong(cacheName+"Sequence", 0, true);
-
-        final CacheConfiguration cacheCfg = new CacheConfiguration(cacheName);
-        cacheCfg.setSqlSchema("messenger");
-        // Способ распределения данных по кластеру
-        cacheCfg.setCacheMode(CacheMode.PARTITIONED);
-        // Количество резервных копий на других узлах
-        cacheCfg.setBackups(2);
-        cacheCfg.setAtomicityMode(CacheAtomicityMode.TRANSACTIONAL);
-        cacheCfg.setIndexedTypes(Long.class, Long.class);
-        this.cache = ignite.getOrCreateCache(cacheCfg);
+    public ChatPriorityDao(DataBase dataBase) {
+        this.sequence = dataBase.getIgnite().atomicLong(cacheName + "Sequence", 0, true);
+        this.cache = DaoHelper.createCache(dataBase, cacheName, Long.class, Long.class, 2);
     }
 
     /**
-     * @return Наименование кеша
-     */
-    public final String getCacheName() {
-        return cacheName;
-    }
-
-    /**
-     * Получить приоритет по идентификатору чата
+     * Получить приоритет по идентификатору чата.
      *
-     * @param session
-     * @param chatId
-     * @return
+     * @param chatId Идентификатор чата.
+     * @return Приоритет.
      */
-    public Long select(final SessionStorage session, Long chatId) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " select by chatId=" + chatId);
-        }
+    public Long select(Long chatId) {
+        logger.debug("{} select by chatId={}", cacheName, chatId);
         final Long result = cache.get(chatId);
         return result;
     }
@@ -76,12 +55,10 @@ public class ChatPriorityDao {
      * Добавление записи
      *
      * @param session
-     * @param chatId   Идентификатор чата
+     * @param chatId  Идентификатор чата
      */
     public long insert(final SessionStorage session, Long chatId) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " insert chatId " + chatId);
-        }
+        logger.debug("{} insert chatId {}", cacheName, chatId);
         final long priority = sequence.incrementAndGet();
         cache.put(chatId, priority);
         return priority;
@@ -97,9 +74,7 @@ public class ChatPriorityDao {
      */
     @Deprecated
     void update(final SessionStorage session, Long chatId, Long priority) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " update chatId " + chatId + " priority " + priority);
-        }
+        logger.debug("{} update chatId={} priority={}", cacheName, chatId, priority);
         cache.put(chatId, priority);
     }
 
@@ -112,9 +87,7 @@ public class ChatPriorityDao {
      */
     @Deprecated
     void delete(final SessionStorage session, Long chatId) {
-        if (logger.isLoggable(Level.FINE)) {
-            logger.fine(cacheName + " delete by chatId=" + chatId);
-        }
+        logger.debug("{} delete by chatId={}", cacheName, chatId);
         cache.remove(chatId);
     }
 
@@ -126,6 +99,7 @@ public class ChatPriorityDao {
      * @param beforeChatId  идентификатор чаты перед которым нужно расположить
      */
     public void up(final SessionStorage session, Long currentChatId, Long beforeChatId) {
+        logger.debug("{} up currentChatId={} beforeChatId={}", cacheName, currentChatId, beforeChatId);
         final Long currentPriority = cache.get(currentChatId);
         final Long beforePriority = cache.get(beforeChatId);
         //TODO if (currentPriority<beforePriority) {throw new IllegalArgumentException();}
@@ -141,6 +115,7 @@ public class ChatPriorityDao {
      * @param afterChatId   идентификатор чаты после которого нужно расположить
      */
     public void down(final SessionStorage session, Long currentChatId, Long afterChatId) {
+        logger.debug("{} down currentChatId={} afterChatId={}", cacheName, currentChatId, afterChatId);
         final Long currentPriority = cache.get(currentChatId);
         final Long afterPriority = cache.get(afterChatId);
         //TODO if (currentPriority>beforePriority) {throw new IllegalArgumentException();}

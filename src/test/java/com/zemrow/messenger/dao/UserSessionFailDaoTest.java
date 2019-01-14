@@ -1,9 +1,9 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dao.constants.IdConstant;
 import com.zemrow.messenger.entity.UserSessionFail;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class UserSessionFailDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new UserSessionFailDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new UserSessionFailDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -32,14 +32,14 @@ public class UserSessionFailDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final UserSessionFail entity2 = dao.select(session, entity.getId());
+            final UserSessionFail entity2 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getUserEntryPointId(), entity2.getUserEntryPointId());
             Assert.assertEquals(entity.getIpAddress(), entity2.getIpAddress());
             Assert.assertEquals(entity.getComment(), entity2.getComment());
 
-            dao.delete(session, entity.getId());
-            final UserSessionFail entity3 = dao.select(session, entity.getId());
+            dao.delete(session, entity.getKey());
+            final UserSessionFail entity3 = dao.select(entity.getKey());
             Assert.assertNull(entity3);
         }
     }

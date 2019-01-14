@@ -1,9 +1,9 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.UserStatus;
 import com.zemrow.messenger.entity.enums.UserStatusTypeEnum;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class UserStatusDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new UserStatusDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new UserStatusDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -33,23 +33,29 @@ public class UserStatusDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            UserStatus entity2 = dao.select(session, entity.getId());
+            UserStatus entity2 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getLabel(), entity2.getLabel());
             Assert.assertEquals(entity.getUserStatusType(), entity2.getUserStatusType());
             Assert.assertNull(entity2.getDeleteTime());
 
+            Long selectId = dao.selectIdByType(session, UserStatusTypeEnum.OFFLINE);
+            Assert.assertNull(selectId);
+
+            selectId = dao.selectIdByType(session, UserStatusTypeEnum.ONLINE);
+            Assert.assertEquals(entity.getId(), selectId);
+
             entity2.setLabel(entity2.getLabel() + "1");
 //
             dao.update(session, entity2);
-            final UserStatus entity3 = dao.select(session, entity.getId());
+            final UserStatus entity3 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity2.getLabel(), entity3.getLabel());
             Assert.assertEquals(entity2.getUserStatusType(), entity3.getUserStatusType());
             Assert.assertNull(entity3.getDeleteTime());
 
             dao.markAsDeleted(session, entity.getId());
-            final UserStatus entity4 = dao.select(session, entity.getId());
+            final UserStatus entity4 = dao.select(entity.getKey());
             Assert.assertNotNull(entity4);
             Assert.assertNotNull(entity4.getDeleteTime());
         }

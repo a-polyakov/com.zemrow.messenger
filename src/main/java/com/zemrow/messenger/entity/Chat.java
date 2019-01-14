@@ -2,6 +2,7 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.ChatTypeEnum;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Чат
@@ -12,18 +13,22 @@ public class Chat extends AbstractEntity {
     /**
      * Наименование чата
      */
+    @QuerySqlField(notNull = true)
     public String label;
     /**
      * Тип чата: чат, задание
      */
+    @QuerySqlField(notNull = true)
     public ChatTypeEnum chatType;
     /**
      * Использованый нумиратор (для определения префикса)
      */
+    @QuerySqlField
     public Long numberingId;
     /**
      * Номер чата(документа)
      */
+    @QuerySqlField
     public Long orderNumber;
 
 //================================ AUTO GENERATE ==============================
@@ -58,14 +63,6 @@ public class Chat extends AbstractEntity {
 
     public void setOrderNumber(Long orderNumber) {
         this.orderNumber = orderNumber;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Chat{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

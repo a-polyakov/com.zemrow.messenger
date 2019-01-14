@@ -1,6 +1,6 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.abstracts.AbstractEntityCreateOnly;
+import com.zemrow.messenger.entity.abstracts.AbstractEntityWithId;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
@@ -8,7 +8,7 @@ import org.apache.ignite.cache.query.annotations.QuerySqlField;
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public class UserLog extends AbstractEntityCreateOnly {
+public class UserLog extends AbstractEntityWithId {
     /**
      * ID пользователя
      */
@@ -17,18 +17,22 @@ public class UserLog extends AbstractEntityCreateOnly {
     /**
      * Поле
      */
+    @QuerySqlField(notNull = true)
     public String fieldName;
     /**
      * Старое значение
      */
+    @QuerySqlField
     public String fieldOldValue;
     /**
      * Новое значение
      */
+    @QuerySqlField
     public String fieldNewValue;
     /**
      * Комментарий - сообщение соответствующее изменению
      */
+    @QuerySqlField
     public String comment;
 
 //================================ AUTO GENERATE ==============================
@@ -71,14 +75,6 @@ public class UserLog extends AbstractEntityCreateOnly {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("UserLog{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

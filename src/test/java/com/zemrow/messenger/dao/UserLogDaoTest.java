@@ -1,8 +1,8 @@
 package com.zemrow.messenger.dao;
 
+import com.zemrow.messenger.DataBase;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.UserLog;
-import org.apache.ignite.Ignite;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,8 +17,8 @@ public class UserLogDaoTest extends AbstractTest {
 
     @Test
     public void test() {
-        try (final Ignite ignite = getIgnite()) {
-            dao = new UserLogDao(ignite);
+        try (final DataBase dataBase = getDataBase()) {
+            dao = new UserLogDao(dataBase);
 
             final SessionStorage session = getSession();
 
@@ -33,7 +33,7 @@ public class UserLogDaoTest extends AbstractTest {
             dao.insert(session, entity);
             System.out.println("After insert " + entity);
 
-            final UserLog entity2 = dao.select(session, entity.getId());
+            final UserLog entity2 = dao.select(entity.getKey());
             Assert.assertNotNull(entity2);
             Assert.assertEquals(entity.getUserId(), entity2.getUserId());
             Assert.assertEquals(entity.getFieldName(), entity2.getFieldName());
@@ -41,8 +41,8 @@ public class UserLogDaoTest extends AbstractTest {
             Assert.assertEquals(entity.getFieldNewValue(), entity2.getFieldNewValue());
             Assert.assertEquals(entity.getComment(), entity2.getComment());
 
-            dao.delete(session, entity.getId());
-            final UserLog entity3 = dao.select(session, entity.getId());
+            dao.delete(session, entity.getKey());
+            final UserLog entity3 = dao.select(entity.getKey());
             Assert.assertNull(entity3);
         }
     }

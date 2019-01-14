@@ -2,6 +2,7 @@ package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.entity.abstracts.AbstractEntity;
 import com.zemrow.messenger.entity.enums.EntryPointTypeEnum;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
  * Способы авторизации пользователя
@@ -12,22 +13,27 @@ public class UserEntryPoint extends AbstractEntity {
     /**
      * ID пользователя
      */
+    @QuerySqlField(notNull = true, index = true)
     public Long userId;
     /**
      * Прошел ли подтверждение
      */
+    @QuerySqlField(notNull = true)
     public Boolean validate;
     /**
      * Способ(система) авторизации: логин_пароль, vk.com, google, ...
      */
+    @QuerySqlField(notNull = true)
     public EntryPointTypeEnum entryPointType;
     /**
      * Идентификатор в системе авторизации (логин)
      */
+    @QuerySqlField(notNull = true)
     public String clientId;
     /**
      * Удостоверение личности в системе авторизации (пароль)
      */
+    @QuerySqlField
     public String credential;
 
 //================================ AUTO GENERATE ==============================
@@ -70,14 +76,6 @@ public class UserEntryPoint extends AbstractEntity {
 
     public void setCredential(String credential) {
         this.credential = credential;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("UserEntryPoint{");
-        toString(sb);
-        sb.append('}');
-        return sb.toString();
     }
 
     @Override

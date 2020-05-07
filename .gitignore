@@ -1,7 +1,11 @@
 # GRADLE
-.gradle/**/*.*
+.gradle/
 **/build/**/*.*
 # IDEA
-.idea/**/*.*
+.idea/
 **/*.iml
 **/out/**/*.*
+# MAVEN
+target/
+#Selenium
+demo/drivers/

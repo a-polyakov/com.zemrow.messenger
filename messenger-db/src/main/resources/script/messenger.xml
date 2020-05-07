@@ -1,0 +1,1110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="202005072100" author="a-polyakov" logicalFilePath="no_path">
+        <comment>
+            Ограничение id для liquibase, только 12 чифр - дата в формате yyyyMMddhhmm
+        </comment>
+        <addPrimaryKey tableName="databasechangelog" columnNames="id"/>
+        <addUniqueConstraint tableName="databasechangelog" columnNames="orderexecuted"/>
+        <sql>
+            ALTER TABLE public.databasechangelog ADD CHECK (id ~*'^20[0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9]$')
+        </sql>
+    </changeSet>
+
+    <changeSet id="202005072105" author="a-polyakov" logicalFilePath="no_path">
+        <comment>
+            Инициализации схемы БД
+        </comment>
+        <createTable tableName="Chat" remarks="Чат">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="label" type="VARCHAR(255)" remarks="Наименование чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chatType" type="VARCHAR(16)" remarks="Тип чата: чат, задание">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numberingId" type="BIGINT" remarks="Использованый нумиратор (для определения префикса)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="orderNumber" type="BIGINT" remarks="Номер чата(документа)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ChatPriority" remarks="Приоритет задания">
+            <column name="chatId" type="BIGINT" remarks="ID чата">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="priority" type="BIGINT" remarks="Приоритет">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ChatReminder" remarks="Напоминание">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="chatId" type="BIGINT" remarks="ID чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userId" type="BIGINT" remarks="ID пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="text" remarks="Текст напоминания">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reminderTime" type="BIGINT" remarks="Дата напоминания">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ChatTagGroup"
+                     remarks="Групповые теги чата (для упрощения поиска последнего тега из группы)">
+            <column name="chatId" type="BIGINT" remarks="ID чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tagGroup" type="VARCHAR(32)"
+                    remarks="Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы">
+                <constraints nullable="false"/>
+            </column>
+            <column name="messageTagId" type="BIGINT" remarks="ID тега из сообщения">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ChatToUser" remarks="Пользователи в чате">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="chatId" type="BIGINT" remarks="ID чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userId" type="BIGINT" remarks="ID пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="favorite" type="boolean" remarks="Избранный чат">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chatToUserType" type="VARCHAR(32)"
+                    remarks="Тип участника: обычный, скрытый только для чтения, скрытый полный доступ">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ChatToUserLastMessage" remarks="Последнее сообщение для пользователя в чате">
+            <column name="chatToUserId" type="BIGINT" remarks="Пользователи в чате (ID чата и ID пользователя)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="messageId" type="BIGINT" remarks="ID сообщения">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ChatTree" remarks="Дерево задач">
+            <column name="parentChatId" type="BIGINT" remarks="ID родительского чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="childChatId" type="BIGINT" remarks="ID дочернего чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distance" type="INT" remarks="Разность уровней">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ChatWork" remarks="Отметка пользователя о затраченом времени">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="chatId" type="BIGINT" remarks="ID чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userId" type="BIGINT" remarks="ID пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="startTime" type="BIGINT" remarks="Дата начала работы">
+                <constraints nullable="false"/>
+            </column>
+            <column name="endTime" type="BIGINT" remarks="Дата окончания работы">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="FileInfo" remarks="Файл">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="TEXT" remarks="Наименование файла">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mimeType" type="VARCHAR(255)" remarks="MIME-тип файла">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fileSize" type="BIGINT" remarks="Размер файла">
+                <constraints nullable="false"/>
+            </column>
+            <column name="path" type="CHAR(36)" remarks="Место хранения в файловой системе, на основе UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fileAccessType" type="varchar(16)" remarks="Тип доступа">
+                <constraints nullable="false"/>
+            </column>
+            <column name="crc32" type="int" remarks="Контрольная сумма, для поиска дубликатов">
+                <constraints nullable="true"/>
+            </column>
+            <column name="lastOpenTime" type="BIGINT"
+                    remarks="Дата последнего скачивания файла, для архивирования редко используемых">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gzipOn" type="BOOLEAN" remarks="Файл заархивирован">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="Message" remarks="Сообщение">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="chatId" type="BIGINT" remarks="ID чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="TEXT" remarks="Текст">
+                <constraints nullable="true"/>
+            </column>
+            <column name="fileId" type="BIGINT" remarks="ID прикрепленного файла">
+                <constraints nullable="true"/>
+            </column>
+            <column name="childChatId" type="BIGINT"
+                    remarks="ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="messageType" type="VARCHAR(16)" remarks="Тип сообщения">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="MessageLog" remarks="История сообщения">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="messageId" type="BIGINT" remarks="ID сообщения">
+                <constraints nullable="false"/>
+            </column>
+            <column name="oldText" type="TEXT" remarks="Предыдущий текст">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="MessageTag" remarks="Тег сообщения">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="messageId" type="BIGINT" remarks="ID сообщения">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tagId" type="BIGINT" remarks="ID тега">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="TEXT"
+                    remarks="Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="MessageToUser"
+                     remarks="Связка сообщения с пользователем. При этом наличие такой связки обеспечивает показ сообщения конкретному пользователю в чате. В случае отсутствия связки, данное сообщение не отображается пользователю.">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="messageId" type="BIGINT" remarks="ID сообщения">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userId" type="BIGINT" remarks="ID пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="messageStatus" type="VARCHAR(16)"
+                    remarks="Статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="Numbering" remarks="Настройка нумирации для компании и типа чата">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="userId" type="BIGINT" remarks="id пользователя(компания, отдел)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prefix" type="VARCHAR(16)" remarks="Префикс">
+                <constraints nullable="false"/>
+            </column>
+            <column name="maxNumber" type="BIGINT" remarks="Последний выданный номер">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="RequestLog" remarks="Логи вызовов сервисов">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="token" type="VARCHAR(72)" remarks="Уникальный идентификатор сессии пользователя">
+                <constraints nullable="true"/>
+            </column>
+            <column name="eventId" type="VARCHAR(32)" remarks="Идентификатор сервиса">
+                <constraints nullable="true"/>
+            </column>
+            <column name="startInvoke" type="BIGINT" remarks="Время запуска">
+                <constraints nullable="false"/>
+            </column>
+            <column name="endInvoke" type="BIGINT" remarks="Время окончания">
+                <constraints nullable="true"/>
+            </column>
+            <column name="errorStackTrace" type="text" remarks="Ошибка если была (stacktrace)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="Tag" remarks="Полный перечень тегов">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="tag" type="VARCHAR(255)" remarks="Тег">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tagType" type="VARCHAR(64)" remarks="Тип тега для связки наименование тега с логикой">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="VARCHAR(255)" remarks="Описание тега для автокомплита">
+                <constraints nullable="true"/>
+            </column>
+            <column name="leftMenuShow" type="BOOLEAN" remarks="показывать ли в левом меню">
+                <constraints nullable="true"/>
+            </column>
+            <column name="headerShow" type="BOOLEAN" remarks="Показывать ли в хеадере">
+                <constraints nullable="true"/>
+            </column>
+            <column name="tagGroup" type="VARCHAR(32)"
+                    remarks="Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserContact" remarks="Контакты пользователя">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="parentUserId" type="BIGINT" remarks="ID пользователя родителя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="childUserId" type="BIGINT" remarks="ID пользователя потомка">
+                <constraints nullable="false"/>
+            </column>
+            <column name="validate" type="boolean" remarks="Прошел ли подтверждение запрос на добавление">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(255)" remarks="Наименование контакта">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chatId" type="BIGINT" remarks="ID чата">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserEntryPoint" remarks="Способы авторизации пользователя">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="userId" type="BIGINT" remarks="ID пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="validate" type="boolean" remarks="Прошел ли подтверждение">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entryPointType" type="VARCHAR(16)"
+                    remarks="Способ(система) авторизации: логин_пароль, vk.com, google, ...">
+                <constraints nullable="false"/>
+            </column>
+            <column name="clientId" type="VARCHAR(255)" remarks="Идентификатор в системе авторизации (логин)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credential" type="VARCHAR(255)"
+                    remarks="Удостоверение личности в системе авторизации (пароль)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserFilter" remarks="Пользовательский фильтр">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="userId" type="BIGINT" remarks="ID пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pageType" type="VARCHAR(32)"
+                    remarks="id части системы (грид, панель, список) для применения данного фильтра">
+                <constraints nullable="false"/>
+            </column>
+            <column name="filterLabel" type="VARCHAR(255)" remarks="Название фильтра">
+                <constraints nullable="true"/>
+            </column>
+            <column name="data" type="JSONB" remarks="Данные фильтра в формате JSON">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserInfo" remarks="Пользователь">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="avatarId" type="BIGINT" remarks="Ссылка на таблицу file где хранится аватар">
+                <constraints nullable="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)" remarks="Наименование пользователя">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="userType" type="VARCHAR(16)" remarks="Тип пользователя: физическое лицо, отдел, компания">
+                <constraints nullable="false"/>
+            </column>
+            <column name="info" type="JSONB" remarks="Json с дополнительными полями">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userStatusId" type="BIGINT"
+                    remarks="Состояние пользователя: Не в сети, В сети, Не беспокоить">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserLink" remarks="Организационная структура пользователей">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="parentUserId" type="BIGINT" remarks="ID пользователя родителя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="childUserId" type="BIGINT" remarks="ID пользователя потомка">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userLinkType" type="VARCHAR(16)"
+                    remarks="Тип связи (подчинение, замена)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserLog" remarks="История изменения пользователь">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="userId" type="BIGINT" remarks="ID пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fieldName" type="VARCHAR(255)" remarks="Поле">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fieldOldValue" type="TEXT" remarks="Старое значение">
+                <constraints nullable="true"/>
+            </column>
+            <column name="fieldNewValue" type="TEXT" remarks="Новое значение">
+                <constraints nullable="true"/>
+            </column>
+            <column name="comment" type="TEXT" remarks="Комментарий - сообщение соответствующее изменению">
+                <constraints nullable="true"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserSession" remarks="Сессия пользователя">
+            <column name="token" type="CHAR(72)" remarks="Уникальный идентификатор сессии, сложный для подбора">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="userEntryPointId" type="BIGINT" remarks="Точка входа пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserSessionFail" remarks="Неудачные попытки войти в систему">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="userEntryPointId" type="BIGINT" remarks="Точка входа пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ipAddress" type="VARCHAR(255)" remarks="IP адрес клиента">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="TEXT" remarks="Сообщение об ошибке">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserStatus" remarks="Справочник статусов пользователя">
+            <column name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="label" type="VARCHAR(255)" remarks="Состояние пользователя: Не в сети, В сети, Не беспокоить">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userStatusType" type="VARCHAR(16)"
+                    remarks="Тип статуса для связки наименование статуса с логикой">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="int" remarks="Вес статуса">
+                <constraints nullable="false"/>
+            </column>
+            <column name="color" type="int"  remarks="Цвет статуса">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createTime" type="BIGINT" remarks="Дата создания записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="UserTree" remarks="Дерево пользователей">
+            <column name="parentUserId" type="BIGINT" remarks="ID родительского пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="childUserId" type="BIGINT" remarks="ID дочернего пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distance" type="INT" remarks="Разность уровней">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="Chat_numberingId_fk"
+                                 baseTableName="Chat" baseColumnNames="numberingId"
+                                 referencedTableName="Numbering" referencedColumnNames="id"/>
+        <addUniqueConstraint tableName="Chat" columnNames="numberingId, orderNumber"/>
+        <addForeignKeyConstraint constraintName="Chat_createdBy_fk"
+                                 baseTableName="Chat" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Chat_updatedBy_fk"
+                                 baseTableName="Chat" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Chat_deletedBy_fk"
+                                 baseTableName="Chat" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="ChatPriority_chatId_fk"
+                                 baseTableName="ChatPriority" baseColumnNames="chatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="ChatReminder_chatId_fk"
+                                 baseTableName="ChatReminder" baseColumnNames="chatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatReminder_userId_fk"
+                                 baseTableName="ChatReminder" baseColumnNames="userId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatReminder_createdBy_fk"
+                                 baseTableName="ChatReminder" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatReminder_deletedBy_fk"
+                                 baseTableName="ChatReminder" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addPrimaryKey tableName="ChatTagGroup" columnNames="chatId, tagGroup"/>
+        <addForeignKeyConstraint constraintName="ChatTagGroup_chatId_fk"
+                                 baseTableName="ChatTagGroup" baseColumnNames="chatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatTagGroup_messageTagId_fk"
+                                 baseTableName="ChatTagGroup" baseColumnNames="messageTagId"
+                                 referencedTableName="MessageTag" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="ChatToUser_chatId_fk"
+                                 baseTableName="ChatToUser" baseColumnNames="chatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatToUser_userId_fk"
+                                 baseTableName="ChatToUser" baseColumnNames="userId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="ChatToUser_chatId_userId_unique"
+                             tableName="ChatToUser" columnNames="chatId, userId"/>
+        <addForeignKeyConstraint constraintName="ChatToUser_createdBy_fk"
+                                 baseTableName="ChatToUser" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatToUser_updatedBy_fk"
+                                 baseTableName="ChatToUser" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatToUser_deletedBy_fk"
+                                 baseTableName="ChatToUser" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="ChatToUserLastMessage_chatToUserId_fk"
+                                 baseTableName="ChatToUserLastMessage" baseColumnNames="chatToUserId"
+                                 referencedTableName="ChatToUser" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatToUserLastMessage_messageId_fk"
+                                 baseTableName="ChatToUserLastMessage" baseColumnNames="messageId"
+                                 referencedTableName="Message" referencedColumnNames="id"/>
+
+        <addPrimaryKey tableName="ChatTree" columnNames="parentChatId, childChatId"/>
+        <addForeignKeyConstraint constraintName="ChatTree_parentChatId_fk"
+                                 baseTableName="ChatTree" baseColumnNames="parentChatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatTree_childChatId_fk"
+                                 baseTableName="ChatTree" baseColumnNames="childChatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="ChatWork_chatId_fk"
+                                 baseTableName="ChatWork" baseColumnNames="chatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatWork_userId_fk"
+                                 baseTableName="ChatWork" baseColumnNames="userId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatWork_createdBy_fk"
+                                 baseTableName="ChatWork" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="ChatWork_deletedBy_fk"
+                                 baseTableName="ChatWork" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="FileInfo_createdBy_fk"
+                                 baseTableName="FileInfo" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="FileInfo_deletedBy_fk"
+                                 baseTableName="FileInfo" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <createIndex indexName="FileInfo_crc32_idx" unique="false"
+                     tableName="FileInfo">
+            <column name="crc32" type="int"/>
+        </createIndex>
+        <createIndex indexName="FileInfo_size_idx" unique="false"
+                     tableName="FileInfo">
+            <column name="fileSize" type="bigint"/>
+        </createIndex>
+
+        <addForeignKeyConstraint constraintName="Message_chatId_fk"
+                                 baseTableName="Message" baseColumnNames="chatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Message_fileId_fk"
+                                 baseTableName="Message" baseColumnNames="fileId"
+                                 referencedTableName="FileInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Message_childChatId_fk"
+                                 baseTableName="Message" baseColumnNames="childChatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Message_createdBy_fk"
+                                 baseTableName="Message" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Message_updatedBy_fk"
+                                 baseTableName="Message" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Message_deletedBy_fk"
+                                 baseTableName="Message" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="MessageLog_messageId_fk"
+                                 baseTableName="MessageLog" baseColumnNames="messageId"
+                                 referencedTableName="Message" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageLog_createdBy_fk"
+                                 baseTableName="MessageLog" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="MessageTag_messageId_fk"
+                                 baseTableName="MessageTag" baseColumnNames="messageId"
+                                 referencedTableName="Message" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageTag_tagId_fk"
+                                 baseTableName="MessageTag" baseColumnNames="tagId"
+                                 referencedTableName="Tag" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageTag_createdBy_fk"
+                                 baseTableName="MessageTag" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageTag_updatedBy_fk"
+                                 baseTableName="MessageTag" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageTag_deletedBy_fk"
+                                 baseTableName="MessageTag" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="MessageToUser_messageId_fk"
+                                 baseTableName="MessageToUser" baseColumnNames="messageId"
+                                 referencedTableName="Message" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageToUser_userId_fk"
+                                 baseTableName="MessageToUser" baseColumnNames="userId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageToUser_createdBy_fk"
+                                 baseTableName="MessageToUser" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageToUser_updatedBy_fk"
+                                 baseTableName="MessageToUser" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="MessageToUser_deletedBy_fk"
+                                 baseTableName="MessageToUser" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="Numbering_userId_fk"
+                                 baseTableName="Numbering" baseColumnNames="userId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Numbering_createdBy_fk"
+                                 baseTableName="Numbering" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Numbering_updatedBy_fk"
+                                 baseTableName="Numbering" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Numbering_deletedBy_fk"
+                                 baseTableName="Numbering" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="Tag_createdBy_fk"
+                                 baseTableName="Tag" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Tag_updatedBy_fk"
+                                 baseTableName="Tag" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Tag_deletedBy_fk"
+                                 baseTableName="Tag" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserContact_parentUserId_fk"
+                                 baseTableName="UserContact" baseColumnNames="parentUserId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserContact_childUserId_fk"
+                                 baseTableName="UserContact" baseColumnNames="childUserId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserContact_chatId_fk"
+                                 baseTableName="UserContact" baseColumnNames="chatId"
+                                 referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserContact_createdBy_fk"
+                                 baseTableName="UserContact" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserContact_updatedBy_fk"
+                                 baseTableName="UserContact" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserContact_deletedBy_fk"
+                                 baseTableName="UserContact" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserEntryPoint_userId_fk"
+                                 baseTableName="UserEntryPoint" baseColumnNames="userId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserEntryPoint_createdBy_fk"
+                                 baseTableName="UserEntryPoint" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserEntryPoint_updatedBy_fk"
+                                 baseTableName="UserEntryPoint" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserEntryPoint_deletedBy_fk"
+                                 baseTableName="UserEntryPoint" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserFilter_userId_fk"
+                                 baseTableName="UserFilter" baseColumnNames="userId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserFilter_createdBy_fk"
+                                 baseTableName="UserFilter" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserFilter_updatedBy_fk"
+                                 baseTableName="UserFilter" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserFilter_deletedBy_fk"
+                                 baseTableName="UserFilter" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserInfo_avatarId_fk"
+                                 baseTableName="UserInfo" baseColumnNames="avatarId"
+                                 referencedTableName="FileInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserInfo_userStatusId_fk" initiallyDeferred="true"
+                                 baseTableName="UserInfo" baseColumnNames="userStatusId"
+                                 referencedTableName="UserStatus" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserInfo_createdBy_fk"
+                                 baseTableName="UserInfo" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserInfo_updatedBy_fk"
+                                 baseTableName="UserInfo" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserInfo_deletedBy_fk"
+                                 baseTableName="UserInfo" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserLink_parentUserId_fk"
+                                 baseTableName="UserLink" baseColumnNames="parentUserId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserLink_childUserId_fk"
+                                 baseTableName="UserLink" baseColumnNames="childUserId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserLink_createdBy_fk"
+                                 baseTableName="UserLink" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserLink_deletedBy_fk"
+                                 baseTableName="UserLink" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserLog_userId_fk"
+                                 baseTableName="UserLog" baseColumnNames="userId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserLog_createdBy_fk"
+                                 baseTableName="UserLog" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserSession_userEntryPointId_fk"
+                                 baseTableName="UserSession" baseColumnNames="userEntryPointId"
+                                 referencedTableName="UserEntryPoint" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserSession_deletedBy_fk"
+                                 baseTableName="UserSession" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserSessionFail_userEntryPointId_fk"
+                                 baseTableName="UserSessionFail" baseColumnNames="userEntryPointId"
+                                 referencedTableName="UserEntryPoint" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserSessionFail_createdBy_fk"
+                                 baseTableName="UserSessionFail" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="UserStatus_createdBy_fk"
+                                 baseTableName="UserStatus" baseColumnNames="createdBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserStatus_updatedBy_fk"
+                                 baseTableName="UserStatus" baseColumnNames="updatedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserStatus_deletedBy_fk"
+                                 baseTableName="UserStatus" baseColumnNames="deletedBy"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addPrimaryKey tableName="UserTree" columnNames="parentUserId, childUserId"/>
+        <addForeignKeyConstraint constraintName="UserTree_parentUserId_fk"
+                                 baseTableName="UserTree" baseColumnNames="parentUserId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="UserTree_childUserId_fk"
+                                 baseTableName="UserTree" baseColumnNames="childUserId"
+                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="202005072110" author="a-polyakov" logicalFilePath="no_path">
+        <comment>
+            Создание администратора
+        </comment>
+        <insert tableName="UserInfo">
+            <column name="id">1</column>
+            <column name="name">system</column>
+            <column name="userType">ADMIN</column>
+            <column name="info">{}</column>
+            <column name="userStatusId">4</column>
+            <column name="createTime">1588885800000</column>
+            <column name="createdBy">1</column>
+            <column name="updateTime">1588885800000</column>
+            <column name="updatedBy">1</column>
+        </insert>
+        <insert tableName="UserInfo">
+            <column name="id">101</column>
+            <column name="name">ИИ</column>
+            <column name="userType">ADMIN</column>
+            <column name="info">{}</column>
+            <column name="userStatusId">4</column>
+            <column name="createTime">1588885800000</column>
+            <column name="createdBy">1</column>
+            <column name="updateTime">1588885800000</column>
+            <column name="updatedBy">1</column>
+        </insert>
+        <insert tableName="UserStatus">
+            <column name="id">4</column>
+            <column name="label">В сети</column>
+            <column name="userStatusType">ONLINE</column>
+            <column name="weight">1000</column>
+            <column name="color">-65536</column>
+            <column name="createTime">1588885800000</column>
+            <column name="createdBy">1</column>
+            <column name="updateTime">1588885800000</column>
+            <column name="updatedBy">1</column>
+        </insert>
+        <insert tableName="UserStatus">
+            <column name="id">104</column>
+            <column name="label">Не в сети</column>
+            <column name="userStatusType">OFFLINE</column>
+            <column name="weight">500</column>
+            <column name="color">-16711936</column>
+            <column name="createTime">1588885800000</column>
+            <column name="createdBy">1</column>
+            <column name="updateTime">1588885800000</column>
+            <column name="updatedBy">1</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

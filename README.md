@@ -170,4 +170,11 @@ TODO Android и IOS приложение представляют из себя 
 - ```-XX:NumberOfGCLogFiles=10``` - Максимальное количество файлов в логе сборщика мусора
 - ```-XX:GCLogFileSize=100M``` - Максимальный размер одного файла в логе сборщика мусора  
 - ```-Xloggc:gc.log``` - Запись логов в файл
+- ```-XX:+DebugNonSafepoints``` - Возможность снимать stack trace вне safepoint, необходимо для более точного профилирования
+- ```-XX:+PreserveFramePointer``` - TODO
+- ```-DIGNITE_QUIET=false``` - TODO
+
+TODO
+-XX:G1NewSizePercent=1 -XX:G1MaxNewSizePercent=5 -XX:+PrintSafepointStatistics -XX:+LogVMOutput
+https://gist.github.com/svanoort/66a766ea68781140b108f465be45ff00
   

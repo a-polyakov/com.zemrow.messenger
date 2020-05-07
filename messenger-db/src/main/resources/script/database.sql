@@ -1,0 +1,5 @@
+CREATE DATABASE messenger;
+DROP DATABASE messenger;
+
+CREATE SCHEMA ;
+DROP SCHEMA ;

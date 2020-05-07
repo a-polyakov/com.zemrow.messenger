@@ -5,7 +5,7 @@ package com.zemrow.messenger.entity.enums;
  *
  * @author Alexandr Polyakov on 2018.04.13
  */
-public enum UserLinkEnum {
+public enum UserLinkTypeEnum {
     /**
      * Содержит (Например отдел состоит из Иванов, Сидоров, ...)
      */

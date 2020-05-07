@@ -7,11 +7,11 @@ package com.zemrow.messenger.entity.enums;
  */
 public enum MessageTypeEnum {
     /**
-     * TODO
+     * Обычное
      */
     SIMPLE,
     /**
-     * TODO
+     * Сообщение с ошибкой в команде
      */
     ERROR;
 }

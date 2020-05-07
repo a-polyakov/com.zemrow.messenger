@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.zemrow.messenger</groupId>
+        <artifactId>root</artifactId>
+        <version>20200507</version>
+    </parent>
+
+    <artifactId>messenger-db</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- Modules -->
+        <dependency>
+            <groupId>com.zemrow.messenger</groupId>
+            <artifactId>messenger-constants</artifactId>
+        </dependency>
+
+        <!-- DB -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!-- LIQUIBASE -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+        <!-- TODO -->
+        <!-- JOOQ -->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+        </dependency>
+
+        <!-- TODO -->
+        <!-- QUERYDSL -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-codegen</artifactId>
+        </dependency>
+    </dependencies>
+</project>

@@ -8,6 +8,7 @@ package com.zemrow.messenger.entity.enums;
 public enum MessageStatusEnum {
     /**
      * Сообщение не отправлено (актуально для мобильного ПО)
+     * TODO Продумать логику черновика (сообщение начали набирать, но еще не отправили)
      */
     NOT_SEND,
     /**

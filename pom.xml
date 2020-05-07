@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zemrow.messenger</groupId>
+    <artifactId>root</artifactId>
+    <version>20200507</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <modules>
+        <module>messenger-constants</module>
+        <module>messenger-db</module>
+        <module>messenger-entity</module>
+        <module>messenger-dao</module>
+        <module>messenger-l10n</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Modules -->
+            <dependency>
+                <groupId>com.zemrow.messenger</groupId>
+                <artifactId>messenger-constants</artifactId>
+                <version>20200507</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zemrow.messenger</groupId>
+                <artifactId>messenger-entity</artifactId>
+                <version>20200507</version>
+            </dependency>
+
+            <!-- DB -->
+            <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.2.12</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>3.4.2</version>
+            </dependency>
+
+            <!-- LIQUIBASE -->
+            <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>3.8.9</version>
+            </dependency>
+
+            <!-- JOOQ -->
+            <!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq</artifactId>
+                <version>3.13.1</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jooq/jooq-codegen -->
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen</artifactId>
+                <version>3.13.1</version>
+            </dependency>
+
+            <!-- QUERYDSL -->
+            <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-sql -->
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-sql</artifactId>
+                <version>4.3.1</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-sql-codegen -->
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-sql-codegen</artifactId>
+                <version>4.3.1</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+
+            <!-- Logging -->
+            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.30</version>
+            </dependency>
+
+            <!--TEST-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.13</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+</project>

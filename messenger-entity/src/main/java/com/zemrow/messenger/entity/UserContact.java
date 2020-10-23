@@ -1,11 +1,12 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.UserContactStatusEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы UserContact(Контакты пользователя) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class UserContact extends AbstractEntityWithId {
 
@@ -20,9 +21,9 @@ public class UserContact extends AbstractEntityWithId {
     private Long childUserId;
 
     /**
-     * Прошел ли подтверждение запрос на добавление
+     * Статус контакта (Запрошен, принят, отклонен)
      */
-    private Boolean validate;
+    private UserContactStatusEnum userContactStatus;
 
     /**
      * Наименование контакта
@@ -75,7 +76,7 @@ public class UserContact extends AbstractEntityWithId {
      * @param id ID записи
      * @param parentUserId ID пользователя родителя
      * @param childUserId ID пользователя потомка
-     * @param validate Прошел ли подтверждение запрос на добавление
+     * @param userContactStatus Статус контакта (Запрошен, принят, отклонен)
      * @param label Наименование контакта
      * @param chatId ID чата
      * @param createTime Дата создания записи
@@ -85,11 +86,11 @@ public class UserContact extends AbstractEntityWithId {
      * @param deleteTime Дата удаления записи
      * @param deletedBy Пользователь удаливший запись
      */
-    public UserContact(Long id, Long parentUserId, Long childUserId, Boolean validate, String label, Long chatId, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
+    public UserContact(Long id, Long parentUserId, Long childUserId, UserContactStatusEnum userContactStatus, String label, Long chatId, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
         this.id = id;
         this.parentUserId = parentUserId;
         this.childUserId = childUserId;
-        this.validate = validate;
+        this.userContactStatus = userContactStatus;
         this.label = label;
         this.chatId = chatId;
         this.createTime = createTime;
@@ -157,17 +158,17 @@ public class UserContact extends AbstractEntityWithId {
     }
 
     /**
-     * Получение прошел ли подтверждение запрос на добавление
+     * Получение статус контакта (запрошен, принят, отклонен)
      */
-    public Boolean getValidate() {
-        return validate;
+    public UserContactStatusEnum getUserContactStatus() {
+        return userContactStatus;
     }
 
     /**
-     * Установить прошел ли подтверждение запрос на добавление
+     * Установить статус контакта (запрошен, принят, отклонен)
      */
-    public void setValidate(Boolean validate) {
-        this.validate = validate;
+    public void setUserContactStatus(UserContactStatusEnum userContactStatus) {
+        this.userContactStatus = userContactStatus;
     }
 
     /**
@@ -294,8 +295,8 @@ public class UserContact extends AbstractEntityWithId {
         if (childUserId != null) {
             result.append(", childUserId = \"").append(childUserId).append('"');
         }
-        if (validate != null) {
-            result.append(", validate = \"").append(validate).append('"');
+        if (userContactStatus != null) {
+            result.append(", userContactStatus = \"").append(userContactStatus).append('"');
         }
         if (label != null) {
             result.append(", label = \"").append(label).append('"');

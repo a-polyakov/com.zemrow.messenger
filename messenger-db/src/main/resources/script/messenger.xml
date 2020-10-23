@@ -95,7 +95,7 @@
         </createTable>
 
         <createTable tableName="ChatTagGroup"
-                     remarks="Групповые теги чата (для упрощения поиска последнего тега из группы)">
+                     remarks="Групповые теги чата (для упрощения поиска последнего тега из группы). Данные являются избыточными, возможно восстановить.">
             <column name="chatId" type="BIGINT" remarks="ID чата">
                 <constraints nullable="false"/>
             </column>
@@ -125,6 +125,9 @@
                     remarks="Тип участника: обычный, скрытый только для чтения, скрытый полный доступ">
                 <constraints nullable="false"/>
             </column>
+            <column name="mute" type="boolean" remarks="Отключить уведомления">
+                <constraints nullable="false"/>
+            </column>
             <column name="createTime" type="BIGINT" remarks="Дата создания записи">
                 <constraints nullable="false"/>
             </column>
@@ -145,7 +148,8 @@
             </column>
         </createTable>
 
-        <createTable tableName="ChatToUserLastMessage" remarks="Последнее сообщение для пользователя в чате">
+        <createTable tableName="ChatToUserLastMessage"
+                     remarks="Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.">
             <column name="chatToUserId" type="BIGINT" remarks="Пользователи в чате (ID чата и ID пользователя)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -154,7 +158,7 @@
             </column>
         </createTable>
 
-        <createTable tableName="ChatTree" remarks="Дерево задач">
+        <createTable tableName="ChatTree" remarks="Дерево задач. Данные являются избыточными, возможно восстановить.">
             <column name="parentChatId" type="BIGINT" remarks="ID родительского чата">
                 <constraints nullable="false"/>
             </column>
@@ -239,6 +243,9 @@
             </column>
         </createTable>
 
+        <!--
+        TODO продумать механику цетирования
+        -->
         <createTable tableName="Message" remarks="Сообщение">
             <column name="id" type="BIGINT" remarks="ID записи">
                 <constraints nullable="false" primaryKey="true"/>
@@ -256,8 +263,11 @@
                     remarks="ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)">
                 <constraints nullable="true"/>
             </column>
-            <column name="messageType" type="VARCHAR(16)" remarks="Тип сообщения">
+            <column name="messageType" type="VARCHAR(16)" remarks="Тип сообщени (SIMPLE, ERROR)">
                 <constraints nullable="false"/>
+            </column>
+            <column name="parentMessageId" type="BIGINT" remarks="ID родительского сообщения">
+                <constraints nullable="true"/>
             </column>
             <column name="createTime" type="BIGINT" remarks="Дата создания записи">
                 <constraints nullable="false"/>
@@ -346,6 +356,10 @@
                     remarks="Статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)">
                 <constraints nullable="false"/>
             </column>
+            <column name="messageFeedback" type="VARCHAR(16)"
+                    remarks="Реакция на сообщение (like/dislike)">
+                <constraints nullable="false"/>
+            </column>
             <column name="createTime" type="BIGINT" remarks="Дата создания записи">
                 <constraints nullable="false"/>
             </column>
@@ -363,6 +377,16 @@
             </column>
             <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
                 <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="MessageFeedback" remarks="Итоговый голос по сообщению.">
+            <column name="messageId" type="BIGINT" remarks="ID сообщения">
+                <constraints nullable="false"/>
+            </column>
+            <column name="feedback" type="INT"
+                    remarks="Итоговый голос по сообщению.">
+                <constraints nullable="false"/>
             </column>
         </createTable>
 
@@ -406,7 +430,7 @@
             <column name="token" type="VARCHAR(72)" remarks="Уникальный идентификатор сессии пользователя">
                 <constraints nullable="true"/>
             </column>
-            <column name="eventId" type="VARCHAR(32)" remarks="Идентификатор сервиса">
+            <column name="eventId" type="VARCHAR(32)" remarks="Идентификатор события">
                 <constraints nullable="true"/>
             </column>
             <column name="startInvoke" type="BIGINT" remarks="Время запуска">
@@ -420,6 +444,10 @@
             </column>
         </createTable>
 
+        <!--
+        TODO добавление произвольных тегов (меток)
+        TODO перевод тега на несколько языков (фильтрация по языку)
+        -->
         <createTable tableName="Tag" remarks="Полный перечень тегов">
             <column name="id" type="BIGINT" remarks="ID записи">
                 <constraints nullable="false" primaryKey="true"/>
@@ -431,13 +459,13 @@
                 <constraints nullable="true"/>
             </column>
             <column name="description" type="VARCHAR(255)" remarks="Описание тега для автокомплита">
-                <constraints nullable="true"/>
+                <constraints nullable="false"/>
             </column>
-            <column name="leftMenuShow" type="BOOLEAN" remarks="показывать ли в левом меню">
-                <constraints nullable="true"/>
+            <column name="leftMenuShow" type="BOOLEAN" remarks="Показывать ли в левом меню">
+                <constraints nullable="false"/>
             </column>
-            <column name="headerShow" type="BOOLEAN" remarks="Показывать ли в хеадере">
-                <constraints nullable="true"/>
+            <column name="headerShow" type="BOOLEAN" remarks="Показывать ли в заголовке чата">
+                <constraints nullable="false"/>
             </column>
             <column name="tagGroup" type="VARCHAR(32)"
                     remarks="Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы">
@@ -473,7 +501,7 @@
             <column name="childUserId" type="BIGINT" remarks="ID пользователя потомка">
                 <constraints nullable="false"/>
             </column>
-            <column name="validate" type="boolean" remarks="Прошел ли подтверждение запрос на добавление">
+            <column name="userContactStatus" type="VARCHAR(16)" remarks="Статус контакта (Запрошен, принят, отклонен)">
                 <constraints nullable="false"/>
             </column>
             <column name="label" type="VARCHAR(255)" remarks="Наименование контакта">
@@ -593,11 +621,19 @@
             <column name="userType" type="VARCHAR(16)" remarks="Тип пользователя: физическое лицо, отдел, компания">
                 <constraints nullable="false"/>
             </column>
-            <column name="info" type="JSONB" remarks="Json с дополнительными полями">
+            <!-- TODO разграничение доступа: какую информацию может видеть лубой человек какую из списка контактов -->
+            <column name="publicInfo" type="JSONB" remarks="Json с дополнительными полями">
                 <constraints nullable="false"/>
             </column>
+            <!-- TODO был в сети -->
             <column name="userStatusId" type="BIGINT"
                     remarks="Состояние пользователя: Не в сети, В сети, Не беспокоить">
+                <constraints nullable="false"/>
+            </column>
+            <column name="locale" type="VARCHAR(16)" remarks="Язык">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timeZone" type="VARCHAR(6)" remarks="Часовой пояс">
                 <constraints nullable="false"/>
             </column>
             <column name="createTime" type="BIGINT" remarks="Дата создания записи">
@@ -648,6 +684,9 @@
             </column>
         </createTable>
 
+        <!--
+        TODO Переработать структуру хранения изменений
+        -->
         <createTable tableName="UserLog" remarks="История изменения пользователь">
             <column name="id" type="BIGINT" remarks="ID записи">
                 <constraints nullable="false" primaryKey="true"/>
@@ -713,7 +752,10 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
+        <!--
+        TODO Статус в сети невсети, но дополнительно пользователь может указать не беспокоить, в командировке, на совещании, в отпуске и тд
+        TODO Стратусы просто текст, для каждого может быть свой список
+        -->
         <createTable tableName="UserStatus" remarks="Справочник статусов пользователя">
             <column name="id" type="BIGINT" remarks="ID записи">
                 <constraints nullable="false" primaryKey="true"/>
@@ -751,7 +793,7 @@
             </column>
         </createTable>
 
-        <createTable tableName="UserTree" remarks="Дерево пользователей">
+        <createTable tableName="UserTree" remarks="Дерево пользователей. Данные являются избыточными, возможно восстановить.">
             <column name="parentUserId" type="BIGINT" remarks="ID родительского пользователя">
                 <constraints nullable="false"/>
             </column>
@@ -854,12 +896,9 @@
         <addForeignKeyConstraint constraintName="FileInfo_deletedBy_fk"
                                  baseTableName="FileInfo" baseColumnNames="deletedBy"
                                  referencedTableName="UserInfo" referencedColumnNames="id"/>
-        <createIndex indexName="FileInfo_crc32_idx" unique="false"
+        <createIndex indexName="FileInfo_crc32_size_idx" unique="false"
                      tableName="FileInfo">
             <column name="crc32" type="int"/>
-        </createIndex>
-        <createIndex indexName="FileInfo_size_idx" unique="false"
-                     tableName="FileInfo">
             <column name="fileSize" type="bigint"/>
         </createIndex>
 
@@ -872,6 +911,9 @@
         <addForeignKeyConstraint constraintName="Message_childChatId_fk"
                                  baseTableName="Message" baseColumnNames="childChatId"
                                  referencedTableName="Chat" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="Message_parentMessageId_fk"
+                                 baseTableName="Message" baseColumnNames="parentMessageId"
+                                 referencedTableName="Message" referencedColumnNames="id"/>
         <addForeignKeyConstraint constraintName="Message_createdBy_fk"
                                  baseTableName="Message" baseColumnNames="createdBy"
                                  referencedTableName="UserInfo" referencedColumnNames="id"/>
@@ -881,6 +923,10 @@
         <addForeignKeyConstraint constraintName="Message_deletedBy_fk"
                                  baseTableName="Message" baseColumnNames="deletedBy"
                                  referencedTableName="UserInfo" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="MessageFeedback_messageId_fk"
+                                 baseTableName="MessageFeedback" baseColumnNames="messageId"
+                                 referencedTableName="Message" referencedColumnNames="id"/>
 
         <addForeignKeyConstraint constraintName="MessageLog_messageId_fk"
                                  baseTableName="MessageLog" baseColumnNames="messageId"
@@ -1066,8 +1112,10 @@
             <column name="id">1</column>
             <column name="name">system</column>
             <column name="userType">ADMIN</column>
-            <column name="info">{}</column>
+            <column name="publicInfo">{}</column>
             <column name="userStatusId">4</column>
+            <column name="locale">en</column>
+            <column name="timeZone">MSK</column>
             <column name="createTime">1588885800000</column>
             <column name="createdBy">1</column>
             <column name="updateTime">1588885800000</column>
@@ -1077,8 +1125,10 @@
             <column name="id">101</column>
             <column name="name">ИИ</column>
             <column name="userType">ADMIN</column>
-            <column name="info">{}</column>
+            <column name="publicInfo">{}</column>
             <column name="userStatusId">4</column>
+            <column name="locale">ru</column>
+            <column name="timeZone">MSK</column>
             <column name="createTime">1588885800000</column>
             <column name="createdBy">1</column>
             <column name="updateTime">1588885800000</column>

@@ -6,7 +6,7 @@ import com.zemrow.messenger.entity.enums.EntryPointTypeEnum;
 /**
  * Класс сгенерирован автоматически, для таблицы UserEntryPoint(Способы авторизации пользователя) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class UserEntryPoint extends AbstractEntityWithId {
 

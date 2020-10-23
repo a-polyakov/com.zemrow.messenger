@@ -1,23 +1,10 @@
 package com.zemrow.messenger.db.querydsl;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mysema.codegen.CodeWriter;
-import com.mysema.codegen.model.ClassType;
-import com.mysema.codegen.model.Parameter;
-import com.mysema.codegen.model.SimpleType;
-import com.mysema.codegen.model.Type;
-import com.mysema.codegen.model.TypeCategory;
-import com.mysema.codegen.model.Types;
-import com.querydsl.codegen.EntityType;
-import com.querydsl.codegen.Property;
-import com.querydsl.codegen.SerializerConfig;
-import com.querydsl.codegen.TypeMappings;
-import com.querydsl.core.types.ConstructorExpression;
-import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.PathMetadata;
-import com.querydsl.core.types.PathMetadataFactory;
-import com.querydsl.core.types.Projections;
+import com.mysema.codegen.model.*;
+import com.querydsl.codegen.*;
+import com.querydsl.core.types.*;
 import com.querydsl.core.types.dsl.PathInits;
 import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.sql.ColumnMetadata;
@@ -26,20 +13,15 @@ import com.querydsl.sql.codegen.NamingStrategy;
 import com.querydsl.sql.codegen.SQLCodegenModule;
 import com.querydsl.sql.codegen.support.ForeignKeyData;
 import com.querydsl.sql.codegen.support.InverseForeignKeyData;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.*;
 
-import static com.mysema.codegen.Symbols.COMMA;
-import static com.mysema.codegen.Symbols.EMPTY;
-import static com.mysema.codegen.Symbols.SUPER;
+import static com.mysema.codegen.Symbols.*;
 
 /**
  * Настройка генерации констант
@@ -47,6 +29,21 @@ import static com.mysema.codegen.Symbols.SUPER;
  * @author Alexandr Polyakov on 2020.05.07
  */
 public class QueryDslMetaDataSerializer extends MetaDataSerializer {
+
+    private static final Map<Integer, String> typeConstants = new HashMap<>();
+
+    static {
+        try {
+            for (Field field : java.sql.Types.class.getDeclaredFields()) {
+                if (field.getType().equals(Integer.TYPE)) {
+                    typeConstants.put(field.getInt(null), field.getName());
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
+
+    }
 
     //TODO
     private final Class<?> entityPathType;
@@ -63,24 +60,24 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
      */
     @Inject
     public QueryDslMetaDataSerializer(TypeMappings typeMappings,
-        NamingStrategy namingStrategy,
-        @Named(SQLCodegenModule.INNER_CLASSES_FOR_KEYS) boolean innerClassesForKeys,
-        @Named(SQLCodegenModule.IMPORTS) Set<String> imports,
-        @Named(SQLCodegenModule.COLUMN_COMPARATOR) Comparator<Property> columnComparator,
-        @Named(SQLCodegenModule.ENTITYPATH_TYPE) Class<?> entityPathType) {
+                                      NamingStrategy namingStrategy,
+                                      @Named(SQLCodegenModule.INNER_CLASSES_FOR_KEYS) boolean innerClassesForKeys,
+                                      @Named(SQLCodegenModule.IMPORTS) Set<String> imports,
+                                      @Named(SQLCodegenModule.COLUMN_COMPARATOR) Comparator<Property> columnComparator,
+                                      @Named(SQLCodegenModule.ENTITYPATH_TYPE) Class<?> entityPathType) {
         super(typeMappings, namingStrategy, innerClassesForKeys, imports, columnComparator, entityPathType);
         this.entityPathType = entityPathType;
     }
 
     protected void introImports(CodeWriter writer, SerializerConfig config,
-        EntityType model) throws IOException {
+                                EntityType model) throws IOException {
         writer.staticimports(PathMetadataFactory.class);
 
         // import package of query type
         Type queryType = typeMappings.getPathType(model, model, true);
         if (!model.getPackageName().isEmpty()
-            && !queryType.getPackageName().equals(model.getPackageName())
-            && !queryType.getSimpleName().equals(model.getSimpleName())) {
+                && !queryType.getPackageName().equals(model.getPackageName())
+                && !queryType.getSimpleName().equals(model.getSimpleName())) {
             String fullName = model.getFullName();
             String packageName = model.getPackageName();
             if (fullName.substring(packageName.length() + 1).contains(".")) {
@@ -107,8 +104,7 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
         boolean inits = false;
         if (model.hasEntityFields() || model.hasInits()) {
             inits = true;
-        }
-        else {
+        } else {
             Set<TypeCategory> collections = Sets.newHashSet(TypeCategory.COLLECTION, TypeCategory.LIST, TypeCategory.SET);
             for (Property property : model.getProperties()) {
                 if (!property.isInherited() && collections.contains(property.getType().getCategory())) {
@@ -124,9 +120,9 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
         writer.importClasses(classes.toArray(new String[classes.size()]));
 
         Collection<ForeignKeyData> foreignKeys = (Collection<ForeignKeyData>)
-            model.getData().get(ForeignKeyData.class);
+                model.getData().get(ForeignKeyData.class);
         Collection<InverseForeignKeyData> inverseForeignKeys = (Collection<InverseForeignKeyData>)
-            model.getData().get(InverseForeignKeyData.class);
+                model.getData().get(InverseForeignKeyData.class);
         boolean addJavaUtilImport = false;
         if (foreignKeys != null) {
             for (ForeignKeyData keyData : foreignKeys) {
@@ -156,12 +152,13 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
         writeUserImports(writer);
     }
 
-    @Override protected void introJavadoc(CodeWriter writer, EntityType model) throws IOException {
+    @Override
+    protected void introJavadoc(CodeWriter writer, EntityType model) throws IOException {
         final String simpleName = model.getSimpleName();
-        final String tableRemarks = (String)model.getData().get(QueryDslMetaDataExporter.REMARKS);
+        final String tableRemarks = (String) model.getData().get(QueryDslMetaDataExporter.REMARKS);
         writer.javadoc("Класс сгенерирован автоматически, для таблицы " + simpleName + (tableRemarks != null ? "(" + tableRemarks + ")" : "") + " из БД"
-            , ""
-            , "@author " + getClass().getName() + " on " + QueryDslMetaDataExporter.DATE_FORMAT.format(new Date()));
+                , ""
+                , "@author " + getClass().getName() + " on " + QueryDslMetaDataExporter.DATE_FORMAT.format(new Date()));
     }
 
     @Override
@@ -181,7 +178,7 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
 
     @Override
     protected void introDefaultInstance(CodeWriter writer, EntityType model, String defaultName) throws IOException {
-        final String tableRemarks = (String)model.getData().get(QueryDslMetaDataExporter.REMARKS);
+        final String tableRemarks = (String) model.getData().get(QueryDslMetaDataExporter.REMARKS);
         if (tableRemarks != null) {
             writer.javadoc(tableRemarks);
         }
@@ -189,12 +186,34 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
     }
 
     protected void serializeProperties(EntityType model, SerializerConfig config,
-        CodeWriter writer) throws IOException {
+                                       CodeWriter writer) throws IOException {
+        for (Property property : QueryDslEntitySerializer.getSortProperties(model)) {
+            final String remarks = (String) property.getData().get(QueryDslMetaDataExporter.REMARKS);
+            if (remarks != null) {
+                writer.javadoc(remarks);
+            }
+
+            String name = property.getName();
+            StringBuilder nameConstant = new StringBuilder(String.valueOf(Character.toUpperCase(name.charAt(0))));
+            for (int i = 1; i < name.length(); i++) {
+                char c = name.charAt(i);
+                if (Character.isUpperCase(c)) {
+                    nameConstant.append('_');
+                } else {
+                    c = Character.toUpperCase(c);
+                }
+                nameConstant.append(c);
+            }
+            property.getData().put("nameConstant", nameConstant.toString());
+            writer.line("public static final String ", nameConstant.toString(),
+                    ASSIGN, QUOTE, name, QUOTE, SEMICOLON).nl();
+        }
+
         for (Property property : QueryDslEntitySerializer.getSortProperties(model)) {
             // FIXME : the custom types should have the custom type category
             if (typeMappings.isRegistered(property.getType())
-                && property.getType().getCategory() != TypeCategory.CUSTOM
-                && property.getType().getCategory() != TypeCategory.ENTITY) {
+                    && property.getType().getCategory() != TypeCategory.CUSTOM
+                    && property.getType().getCategory() != TypeCategory.ENTITY) {
                 customField(model, property, config, writer);
                 continue;
             }
@@ -254,12 +273,41 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
 
     @Override
     protected void serialize(EntityType model, Property field, Type type, CodeWriter writer,
-        String factoryMethod, String... args) throws IOException {
-        final String remarks = (String)field.getData().get(QueryDslMetaDataExporter.REMARKS);
+                             String factoryMethod, String... args) throws IOException {
+        final String remarks = (String) field.getData().get(QueryDslMetaDataExporter.REMARKS);
         if (remarks != null) {
             writer.javadoc(remarks);
         }
-        super.serialize(model, field, type, writer, factoryMethod, args);
+        Supertype superType = model.getSuperType();
+        StringBuilder value = new StringBuilder();
+        if (field.isInherited() && superType != null) {
+            if (!superType.getEntityType().hasEntityFields()) {
+                value.append("_super." + field.getEscapedName());
+            }
+        } else {
+            String nameConstant = (String) field.getData().get("nameConstant");
+            value.append(factoryMethod + "(" + nameConstant);
+            String[] var9 = args;
+            int var10 = args.length;
+
+            for (int var11 = 0; var11 < var10; ++var11) {
+                String arg = var9[var11];
+                value.append(", " + arg);
+            }
+
+            value.append(")");
+        }
+
+        if (field.isInherited()) {
+            writer.line(new String[]{"//inherited"});
+        }
+
+        if (value.length() > 0) {
+            writer.publicFinal(type, field.getEscapedName(), value.toString());
+        } else {
+            writer.publicFinal(type, field.getEscapedName());
+        }
+
     }
 
     @Override
@@ -268,7 +316,7 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
         String genericName = writer.getGenericName(true, model);
 
         boolean stringOrBoolean = model.getOriginalCategory() == TypeCategory.STRING
-            || model.getOriginalCategory() == TypeCategory.BOOLEAN;
+                || model.getOriginalCategory() == TypeCategory.BOOLEAN;
 //        boolean hasEntityFields = model.hasEntityFields() || superTypeHasEntityFields(model);
         boolean hasEntityFields = false;
 //        String thisOrSuper = hasEntityFields ? THIS : SUPER;
@@ -281,15 +329,49 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
         writer.beginConstructor(new Parameter("variable", Types.STRING));
         if (stringOrBoolean) {
             writer.line(thisOrSuper, "(forVariable(variable)", additionalParams, ");");
-        }
-        else {
+        } else {
             writer.line(thisOrSuper, "(", localName.equals(genericName) ? EMPTY : "(Class) ",
-                writer.getClassConstant(localName) + COMMA + "forVariable(variable)", hasEntityFields ? ", INITS" : EMPTY,
-                additionalParams, ");");
+                    writer.getClassConstant(localName) + COMMA + "forVariable(variable)", hasEntityFields ? ", INITS" : EMPTY,
+                    additionalParams, ");");
         }
         if (!hasEntityFields) {
             constructorContent(writer, model);
         }
+        writer.end();
+    }
+
+    @Override
+    protected void outro(EntityType model, CodeWriter writer) throws IOException {
+        writer.beginPublicMethod(Types.VOID,"addMetadata");
+        for (Property property : QueryDslEntitySerializer.getSortProperties(model)) {
+            String name = property.getEscapedName();
+            ColumnMetadata metadata = (ColumnMetadata) property.getData().get("COLUMN");
+            StringBuilder columnMeta = new StringBuilder();
+            columnMeta.append("ColumnMetadata");
+            String nameConstant = (String) property.getData().get("nameConstant");
+
+            columnMeta.append(".named(" + nameConstant + ")");
+            columnMeta.append(".withIndex(" + metadata.getIndex() + ")");
+            if (metadata.hasJdbcType()) {
+                String type = String.valueOf(metadata.getJdbcType());
+                if (typeConstants.containsKey(metadata.getJdbcType())) {
+                    type = "Types." + typeConstants.get(metadata.getJdbcType());
+                }
+                columnMeta.append(".ofType(" + type + ")");
+            }
+            if (metadata.hasSize()) {
+                columnMeta.append(".withSize(" + metadata.getSize() + ")");
+            }
+            if (metadata.getDigits() > 0) {
+                columnMeta.append(".withDigits(" + metadata.getDigits() + ")");
+            }
+            if (!metadata.isNullable()) {
+                columnMeta.append(".notNull()");
+            }
+            writer.line("addMetadata(", name, ", ", columnMeta.toString(), ");");
+        }
+        writer.end();
+
         writer.end();
     }
 }

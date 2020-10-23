@@ -1,12 +1,12 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.enums.MessageTypeEnum;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.MessageTypeEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы Message(Сообщение) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class Message extends AbstractEntityWithId {
 
@@ -31,9 +31,14 @@ public class Message extends AbstractEntityWithId {
     private Long childChatId;
 
     /**
-     * Тип сообщения
+     * Тип сообщени (SIMPLE, ERROR)
      */
     private MessageTypeEnum messageType;
+
+    /**
+     * ID родительского сообщения
+     */
+    private Long parentMessageId;
 
     /**
      * Дата создания записи
@@ -78,7 +83,8 @@ public class Message extends AbstractEntityWithId {
      * @param text Текст
      * @param fileId ID прикрепленного файла
      * @param childChatId ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
-     * @param messageType Тип сообщения
+     * @param messageType Тип сообщени (SIMPLE, ERROR)
+     * @param parentMessageId ID родительского сообщения
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
      * @param updateTime Дата обновления записи
@@ -86,13 +92,14 @@ public class Message extends AbstractEntityWithId {
      * @param deleteTime Дата удаления записи
      * @param deletedBy Пользователь удаливший запись
      */
-    public Message(Long id, Long chatId, String text, Long fileId, Long childChatId, MessageTypeEnum messageType, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
+    public Message(Long id, Long chatId, String text, Long fileId, Long childChatId, MessageTypeEnum messageType, Long parentMessageId, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
         this.id = id;
         this.chatId = chatId;
         this.text = text;
         this.fileId = fileId;
         this.childChatId = childChatId;
         this.messageType = messageType;
+        this.parentMessageId = parentMessageId;
         this.createTime = createTime;
         this.createdBy = createdBy;
         this.updateTime = updateTime;
@@ -186,17 +193,31 @@ public class Message extends AbstractEntityWithId {
     }
 
     /**
-     * Получение тип сообщения
+     * Получение тип сообщени (simple, error)
      */
     public MessageTypeEnum getMessageType() {
         return messageType;
     }
 
     /**
-     * Установить тип сообщения
+     * Установить тип сообщени (simple, error)
      */
     public void setMessageType(MessageTypeEnum messageType) {
         this.messageType = messageType;
+    }
+
+    /**
+     * Получение id родительского сообщения
+     */
+    public Long getParentMessageId() {
+        return parentMessageId;
+    }
+
+    /**
+     * Установить id родительского сообщения
+     */
+    public void setParentMessageId(Long parentMessageId) {
+        this.parentMessageId = parentMessageId;
     }
 
     /**
@@ -303,6 +324,9 @@ public class Message extends AbstractEntityWithId {
         }
         if (messageType != null) {
             result.append(", messageType = \"").append(messageType).append('"');
+        }
+        if (parentMessageId != null) {
+            result.append(", parentMessageId = \"").append(parentMessageId).append('"');
         }
         if (createTime != null) {
             result.append(", createTime = \"").append(createTime).append('"');

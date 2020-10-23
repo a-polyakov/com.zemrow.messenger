@@ -5,7 +5,7 @@ import com.zemrow.messenger.SessionStorage;
 /**
  * Класс сгенерирован автоматически, для таблицы Numbering(Настройка нумирации для компании и типа чата) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class Numbering extends AbstractEntityWithId {
 

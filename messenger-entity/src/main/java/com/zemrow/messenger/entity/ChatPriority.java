@@ -3,7 +3,7 @@ package com.zemrow.messenger.entity;
 /**
  * Класс сгенерирован автоматически, для таблицы ChatPriority(Приоритет задания) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class ChatPriority extends AbstractEntity {
 

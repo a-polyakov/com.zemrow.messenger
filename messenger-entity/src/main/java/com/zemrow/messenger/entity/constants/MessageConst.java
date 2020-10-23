@@ -1,16 +1,16 @@
 package com.zemrow.messenger.entity.constants;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-import com.zemrow.messenger.entity.Message;
-
-
-import com.querydsl.core.types.dsl.*;
-
 import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.EnumPath;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.sql.ColumnMetadata;
+import com.zemrow.messenger.entity.Message;
 import com.zemrow.messenger.entity.enums.MessageTypeEnum;
 
-import com.querydsl.sql.ColumnMetadata;
 import java.sql.Types;
+
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 
@@ -18,7 +18,7 @@ import java.sql.Types;
 /**
  * Класс сгенерирован автоматически, для таблицы Message(Сообщение) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
 public class MessageConst extends com.querydsl.sql.RelationalPathBase<Message> {
 
@@ -32,62 +32,132 @@ public class MessageConst extends com.querydsl.sql.RelationalPathBase<Message> {
     /**
      * ID записи
      */
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public static final String ID = "id";
 
     /**
      * ID чата
      */
-    public final NumberPath<Long> chatId = createNumber("chatId", Long.class);
+    public static final String CHAT_ID = "chatId";
 
     /**
      * Текст
      */
-    public final StringPath text = createString("text");
+    public static final String TEXT = "text";
 
     /**
      * ID прикрепленного файла
      */
-    public final NumberPath<Long> fileId = createNumber("fileId", Long.class);
+    public static final String FILE_ID = "fileId";
 
     /**
      * ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
      */
-    public final NumberPath<Long> childChatId = createNumber("childChatId", Long.class);
+    public static final String CHILD_CHAT_ID = "childChatId";
 
     /**
-     * Тип сообщения
+     * Тип сообщени (SIMPLE, ERROR)
      */
-    public final EnumPath<MessageTypeEnum> messageType = createEnum("messageType", MessageTypeEnum.class);
+    public static final String MESSAGE_TYPE = "messageType";
+
+    /**
+     * ID родительского сообщения
+     */
+    public static final String PARENT_MESSAGE_ID = "parentMessageId";
 
     /**
      * Дата создания записи
      */
-    public final NumberPath<Long> createTime = createNumber("createTime", Long.class);
+    public static final String CREATE_TIME = "createTime";
 
     /**
      * Пользователь создавший запись
      */
-    public final NumberPath<Long> createdBy = createNumber("createdBy", Long.class);
+    public static final String CREATED_BY = "createdBy";
 
     /**
      * Дата обновления записи
      */
-    public final NumberPath<Long> updateTime = createNumber("updateTime", Long.class);
+    public static final String UPDATE_TIME = "updateTime";
 
     /**
      * Пользователь обновивший запись
      */
-    public final NumberPath<Long> updatedBy = createNumber("updatedBy", Long.class);
+    public static final String UPDATED_BY = "updatedBy";
 
     /**
      * Дата удаления записи
      */
-    public final NumberPath<Long> deleteTime = createNumber("deleteTime", Long.class);
+    public static final String DELETE_TIME = "deleteTime";
 
     /**
      * Пользователь удаливший запись
      */
-    public final NumberPath<Long> deletedBy = createNumber("deletedBy", Long.class);
+    public static final String DELETED_BY = "deletedBy";
+
+    /**
+     * ID записи
+     */
+    public final NumberPath<Long> id = createNumber(ID, Long.class);
+
+    /**
+     * ID чата
+     */
+    public final NumberPath<Long> chatId = createNumber(CHAT_ID, Long.class);
+
+    /**
+     * Текст
+     */
+    public final StringPath text = createString(TEXT);
+
+    /**
+     * ID прикрепленного файла
+     */
+    public final NumberPath<Long> fileId = createNumber(FILE_ID, Long.class);
+
+    /**
+     * ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
+     */
+    public final NumberPath<Long> childChatId = createNumber(CHILD_CHAT_ID, Long.class);
+
+    /**
+     * Тип сообщени (SIMPLE, ERROR)
+     */
+    public final EnumPath<MessageTypeEnum> messageType = createEnum(MESSAGE_TYPE, MessageTypeEnum.class);
+
+    /**
+     * ID родительского сообщения
+     */
+    public final NumberPath<Long> parentMessageId = createNumber(PARENT_MESSAGE_ID, Long.class);
+
+    /**
+     * Дата создания записи
+     */
+    public final NumberPath<Long> createTime = createNumber(CREATE_TIME, Long.class);
+
+    /**
+     * Пользователь создавший запись
+     */
+    public final NumberPath<Long> createdBy = createNumber(CREATED_BY, Long.class);
+
+    /**
+     * Дата обновления записи
+     */
+    public final NumberPath<Long> updateTime = createNumber(UPDATE_TIME, Long.class);
+
+    /**
+     * Пользователь обновивший запись
+     */
+    public final NumberPath<Long> updatedBy = createNumber(UPDATED_BY, Long.class);
+
+    /**
+     * Дата удаления записи
+     */
+    public final NumberPath<Long> deleteTime = createNumber(DELETE_TIME, Long.class);
+
+    /**
+     * Пользователь удаливший запись
+     */
+    public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
 
     public MessageConst(String variable) {
         super(Message.class, forVariable(variable), "public", "Message");
@@ -105,18 +175,19 @@ public class MessageConst extends com.querydsl.sql.RelationalPathBase<Message> {
     }
 
     public void addMetadata() {
-        addMetadata(id, ColumnMetadata.named("id").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(chatId, ColumnMetadata.named("chatId").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(text, ColumnMetadata.named("text").withIndex(3).ofType(Types.VARCHAR).withSize(2147483647));
-        addMetadata(fileId, ColumnMetadata.named("fileId").withIndex(4).ofType(Types.BIGINT).withSize(19));
-        addMetadata(childChatId, ColumnMetadata.named("childChatId").withIndex(5).ofType(Types.BIGINT).withSize(19));
-        addMetadata(messageType, ColumnMetadata.named("messageType").withIndex(6).ofType(Types.VARCHAR).withSize(16).notNull());
-        addMetadata(createTime, ColumnMetadata.named("createTime").withIndex(7).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(createdBy, ColumnMetadata.named("createdBy").withIndex(8).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(updateTime, ColumnMetadata.named("updateTime").withIndex(9).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(updatedBy, ColumnMetadata.named("updatedBy").withIndex(10).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(deleteTime, ColumnMetadata.named("deleteTime").withIndex(11).ofType(Types.BIGINT).withSize(19));
-        addMetadata(deletedBy, ColumnMetadata.named("deletedBy").withIndex(12).ofType(Types.BIGINT).withSize(19));
+        addMetadata(id, ColumnMetadata.named(ID).withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(chatId, ColumnMetadata.named(CHAT_ID).withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(text, ColumnMetadata.named(TEXT).withIndex(3).ofType(Types.VARCHAR).withSize(2147483647));
+        addMetadata(fileId, ColumnMetadata.named(FILE_ID).withIndex(4).ofType(Types.BIGINT).withSize(19));
+        addMetadata(childChatId, ColumnMetadata.named(CHILD_CHAT_ID).withIndex(5).ofType(Types.BIGINT).withSize(19));
+        addMetadata(messageType, ColumnMetadata.named(MESSAGE_TYPE).withIndex(6).ofType(Types.VARCHAR).withSize(16).notNull());
+        addMetadata(parentMessageId, ColumnMetadata.named(PARENT_MESSAGE_ID).withIndex(7).ofType(Types.BIGINT).withSize(19));
+        addMetadata(createTime, ColumnMetadata.named(CREATE_TIME).withIndex(8).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(createdBy, ColumnMetadata.named(CREATED_BY).withIndex(9).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(updateTime, ColumnMetadata.named(UPDATE_TIME).withIndex(10).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(updatedBy, ColumnMetadata.named(UPDATED_BY).withIndex(11).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(deleteTime, ColumnMetadata.named(DELETE_TIME).withIndex(12).ofType(Types.BIGINT).withSize(19));
+        addMetadata(deletedBy, ColumnMetadata.named(DELETED_BY).withIndex(13).ofType(Types.BIGINT).withSize(19));
     }
 
 }

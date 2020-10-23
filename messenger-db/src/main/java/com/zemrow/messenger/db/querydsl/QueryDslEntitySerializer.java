@@ -11,15 +11,10 @@ import com.querydsl.codegen.Serializer;
 import com.querydsl.codegen.SerializerConfig;
 import com.querydsl.core.util.BeanUtils;
 import com.querydsl.sql.codegen.OrdinalPositionComparator;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Настройка генерации entity
@@ -110,7 +105,7 @@ public class QueryDslEntitySerializer implements Serializer {
             writer.annotation(annotation);
         }
 
-        // todo implement
+        // TODO implement
         if (hasId) {
             writer.beginClass(model, new SimpleType("AbstractEntityWithId"));
         }

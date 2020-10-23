@@ -6,7 +6,7 @@ collections Controller
 collections Service
 collections Logic
 collections Dao
-database Ignite
+database Database
 autonumber
 User -> Client
 Client -> Server: Requers
@@ -16,18 +16,18 @@ Service -> Service : Checks before transaction
 group Transaction
 Service -> Logic : step 1
 Logic -> Dao
-Dao -> Ignite
-Dao <- Ignite
+Dao -> Database
+Dao <- Database
 Logic <- Dao
 Service <- Logic
 Service -> Logic : step n
 Logic -> Dao
-Dao -> Ignite
-Dao <- Ignite
+Dao -> Database
+Dao <- Database
 Logic <- Dao
 Logic -> Dao
-Dao -> Ignite
-Dao <- Ignite
+Dao -> Database
+Dao <- Database
 Logic <- Dao
 Service <- Logic
 end

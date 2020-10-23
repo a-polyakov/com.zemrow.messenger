@@ -1,9 +1,11 @@
 package com.zemrow.messenger.entity;
 
+import com.zemrow.messenger.entity.enums.TagGroupEnum;
+
 /**
- * Класс сгенерирован автоматически, для таблицы ChatTagGroup(Групповые теги чата (для упрощения поиска последнего тега из группы)) из БД
- * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * Класс сгенерирован автоматически, для таблицы ChatTagGroup(Групповые теги чата (для упрощения поиска последнего тега из группы). Данные являются избыточными, возможно восстановить.) из БД
+ *
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class ChatTagGroup extends AbstractEntity {
 
@@ -15,7 +17,7 @@ public class ChatTagGroup extends AbstractEntity {
     /**
      * Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
-    private String tagGroup;
+    private TagGroupEnum tagGroup;
 
     /**
      * ID тега из сообщения
@@ -23,18 +25,18 @@ public class ChatTagGroup extends AbstractEntity {
     private Long messageTagId;
 
     /**
-     * Создать Групповые теги чата (для упрощения поиска последнего тега из группы)
+     * Создать Групповые теги чата (для упрощения поиска последнего тега из группы). Данные являются избыточными, возможно восстановить.
      */
     public ChatTagGroup() {
     }
 
     /**
-     * Создать Групповые теги чата (для упрощения поиска последнего тега из группы)
+     * Создать Групповые теги чата (для упрощения поиска последнего тега из группы). Данные являются избыточными, возможно восстановить.
      * @param chatId ID чата
      * @param tagGroup Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      * @param messageTagId ID тега из сообщения
      */
-    public ChatTagGroup(Long chatId, String tagGroup, Long messageTagId) {
+    public ChatTagGroup(Long chatId, TagGroupEnum tagGroup, Long messageTagId) {
         this.chatId = chatId;
         this.tagGroup = tagGroup;
         this.messageTagId = messageTagId;
@@ -57,14 +59,14 @@ public class ChatTagGroup extends AbstractEntity {
     /**
      * Получение группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
-    public String getTagGroup() {
+    public TagGroupEnum getTagGroup() {
         return tagGroup;
     }
 
     /**
      * Установить группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
-    public void setTagGroup(String tagGroup) {
+    public void setTagGroup(TagGroupEnum tagGroup) {
         this.tagGroup = tagGroup;
     }
 

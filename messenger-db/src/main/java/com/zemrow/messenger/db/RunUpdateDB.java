@@ -3,13 +3,13 @@ package com.zemrow.messenger.db;
 import com.zemrow.messenger.constants.DBConst;
 import com.zemrow.messenger.constants.SystemPropertiesConst;
 import com.zemrow.messenger.db.querydsl.QueryDslGenerator;
+import liquibase.integration.commandline.Main;
+
 import java.io.File;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import liquibase.integration.commandline.Main;
 
 /**
  * Обновление БД, актуализация констант, актуализация сущностей
@@ -53,7 +53,6 @@ public class RunUpdateDB {
 
             long time = System.currentTimeMillis();
 
-//        JooqGenerator.generate(url, username, password);
             QueryDslGenerator.generate(url, username, password);
 
             time = System.currentTimeMillis() - time;

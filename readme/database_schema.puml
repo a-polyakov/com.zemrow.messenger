@@ -1,9 +1,18 @@
 @startuml
-    class User{
+'Скрыть иконку класса
+hide circle
+'Скрыть раздел с полями если он пустой
+hide empty fields
+'Скрыть раздел с методами если он пустой
+hide empty methods
+'Скрыть поля и методы
+'hide members
+
+    class UserInfo{
         Long avatarId
         String name
         UserTypeEnum userType
-        Map<String, String> info
+        Map<String, String> publicInfo
         Long userStatusId
         Locale locale
         TimeZone timeZone
@@ -20,8 +29,9 @@
         Long fileId
         Long childChatId
         MessageTypeEnum messageType
+        Long parentMessageId
     }
-    class File{
+    class FileInfo{
     	String name
     	String mimeType
     	Long fileSize
@@ -44,28 +54,32 @@
         Long messageId
         Long userId
         MessageStatusEnum messageStatus
+        FeedbackFeedbackEnum feedbackFeedback
     }
-
-class Tag{
-    String tag
-    TagTypeEnum tagType
-    String description
-    Boolean leftMenuShow
-    Boolean headerShow
-    TagGroupEnum tagGroup
-}
+    class MessageFeedback {
+        Long messageId
+        Integer feedback
+    }
+    class Tag{
+        String tag
+        TagTypeEnum tagType
+        String description
+        Boolean leftMenuShow
+        Boolean headerShow
+        TagGroupEnum tagGroup
+    }
     class UserContact{
         Long parentUserId
         Long childUserId
+        UserContactStatusEnum userContactStatus
         String label
-        boolean favorite
         Long chatId
     }
     class UserFilter {
          Long userId
-         FilterGridEnum gridId
-         String filterId
-         String data
+         FilterPageTypeEnum pageType
+         String filterLabel
+         JSON data
     }
     class UserLink {
          Long parentUserId
@@ -83,7 +97,7 @@ class Tag{
         String label
         UserStatusTypeEnum userStatusType
         Integer weight
-         Integer color
+        Integer color
     }
     class UserTree {
          Long parentUserId
@@ -93,7 +107,9 @@ class Tag{
     class ChatToUser{
         Long chatId
         Long userId
+        boolean favorite
         ChatToUserTypeEnum chatToUserType
+        boolean mute
     }
     class ChatToUserLastMessage{
         Long chatToUserId
@@ -104,17 +120,21 @@ class Tag{
         Long childChatId
         Integer distance
     }
+    class ChatPriority{
+        Long chatId
+        Long priority
+    }
     class ChatWork{
         Long chatId
         Long userId
         Long startTime
         Long endTime
     }
-    class ChatReminders{
+    class ChatReminder{
         Long chatId
         Long userId
         String text
-        Long dateTime
+        Long reminderTime
     }
     class ChatTagGroup {
         Long chatId
@@ -123,9 +143,8 @@ class Tag{
     }
     class Numbering {
         Long userId
-        ChatTypeEnum chatType
         String prefix
-        Long maxNumberLong maxNumber
+        Long maxNumber
     }
     class UserEntryPoint {
         Long userId
@@ -137,6 +156,7 @@ class Tag{
     class UserSession  {
         Long userEntryPointId
         String token
+        Long userEntryPointId
     }
     class UserSessionFail  {
         Long userEntryPointId
@@ -145,34 +165,34 @@ class Tag{
     }
     class RequestLog {
         String token
-        String serviceId
-        String action
+        String eventId
         Long startInvoke
         Long endInvoke
         String errorStackTrace
     }
 
-User -[#00FF00]- UserContact
-User -[#00FF00]left-{ UserEntryPoint
-User -[#00FF00]-{ UserFilter
-User -[#00FF00]-{ UserLink
-User -[#00FF00]-{ UserLog
-User -[#00FF00]-{ UserTree
-User -[#00FF00]-{ UserStatus
-User -[#00FF00]-{ ChatWork
-User -[#00FF00]-{ ChatReminders
-User -[#00FF00]-{ ChatToUser
-User -[#00FF00]-{ MessageToUser
-User -[#00FF00]-{ Numbering
+UserInfo -[#00FF00]- UserContact
+UserInfo -[#00FF00]left-{ UserEntryPoint
+UserInfo -[#00FF00]-{ UserFilter
+UserInfo -[#00FF00]-{ UserLink
+UserInfo -[#00FF00]-{ UserLog
+UserInfo -[#00FF00]-{ UserTree
+UserInfo -[#00FF00]-{ UserStatus
+UserInfo -[#00FF00]-{ ChatWork
+UserInfo -[#00FF00]-{ ChatReminder
+UserInfo -[#00FF00]-{ ChatToUser
+UserInfo -[#00FF00]-{ MessageToUser
+UserInfo -[#00FF00]-{ Numbering
 
-User -[#000000]right-{ Chat
+UserInfo -[#000000]right-{ Chat
 
-Chat -[#FF0000]-{ ChatReminders
+Chat -[#FF0000]-{ ChatReminder
 Chat -[#FF0000]-{ ChatTagGroup
 Chat -[#FF0000]-{ ChatToUser
 Chat -[#FF0000]-{ ChatTree
 Chat -[#FF0000]-{ ChatWork
 Chat -[#FF0000]-{ UserContact
+Chat -[#FF0000]- ChatPriority
 
 Chat -[#000000]right-{ Message
 
@@ -181,7 +201,8 @@ Message -[#0000FF]-{ MessageToUser
 Message -[#0000FF]-{ MessageLog
 Message -[#0000FF]-{ MessageTag
 Message -[#0000FF]-{ ChatToUserLastMessage
-Message }-[#000000]- File
+Message }-[#000000]- FileInfo
+Message -[#0000FF]- MessageFeedback
 
 MessageTag }-[#000000]- Tag
 UserEntryPoint -[#000000]down-{ UserSession
@@ -193,7 +214,7 @@ UserStatus -[hidden]down- UserLog
 UserLog -[hidden]down- UserFilter
 UserFilter -[hidden]down- Numbering
 UserContact -[hidden]down- ChatWork
-ChatWork -[hidden]down- ChatReminders
+ChatWork -[hidden]down- ChatReminder
 ChatTagGroup -[hidden]down- ChatTree
 ChatToUser -down- ChatToUserLastMessage
 

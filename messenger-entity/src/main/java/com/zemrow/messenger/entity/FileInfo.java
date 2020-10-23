@@ -1,12 +1,12 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.enums.FileAccessTypeEnum;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.FileAccessTypeEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы FileInfo(Файл) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class FileInfo extends AbstractEntityWithId {
 

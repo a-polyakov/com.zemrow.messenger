@@ -1,13 +1,13 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.enums.TagTypeEnum;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.enums.TagGroupEnum;
+import com.zemrow.messenger.entity.enums.TagTypeEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы Tag(Полный перечень тегов) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class Tag extends AbstractEntityWithId {
 
@@ -27,12 +27,12 @@ public class Tag extends AbstractEntityWithId {
     private String description;
 
     /**
-     * показывать ли в левом меню
+     * Показывать ли в левом меню
      */
     private Boolean leftMenuShow;
 
     /**
-     * Показывать ли в хеадере
+     * Показывать ли в заголовке чата
      */
     private Boolean headerShow;
 
@@ -83,8 +83,8 @@ public class Tag extends AbstractEntityWithId {
      * @param tag Тег
      * @param tagType Тип тега для связки наименование тега с логикой
      * @param description Описание тега для автокомплита
-     * @param leftMenuShow показывать ли в левом меню
-     * @param headerShow Показывать ли в хеадере
+     * @param leftMenuShow Показывать ли в левом меню
+     * @param headerShow Показывать ли в заголовке чата
      * @param tagGroup Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
@@ -194,14 +194,14 @@ public class Tag extends AbstractEntityWithId {
     }
 
     /**
-     * Получение показывать ли в хеадере
+     * Получение показывать ли в заголовке чата
      */
     public Boolean getHeaderShow() {
         return headerShow;
     }
 
     /**
-     * Установить показывать ли в хеадере
+     * Установить показывать ли в заголовке чата
      */
     public void setHeaderShow(Boolean headerShow) {
         this.headerShow = headerShow;

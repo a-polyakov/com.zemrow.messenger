@@ -7,6 +7,7 @@ import com.querydsl.sql.dml.SQLDeleteClause;
 import com.querydsl.sql.dml.SQLUpdateClause;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.AbstractEntityWithId;
+
 import java.sql.Connection;
 
 /**
@@ -27,12 +28,12 @@ import java.sql.Connection;
  */
 public abstract class AbstractDaoWithId<E extends AbstractEntityWithId, Q extends RelationalPath> extends AbstractDao<E, Q> {
     /**
-     * Получить entity по id
+     * Получить запись по id
      *
-     * @param connection
-     * @param session
-     * @param id
-     * @return
+     * @param connection TODO
+     * @param session    TODO
+     * @param id         Идентификатор записи
+     * @return запись
      */
     protected E select(final Connection connection, final SessionStorage session, long id) {
         final SQLQuery<E> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
@@ -46,9 +47,9 @@ public abstract class AbstractDaoWithId<E extends AbstractEntityWithId, Q extend
     /**
      * Обновление записи в таблице по id
      *
-     * @param connection
-     * @param session
-     * @param entity
+     * @param connection TODO
+     * @param session    TODO
+     * @param entity     TODO
      */
     protected void update(final Connection connection, final SessionStorage session, E entity) {
         entity.preUpdate(session);
@@ -61,9 +62,9 @@ public abstract class AbstractDaoWithId<E extends AbstractEntityWithId, Q extend
     /**
      * Удаление записи из таблицы
      *
-     * @param connection
-     * @param session
-     * @param id
+     * @param connection TODO
+     * @param session    TODO
+     * @param id         TODO
      */
     protected void delete(final Connection connection, final SessionStorage session, long id) {
         final SQLDeleteClause query = new SQLDeleteClause(connection, QueryDslConfiguration.CUSTOM, getTable());
@@ -74,9 +75,9 @@ public abstract class AbstractDaoWithId<E extends AbstractEntityWithId, Q extend
     /**
      * Пометить запись как удаленная
      *
-     * @param connection
-     * @param session
-     * @param id
+     * @param connection TODO
+     * @param session    TODO
+     * @param id         TODO
      */
     protected void markAsDeleted(final Connection connection, final SessionStorage session, long id) {
         final E entity = select(connection, session, id);
@@ -86,9 +87,9 @@ public abstract class AbstractDaoWithId<E extends AbstractEntityWithId, Q extend
     /**
      * Пометить запись как удаленная
      *
-     * @param connection
-     * @param session
-     * @param entity
+     * @param connection TODO
+     * @param session    TODO
+     * @param entity     TODO
      */
     protected void markAsDeleted(final Connection connection, final SessionStorage session, E entity) {
         entity.preDelete(session);

@@ -1,12 +1,12 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.enums.ChatTypeEnum;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.ChatTypeEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы Chat(Чат) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class Chat extends AbstractEntityWithId {
 

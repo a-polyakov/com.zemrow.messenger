@@ -1,12 +1,12 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.enums.UserLinkTypeEnum;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.UserLinkTypeEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы UserLink(Организационная структура пользователей) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class UserLink extends AbstractEntityWithId {
 

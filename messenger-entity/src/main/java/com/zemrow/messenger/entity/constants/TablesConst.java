@@ -3,7 +3,7 @@ package com.zemrow.messenger.entity.constants;
 /**
  * Класс сгенерирован автоматически, для БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataExporter on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataExporter on 2020.10.23
  */
 public class TablesConst {
 
@@ -23,7 +23,7 @@ public class TablesConst {
     public static final ChatReminderConst ChatReminder = ChatReminderConst.ChatReminder;
 
     /**
-     * Групповые теги чата (для упрощения поиска последнего тега из группы)
+     * Групповые теги чата (для упрощения поиска последнего тега из группы). Данные являются избыточными, возможно восстановить.
      */
     public static final ChatTagGroupConst ChatTagGroup = ChatTagGroupConst.ChatTagGroup;
 
@@ -33,12 +33,12 @@ public class TablesConst {
     public static final ChatToUserConst ChatToUser = ChatToUserConst.ChatToUser;
 
     /**
-     * Последнее сообщение для пользователя в чате
+     * Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.
      */
     public static final ChatToUserLastMessageConst ChatToUserLastMessage = ChatToUserLastMessageConst.ChatToUserLastMessage;
 
     /**
-     * Дерево задач
+     * Дерево задач. Данные являются избыточными, возможно восстановить.
      */
     public static final ChatTreeConst ChatTree = ChatTreeConst.ChatTree;
 
@@ -56,6 +56,11 @@ public class TablesConst {
      * Сообщение
      */
     public static final MessageConst Message = MessageConst.Message;
+
+    /**
+     * Итоговый голос по сообщению.
+     */
+    public static final MessageFeedbackConst MessageFeedback = MessageFeedbackConst.MessageFeedback;
 
     /**
      * История сообщения
@@ -133,7 +138,7 @@ public class TablesConst {
     public static final UserStatusConst UserStatus = UserStatusConst.UserStatus;
 
     /**
-     * Дерево пользователей
+     * Дерево пользователей. Данные являются избыточными, возможно восстановить.
      */
     public static final UserTreeConst UserTree = UserTreeConst.UserTree;
 

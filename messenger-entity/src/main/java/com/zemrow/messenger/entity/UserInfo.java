@@ -1,12 +1,12 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.enums.UserTypeEnum;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.UserTypeEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы UserInfo(Пользователь) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class UserInfo extends AbstractEntityWithId {
 
@@ -28,12 +28,22 @@ public class UserInfo extends AbstractEntityWithId {
     /**
      * Json с дополнительными полями
      */
-    private String info;
+    private String publicInfo;
 
     /**
      * Состояние пользователя: Не в сети, В сети, Не беспокоить
      */
     private Long userStatusId;
+
+    /**
+     * Язык
+     */
+    private String locale;
+
+    /**
+     * Часовой пояс
+     */
+    private String timeZone;
 
     /**
      * Дата создания записи
@@ -77,8 +87,10 @@ public class UserInfo extends AbstractEntityWithId {
      * @param avatarId Ссылка на таблицу file где хранится аватар
      * @param name Наименование пользователя
      * @param userType Тип пользователя: физическое лицо, отдел, компания
-     * @param info Json с дополнительными полями
+     * @param publicInfo Json с дополнительными полями
      * @param userStatusId Состояние пользователя: Не в сети, В сети, Не беспокоить
+     * @param locale Язык
+     * @param timeZone Часовой пояс
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
      * @param updateTime Дата обновления записи
@@ -86,13 +98,15 @@ public class UserInfo extends AbstractEntityWithId {
      * @param deleteTime Дата удаления записи
      * @param deletedBy Пользователь удаливший запись
      */
-    public UserInfo(Long id, Long avatarId, String name, UserTypeEnum userType, String info, Long userStatusId, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
+    public UserInfo(Long id, Long avatarId, String name, UserTypeEnum userType, String publicInfo, Long userStatusId, String locale, String timeZone, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
         this.id = id;
         this.avatarId = avatarId;
         this.name = name;
         this.userType = userType;
-        this.info = info;
+        this.publicInfo = publicInfo;
         this.userStatusId = userStatusId;
+        this.locale = locale;
+        this.timeZone = timeZone;
         this.createTime = createTime;
         this.createdBy = createdBy;
         this.updateTime = updateTime;
@@ -174,15 +188,15 @@ public class UserInfo extends AbstractEntityWithId {
     /**
      * Получение json с дополнительными полями
      */
-    public String getInfo() {
-        return info;
+    public String getPublicInfo() {
+        return publicInfo;
     }
 
     /**
      * Установить json с дополнительными полями
      */
-    public void setInfo(String info) {
-        this.info = info;
+    public void setPublicInfo(String publicInfo) {
+        this.publicInfo = publicInfo;
     }
 
     /**
@@ -197,6 +211,34 @@ public class UserInfo extends AbstractEntityWithId {
      */
     public void setUserStatusId(Long userStatusId) {
         this.userStatusId = userStatusId;
+    }
+
+    /**
+     * Получение язык
+     */
+    public String getLocale() {
+        return locale;
+    }
+
+    /**
+     * Установить язык
+     */
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    /**
+     * Получение часовой пояс
+     */
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    /**
+     * Установить часовой пояс
+     */
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 
     /**
@@ -298,11 +340,17 @@ public class UserInfo extends AbstractEntityWithId {
         if (userType != null) {
             result.append(", userType = \"").append(userType).append('"');
         }
-        if (info != null) {
-            result.append(", info = \"").append(info).append('"');
+        if (publicInfo != null) {
+            result.append(", publicInfo = \"").append(publicInfo).append('"');
         }
         if (userStatusId != null) {
             result.append(", userStatusId = \"").append(userStatusId).append('"');
+        }
+        if (locale != null) {
+            result.append(", locale = \"").append(locale).append('"');
+        }
+        if (timeZone != null) {
+            result.append(", timeZone = \"").append(timeZone).append('"');
         }
         if (createTime != null) {
             result.append(", createTime = \"").append(createTime).append('"');

@@ -1,15 +1,13 @@
 package com.zemrow.messenger.entity.constants;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.sql.ColumnMetadata;
 import com.zemrow.messenger.entity.ChatPriority;
 
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-
-import com.querydsl.sql.ColumnMetadata;
 import java.sql.Types;
+
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 
@@ -17,7 +15,7 @@ import java.sql.Types;
 /**
  * Класс сгенерирован автоматически, для таблицы ChatPriority(Приоритет задания) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
 public class ChatPriorityConst extends com.querydsl.sql.RelationalPathBase<ChatPriority> {
 
@@ -31,12 +29,22 @@ public class ChatPriorityConst extends com.querydsl.sql.RelationalPathBase<ChatP
     /**
      * ID чата
      */
-    public final NumberPath<Long> chatId = createNumber("chatId", Long.class);
+    public static final String CHAT_ID = "chatId";
 
     /**
      * Приоритет
      */
-    public final NumberPath<Long> priority = createNumber("priority", Long.class);
+    public static final String PRIORITY = "priority";
+
+    /**
+     * ID чата
+     */
+    public final NumberPath<Long> chatId = createNumber(CHAT_ID, Long.class);
+
+    /**
+     * Приоритет
+     */
+    public final NumberPath<Long> priority = createNumber(PRIORITY, Long.class);
 
     public ChatPriorityConst(String variable) {
         super(ChatPriority.class, forVariable(variable), "public", "ChatPriority");
@@ -54,8 +62,8 @@ public class ChatPriorityConst extends com.querydsl.sql.RelationalPathBase<ChatP
     }
 
     public void addMetadata() {
-        addMetadata(chatId, ColumnMetadata.named("chatId").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(priority, ColumnMetadata.named("priority").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(chatId, ColumnMetadata.named(CHAT_ID).withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(priority, ColumnMetadata.named(PRIORITY).withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
     }
 
 }

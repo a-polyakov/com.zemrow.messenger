@@ -21,6 +21,10 @@
         <module>messenger-db</module>
         <module>messenger-entity</module>
         <module>messenger-dao</module>
+        <module>messenger-logic</module>
+        <module>messenger-service</module>
+        <module>messenger-controller</module>
+        <module>messenger-server</module>
         <module>messenger-l10n</module>
     </modules>
 
@@ -39,18 +43,48 @@
                 <version>20200507</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.zemrow.messenger</groupId>
+                <artifactId>messenger-dao</artifactId>
+                <version>20200507</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zemrow.messenger</groupId>
+                <artifactId>messenger-logic</artifactId>
+                <version>20200507</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zemrow.messenger</groupId>
+                <artifactId>messenger-service</artifactId>
+                <version>20200507</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zemrow.messenger</groupId>
+                <artifactId>messenger-controller</artifactId>
+                <version>20200507</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zemrow.messenger</groupId>
+                <artifactId>messenger-server</artifactId>
+                <version>20200507</version>
+            </dependency>
+
             <!-- DB -->
             <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.2.12</version>
+                <version>42.2.17</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
             <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
-                <version>3.4.2</version>
+                <version>3.4.5</version>
             </dependency>
 
             <!-- LIQUIBASE -->
@@ -58,9 +92,10 @@
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
-                <version>3.8.9</version>
+                <version>4.1.1</version>
             </dependency>
 
+<!--            TODO-->
             <!-- JOOQ -->
             <!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
             <dependency>
@@ -80,13 +115,13 @@
             <dependency>
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-sql</artifactId>
-                <version>4.3.1</version>
+                <version>4.4.0</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-sql-codegen -->
             <dependency>
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-sql-codegen</artifactId>
-                <version>4.3.1</version>
+                <version>4.4.0</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
             <dependency>
@@ -104,10 +139,11 @@
             </dependency>
 
             <!--TEST-->
+            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.13</version>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>5.7.0</version>
                 <scope>test</scope>
             </dependency>
 

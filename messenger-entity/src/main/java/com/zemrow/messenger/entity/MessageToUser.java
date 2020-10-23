@@ -1,12 +1,13 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.enums.MessageStatusEnum;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.MessageFeedbackEnum;
+import com.zemrow.messenger.entity.enums.MessageStatusEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы MessageToUser(Связка сообщения с пользователем. При этом наличие такой связки обеспечивает показ сообщения конкретному пользователю в чате. В случае отсутствия связки, данное сообщение не отображается пользователю.) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class MessageToUser extends AbstractEntityWithId {
 
@@ -24,6 +25,11 @@ public class MessageToUser extends AbstractEntityWithId {
      * Статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)
      */
     private MessageStatusEnum messageStatus;
+
+    /**
+     * Реакция на сообщение (like/dislike)
+     */
+    private MessageFeedbackEnum messageFeedback;
 
     /**
      * Дата создания записи
@@ -67,6 +73,7 @@ public class MessageToUser extends AbstractEntityWithId {
      * @param messageId ID сообщения
      * @param userId ID пользователя
      * @param messageStatus Статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)
+     * @param messageFeedback Реакция на сообщение (like/dislike)
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
      * @param updateTime Дата обновления записи
@@ -74,11 +81,12 @@ public class MessageToUser extends AbstractEntityWithId {
      * @param deleteTime Дата удаления записи
      * @param deletedBy Пользователь удаливший запись
      */
-    public MessageToUser(Long id, Long messageId, Long userId, MessageStatusEnum messageStatus, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
+    public MessageToUser(Long id, Long messageId, Long userId, MessageStatusEnum messageStatus, MessageFeedbackEnum messageFeedback, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
         this.id = id;
         this.messageId = messageId;
         this.userId = userId;
         this.messageStatus = messageStatus;
+        this.messageFeedback = messageFeedback;
         this.createTime = createTime;
         this.createdBy = createdBy;
         this.updateTime = updateTime;
@@ -155,6 +163,20 @@ public class MessageToUser extends AbstractEntityWithId {
      */
     public void setMessageStatus(MessageStatusEnum messageStatus) {
         this.messageStatus = messageStatus;
+    }
+
+    /**
+     * Получение реакция на сообщение (like/dislike)
+     */
+    public MessageFeedbackEnum getMessageFeedback() {
+        return messageFeedback;
+    }
+
+    /**
+     * Установить реакция на сообщение (like/dislike)
+     */
+    public void setMessageFeedback(MessageFeedbackEnum messageFeedback) {
+        this.messageFeedback = messageFeedback;
     }
 
     /**
@@ -255,6 +277,9 @@ public class MessageToUser extends AbstractEntityWithId {
         }
         if (messageStatus != null) {
             result.append(", messageStatus = \"").append(messageStatus).append('"');
+        }
+        if (messageFeedback != null) {
+            result.append(", messageFeedback = \"").append(messageFeedback).append('"');
         }
         if (createTime != null) {
             result.append(", createTime = \"").append(createTime).append('"');

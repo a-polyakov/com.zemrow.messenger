@@ -1,12 +1,12 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.entity.enums.ChatToUserTypeEnum;
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.ChatToUserTypeEnum;
 
 /**
  * Класс сгенерирован автоматически, для таблицы ChatToUser(Пользователи в чате) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class ChatToUser extends AbstractEntityWithId {
 
@@ -29,6 +29,11 @@ public class ChatToUser extends AbstractEntityWithId {
      * Тип участника: обычный, скрытый только для чтения, скрытый полный доступ
      */
     private ChatToUserTypeEnum chatToUserType;
+
+    /**
+     * Отключить уведомления
+     */
+    private Boolean mute;
 
     /**
      * Дата создания записи
@@ -73,6 +78,7 @@ public class ChatToUser extends AbstractEntityWithId {
      * @param userId ID пользователя
      * @param favorite Избранный чат
      * @param chatToUserType Тип участника: обычный, скрытый только для чтения, скрытый полный доступ
+     * @param mute Отключить уведомления
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
      * @param updateTime Дата обновления записи
@@ -80,12 +86,13 @@ public class ChatToUser extends AbstractEntityWithId {
      * @param deleteTime Дата удаления записи
      * @param deletedBy Пользователь удаливший запись
      */
-    public ChatToUser(Long id, Long chatId, Long userId, Boolean favorite, ChatToUserTypeEnum chatToUserType, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
+    public ChatToUser(Long id, Long chatId, Long userId, Boolean favorite, ChatToUserTypeEnum chatToUserType, Boolean mute, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
         this.id = id;
         this.chatId = chatId;
         this.userId = userId;
         this.favorite = favorite;
         this.chatToUserType = chatToUserType;
+        this.mute = mute;
         this.createTime = createTime;
         this.createdBy = createdBy;
         this.updateTime = updateTime;
@@ -176,6 +183,20 @@ public class ChatToUser extends AbstractEntityWithId {
      */
     public void setChatToUserType(ChatToUserTypeEnum chatToUserType) {
         this.chatToUserType = chatToUserType;
+    }
+
+    /**
+     * Получение отключить уведомления
+     */
+    public Boolean getMute() {
+        return mute;
+    }
+
+    /**
+     * Установить отключить уведомления
+     */
+    public void setMute(Boolean mute) {
+        this.mute = mute;
     }
 
     /**
@@ -279,6 +300,9 @@ public class ChatToUser extends AbstractEntityWithId {
         }
         if (chatToUserType != null) {
             result.append(", chatToUserType = \"").append(chatToUserType).append('"');
+        }
+        if (mute != null) {
+            result.append(", mute = \"").append(mute).append('"');
         }
         if (createTime != null) {
             result.append(", createTime = \"").append(createTime).append('"');

@@ -5,7 +5,7 @@ import com.zemrow.messenger.SessionStorage;
 /**
  * Класс сгенерирован автоматически, для таблицы RequestLog(Логи вызовов сервисов) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class RequestLog extends AbstractEntityWithId {
 
@@ -15,7 +15,7 @@ public class RequestLog extends AbstractEntityWithId {
     private String token;
 
     /**
-     * Идентификатор сервиса
+     * Идентификатор события
      */
     private String eventId;
 
@@ -44,7 +44,7 @@ public class RequestLog extends AbstractEntityWithId {
      * Создать Логи вызовов сервисов
      * @param id ID записи
      * @param token Уникальный идентификатор сессии пользователя
-     * @param eventId Идентификатор сервиса
+     * @param eventId Идентификатор события
      * @param startInvoke Время запуска
      * @param endInvoke Время окончания
      * @param errorStackTrace Ошибка если была (stacktrace)
@@ -77,14 +77,14 @@ public class RequestLog extends AbstractEntityWithId {
     }
 
     /**
-     * Получение идентификатор сервиса
+     * Получение идентификатор события
      */
     public String getEventId() {
         return eventId;
     }
 
     /**
-     * Установить идентификатор сервиса
+     * Установить идентификатор события
      */
     public void setEventId(String eventId) {
         this.eventId = eventId;

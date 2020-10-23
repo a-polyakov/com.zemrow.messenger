@@ -1,9 +1,9 @@
 package com.zemrow.messenger.entity;
 
 /**
- * Класс сгенерирован автоматически, для таблицы ChatToUserLastMessage(Последнее сообщение для пользователя в чате) из БД
+ * Класс сгенерирован автоматически, для таблицы ChatToUserLastMessage(Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class ChatToUserLastMessage extends AbstractEntity {
 
@@ -18,13 +18,13 @@ public class ChatToUserLastMessage extends AbstractEntity {
     private Long messageId;
 
     /**
-     * Создать Последнее сообщение для пользователя в чате
+     * Создать Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.
      */
     public ChatToUserLastMessage() {
     }
 
     /**
-     * Создать Последнее сообщение для пользователя в чате
+     * Создать Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.
      * @param chatToUserId Пользователи в чате (ID чата и ID пользователя)
      * @param messageId ID сообщения
      */

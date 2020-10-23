@@ -1,47 +1,60 @@
 package com.zemrow.messenger.entity.constants;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.sql.ColumnMetadata;
 import com.zemrow.messenger.entity.UserTree;
 
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-
-import com.querydsl.sql.ColumnMetadata;
 import java.sql.Types;
+
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 
 
 /**
- * Класс сгенерирован автоматически, для таблицы UserTree(Дерево пользователей) из БД
+ * Класс сгенерирован автоматически, для таблицы UserTree(Дерево пользователей. Данные являются избыточными, возможно восстановить.) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
 public class UserTreeConst extends com.querydsl.sql.RelationalPathBase<UserTree> {
 
     private static final long serialVersionUID = 1696307024;
 
     /**
-     * Дерево пользователей
+     * Дерево пользователей. Данные являются избыточными, возможно восстановить.
      */
     public static final UserTreeConst UserTree = new UserTreeConst("UserTree");
 
     /**
      * ID родительского пользователя
      */
-    public final NumberPath<Long> parentUserId = createNumber("parentUserId", Long.class);
+    public static final String PARENT_USER_ID = "parentUserId";
 
     /**
      * ID дочернего пользователя
      */
-    public final NumberPath<Long> childUserId = createNumber("childUserId", Long.class);
+    public static final String CHILD_USER_ID = "childUserId";
 
     /**
      * Разность уровней
      */
-    public final NumberPath<Integer> distance = createNumber("distance", Integer.class);
+    public static final String DISTANCE = "distance";
+
+    /**
+     * ID родительского пользователя
+     */
+    public final NumberPath<Long> parentUserId = createNumber(PARENT_USER_ID, Long.class);
+
+    /**
+     * ID дочернего пользователя
+     */
+    public final NumberPath<Long> childUserId = createNumber(CHILD_USER_ID, Long.class);
+
+    /**
+     * Разность уровней
+     */
+    public final NumberPath<Integer> distance = createNumber(DISTANCE, Integer.class);
 
     public UserTreeConst(String variable) {
         super(UserTree.class, forVariable(variable), "public", "UserTree");
@@ -59,9 +72,9 @@ public class UserTreeConst extends com.querydsl.sql.RelationalPathBase<UserTree>
     }
 
     public void addMetadata() {
-        addMetadata(parentUserId, ColumnMetadata.named("parentUserId").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(childUserId, ColumnMetadata.named("childUserId").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(distance, ColumnMetadata.named("distance").withIndex(3).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(parentUserId, ColumnMetadata.named(PARENT_USER_ID).withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(childUserId, ColumnMetadata.named(CHILD_USER_ID).withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(distance, ColumnMetadata.named(DISTANCE).withIndex(3).ofType(Types.INTEGER).withSize(10).notNull());
     }
 
 }

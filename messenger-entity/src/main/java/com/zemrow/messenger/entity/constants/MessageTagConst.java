@@ -1,15 +1,14 @@
 package com.zemrow.messenger.entity.constants;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.sql.ColumnMetadata;
 import com.zemrow.messenger.entity.MessageTag;
 
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-
-import com.querydsl.sql.ColumnMetadata;
 import java.sql.Types;
+
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 
@@ -17,7 +16,7 @@ import java.sql.Types;
 /**
  * Класс сгенерирован автоматически, для таблицы MessageTag(Тег сообщения) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
 public class MessageTagConst extends com.querydsl.sql.RelationalPathBase<MessageTag> {
 
@@ -31,52 +30,102 @@ public class MessageTagConst extends com.querydsl.sql.RelationalPathBase<Message
     /**
      * ID записи
      */
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public static final String ID = "id";
 
     /**
      * ID сообщения
      */
-    public final NumberPath<Long> messageId = createNumber("messageId", Long.class);
+    public static final String MESSAGE_ID = "messageId";
 
     /**
      * ID тега
      */
-    public final NumberPath<Long> tagId = createNumber("tagId", Long.class);
+    public static final String TAG_ID = "tagId";
 
     /**
      * Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
      */
-    public final StringPath value = createString("value");
+    public static final String VALUE = "value";
 
     /**
      * Дата создания записи
      */
-    public final NumberPath<Long> createTime = createNumber("createTime", Long.class);
+    public static final String CREATE_TIME = "createTime";
 
     /**
      * Пользователь создавший запись
      */
-    public final NumberPath<Long> createdBy = createNumber("createdBy", Long.class);
+    public static final String CREATED_BY = "createdBy";
 
     /**
      * Дата обновления записи
      */
-    public final NumberPath<Long> updateTime = createNumber("updateTime", Long.class);
+    public static final String UPDATE_TIME = "updateTime";
 
     /**
      * Пользователь обновивший запись
      */
-    public final NumberPath<Long> updatedBy = createNumber("updatedBy", Long.class);
+    public static final String UPDATED_BY = "updatedBy";
 
     /**
      * Дата удаления записи
      */
-    public final NumberPath<Long> deleteTime = createNumber("deleteTime", Long.class);
+    public static final String DELETE_TIME = "deleteTime";
 
     /**
      * Пользователь удаливший запись
      */
-    public final NumberPath<Long> deletedBy = createNumber("deletedBy", Long.class);
+    public static final String DELETED_BY = "deletedBy";
+
+    /**
+     * ID записи
+     */
+    public final NumberPath<Long> id = createNumber(ID, Long.class);
+
+    /**
+     * ID сообщения
+     */
+    public final NumberPath<Long> messageId = createNumber(MESSAGE_ID, Long.class);
+
+    /**
+     * ID тега
+     */
+    public final NumberPath<Long> tagId = createNumber(TAG_ID, Long.class);
+
+    /**
+     * Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
+     */
+    public final StringPath value = createString(VALUE);
+
+    /**
+     * Дата создания записи
+     */
+    public final NumberPath<Long> createTime = createNumber(CREATE_TIME, Long.class);
+
+    /**
+     * Пользователь создавший запись
+     */
+    public final NumberPath<Long> createdBy = createNumber(CREATED_BY, Long.class);
+
+    /**
+     * Дата обновления записи
+     */
+    public final NumberPath<Long> updateTime = createNumber(UPDATE_TIME, Long.class);
+
+    /**
+     * Пользователь обновивший запись
+     */
+    public final NumberPath<Long> updatedBy = createNumber(UPDATED_BY, Long.class);
+
+    /**
+     * Дата удаления записи
+     */
+    public final NumberPath<Long> deleteTime = createNumber(DELETE_TIME, Long.class);
+
+    /**
+     * Пользователь удаливший запись
+     */
+    public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
 
     public MessageTagConst(String variable) {
         super(MessageTag.class, forVariable(variable), "public", "MessageTag");
@@ -94,16 +143,16 @@ public class MessageTagConst extends com.querydsl.sql.RelationalPathBase<Message
     }
 
     public void addMetadata() {
-        addMetadata(id, ColumnMetadata.named("id").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(messageId, ColumnMetadata.named("messageId").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(tagId, ColumnMetadata.named("tagId").withIndex(3).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(value, ColumnMetadata.named("value").withIndex(4).ofType(Types.VARCHAR).withSize(2147483647));
-        addMetadata(createTime, ColumnMetadata.named("createTime").withIndex(5).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(createdBy, ColumnMetadata.named("createdBy").withIndex(6).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(updateTime, ColumnMetadata.named("updateTime").withIndex(7).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(updatedBy, ColumnMetadata.named("updatedBy").withIndex(8).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(deleteTime, ColumnMetadata.named("deleteTime").withIndex(9).ofType(Types.BIGINT).withSize(19));
-        addMetadata(deletedBy, ColumnMetadata.named("deletedBy").withIndex(10).ofType(Types.BIGINT).withSize(19));
+        addMetadata(id, ColumnMetadata.named(ID).withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(messageId, ColumnMetadata.named(MESSAGE_ID).withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(tagId, ColumnMetadata.named(TAG_ID).withIndex(3).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(value, ColumnMetadata.named(VALUE).withIndex(4).ofType(Types.VARCHAR).withSize(2147483647));
+        addMetadata(createTime, ColumnMetadata.named(CREATE_TIME).withIndex(5).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(createdBy, ColumnMetadata.named(CREATED_BY).withIndex(6).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(updateTime, ColumnMetadata.named(UPDATE_TIME).withIndex(7).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(updatedBy, ColumnMetadata.named(UPDATED_BY).withIndex(8).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(deleteTime, ColumnMetadata.named(DELETE_TIME).withIndex(9).ofType(Types.BIGINT).withSize(19));
+        addMetadata(deletedBy, ColumnMetadata.named(DELETED_BY).withIndex(10).ofType(Types.BIGINT).withSize(19));
     }
 
 }

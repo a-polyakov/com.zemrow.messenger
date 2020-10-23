@@ -1,9 +1,9 @@
 package com.zemrow.messenger.entity;
 
 /**
- * Класс сгенерирован автоматически, для таблицы ChatTree(Дерево задач) из БД
+ * Класс сгенерирован автоматически, для таблицы ChatTree(Дерево задач. Данные являются избыточными, возможно восстановить.) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class ChatTree extends AbstractEntity {
 
@@ -23,13 +23,13 @@ public class ChatTree extends AbstractEntity {
     private Integer distance;
 
     /**
-     * Создать Дерево задач
+     * Создать Дерево задач. Данные являются избыточными, возможно восстановить.
      */
     public ChatTree() {
     }
 
     /**
-     * Создать Дерево задач
+     * Создать Дерево задач. Данные являются избыточными, возможно восстановить.
      * @param parentChatId ID родительского чата
      * @param childChatId ID дочернего чата
      * @param distance Разность уровней

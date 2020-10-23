@@ -1,9 +1,9 @@
 package com.zemrow.messenger.entity;
 
 /**
- * Класс сгенерирован автоматически, для таблицы UserTree(Дерево пользователей) из БД
+ * Класс сгенерирован автоматически, для таблицы UserTree(Дерево пользователей. Данные являются избыточными, возможно восстановить.) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class UserTree extends AbstractEntity {
 
@@ -23,13 +23,13 @@ public class UserTree extends AbstractEntity {
     private Integer distance;
 
     /**
-     * Создать Дерево пользователей
+     * Создать Дерево пользователей. Данные являются избыточными, возможно восстановить.
      */
     public UserTree() {
     }
 
     /**
-     * Создать Дерево пользователей
+     * Создать Дерево пользователей. Данные являются избыточными, возможно восстановить.
      * @param parentUserId ID родительского пользователя
      * @param childUserId ID дочернего пользователя
      * @param distance Разность уровней

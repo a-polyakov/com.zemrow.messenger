@@ -1,15 +1,14 @@
 package com.zemrow.messenger.entity.constants;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.sql.ColumnMetadata;
 import com.zemrow.messenger.entity.RequestLog;
 
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-
-import com.querydsl.sql.ColumnMetadata;
 import java.sql.Types;
+
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 
@@ -17,7 +16,7 @@ import java.sql.Types;
 /**
  * Класс сгенерирован автоматически, для таблицы RequestLog(Логи вызовов сервисов) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
 public class RequestLogConst extends com.querydsl.sql.RelationalPathBase<RequestLog> {
 
@@ -31,32 +30,62 @@ public class RequestLogConst extends com.querydsl.sql.RelationalPathBase<Request
     /**
      * ID записи
      */
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public static final String ID = "id";
 
     /**
      * Уникальный идентификатор сессии пользователя
      */
-    public final StringPath token = createString("token");
+    public static final String TOKEN = "token";
 
     /**
-     * Идентификатор сервиса
+     * Идентификатор события
      */
-    public final StringPath eventId = createString("eventId");
+    public static final String EVENT_ID = "eventId";
 
     /**
      * Время запуска
      */
-    public final NumberPath<Long> startInvoke = createNumber("startInvoke", Long.class);
+    public static final String START_INVOKE = "startInvoke";
 
     /**
      * Время окончания
      */
-    public final NumberPath<Long> endInvoke = createNumber("endInvoke", Long.class);
+    public static final String END_INVOKE = "endInvoke";
 
     /**
      * Ошибка если была (stacktrace)
      */
-    public final StringPath errorStackTrace = createString("errorStackTrace");
+    public static final String ERROR_STACK_TRACE = "errorStackTrace";
+
+    /**
+     * ID записи
+     */
+    public final NumberPath<Long> id = createNumber(ID, Long.class);
+
+    /**
+     * Уникальный идентификатор сессии пользователя
+     */
+    public final StringPath token = createString(TOKEN);
+
+    /**
+     * Идентификатор события
+     */
+    public final StringPath eventId = createString(EVENT_ID);
+
+    /**
+     * Время запуска
+     */
+    public final NumberPath<Long> startInvoke = createNumber(START_INVOKE, Long.class);
+
+    /**
+     * Время окончания
+     */
+    public final NumberPath<Long> endInvoke = createNumber(END_INVOKE, Long.class);
+
+    /**
+     * Ошибка если была (stacktrace)
+     */
+    public final StringPath errorStackTrace = createString(ERROR_STACK_TRACE);
 
     public RequestLogConst(String variable) {
         super(RequestLog.class, forVariable(variable), "public", "RequestLog");
@@ -74,12 +103,12 @@ public class RequestLogConst extends com.querydsl.sql.RelationalPathBase<Request
     }
 
     public void addMetadata() {
-        addMetadata(id, ColumnMetadata.named("id").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(token, ColumnMetadata.named("token").withIndex(2).ofType(Types.VARCHAR).withSize(72));
-        addMetadata(eventId, ColumnMetadata.named("eventId").withIndex(3).ofType(Types.VARCHAR).withSize(32));
-        addMetadata(startInvoke, ColumnMetadata.named("startInvoke").withIndex(4).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(endInvoke, ColumnMetadata.named("endInvoke").withIndex(5).ofType(Types.BIGINT).withSize(19));
-        addMetadata(errorStackTrace, ColumnMetadata.named("errorStackTrace").withIndex(6).ofType(Types.VARCHAR).withSize(2147483647));
+        addMetadata(id, ColumnMetadata.named(ID).withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(token, ColumnMetadata.named(TOKEN).withIndex(2).ofType(Types.VARCHAR).withSize(72));
+        addMetadata(eventId, ColumnMetadata.named(EVENT_ID).withIndex(3).ofType(Types.VARCHAR).withSize(32));
+        addMetadata(startInvoke, ColumnMetadata.named(START_INVOKE).withIndex(4).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(endInvoke, ColumnMetadata.named(END_INVOKE).withIndex(5).ofType(Types.BIGINT).withSize(19));
+        addMetadata(errorStackTrace, ColumnMetadata.named(ERROR_STACK_TRACE).withIndex(6).ofType(Types.VARCHAR).withSize(2147483647));
     }
 
 }

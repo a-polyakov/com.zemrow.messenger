@@ -5,7 +5,7 @@ import com.zemrow.messenger.SessionStorage;
 /**
  * Класс сгенерирован автоматически, для таблицы MessageLog(История сообщения) из БД
  * 
- * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.05.07
+ * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class MessageLog extends AbstractEntityWithId {
 

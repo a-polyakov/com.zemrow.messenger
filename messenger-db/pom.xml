@@ -32,14 +32,6 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
 
-        <!-- TODO -->
-        <!-- JOOQ -->
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq-codegen</artifactId>
-        </dependency>
-
-        <!-- TODO -->
         <!-- QUERYDSL -->
         <dependency>
             <groupId>com.querydsl</groupId>

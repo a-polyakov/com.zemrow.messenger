@@ -15,11 +15,11 @@ public class PageNavigationDto<T extends AbstractDto> extends AbstractDto {
     /**
      * На сколько элементов необходимо сместится относительно начала списка.
      */
-    private int offset;
+    private long offset;
     /**
      * Максимальное количество элементов на странице.
      */
-    private int limit;
+    private long limit;
     /**
      * Количество записей всего
      */
@@ -31,7 +31,7 @@ public class PageNavigationDto<T extends AbstractDto> extends AbstractDto {
     public PageNavigationDto() {
     }
 
-    public PageNavigationDto(List<T> page, int offset, int limit, long totalSize) {
+    public PageNavigationDto(List<T> page, long offset, long limit, long totalSize) {
         this.page = page;
         this.offset = offset;
         this.limit = limit;
@@ -46,19 +46,19 @@ public class PageNavigationDto<T extends AbstractDto> extends AbstractDto {
         this.page = page;
     }
 
-    public int getOffset() {
+    public long getOffset() {
         return offset;
     }
 
-    public void setOffset(int offset) {
+    public void setOffset(long offset) {
         this.offset = offset;
     }
 
-    public int getLimit() {
+    public long getLimit() {
         return limit;
     }
 
-    public void setLimit(int limit) {
+    public void setLimit(long limit) {
         this.limit = limit;
     }
 

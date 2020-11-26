@@ -34,13 +34,13 @@ public class RunUpdateDB {
             out.println("Обновление БД (Запуск liquibase)");
             long time = System.currentTimeMillis();
             Main.run(new String[] {
-                "--logLevel=debug",
-                "--url=" + url,
-                "--driver=" + DBConst.DRIVER,
-                "--username=" + username,
-                "--password=" + password,
-                "--changeLogFile=script/messenger.xml",
-                "update"
+                    "--logLevel=debug",
+                    "--url=" + url,
+                    "--driver=" + DBConst.DRIVER_CLASS_NAME,
+                    "--username=" + username,
+                    "--password=" + password,
+                    "--changeLogFile=script/messenger.xml",
+                    "update"
             });
             time = System.currentTimeMillis() - time;
             out.println("Время обновления БД " + time + "ms");

@@ -2,12 +2,12 @@ package com.zemrow.messenger.dao;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.sql.RelationalPath;
 import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.dml.SQLInsertClause;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.AbstractEntity;
+
 import java.sql.Connection;
 import java.util.List;
 
@@ -26,31 +26,23 @@ public abstract class AbstractDao<E extends AbstractEntity, Q extends Relational
     /**
      * SQL константа таблицы
      *
-     * @return
+     * @return TODO
      */
     public abstract Q getTable();
 
     /**
-     * SQL константа идентификатора записи
-     *
-     * @return
-     */
-    public abstract SimpleExpression getKey();
-
-    /**
      * Получить список entity
      *
-     * @param connection
-     * @param session
-     * @param where
-     * @param order
-     * @param offset
-     * @param limit
-     * @return
+     * @param connection TODO
+     * @param where      TODO
+     * @param order      TODO
+     * @param offset     TODO
+     * @param limit      TODO
+     * @return TODO
      */
-    protected List<E> select(final Connection connection, final SessionStorage session, Predicate where[],
-        OrderSpecifier order[], long offset,
-        long limit) {
+    protected List<E> select(final Connection connection, Predicate where[],
+                             OrderSpecifier order[], long offset,
+                             long limit) {
         final SQLQuery<E> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
         query.select(getTable());
         query.from(getTable());
@@ -69,12 +61,11 @@ public abstract class AbstractDao<E extends AbstractEntity, Q extends Relational
     /**
      * Определение количества записей удовлетворяющее условиям
      *
-     * @param connection
-     * @param session
-     * @param where
-     * @return
+     * @param connection TODO
+     * @param where      TODO
+     * @return TODO
      */
-    protected long selectCount(final Connection connection, final SessionStorage session, Predicate where[]) {
+    protected long selectCount(final Connection connection, Predicate where[]) {
         final SQLQuery<Long> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
         query.from(getTable());
         if (where != null) {
@@ -87,9 +78,9 @@ public abstract class AbstractDao<E extends AbstractEntity, Q extends Relational
     /**
      * Добавление запись в таблицу
      *
-     * @param connection
-     * @param session
-     * @param entity
+     * @param connection TODO
+     * @param session    TODO
+     * @param entity     TODO
      */
     protected void insert(final Connection connection, final SessionStorage session, E entity) {
         entity.preInsert(session);
@@ -101,9 +92,9 @@ public abstract class AbstractDao<E extends AbstractEntity, Q extends Relational
     /**
      * Добавление записей в таблицу
      *
-     * @param connection
-     * @param session
-     * @param entityArray
+     * @param connection  TODO
+     * @param session     TODO
+     * @param entityArray TODO
      */
     protected void insertBatch(final Connection connection, final SessionStorage session, E... entityArray) {
         if (entityArray != null && entityArray.length > 0) {

@@ -1,11 +1,12 @@
 package com.zemrow.messenger.dao;
 
 import com.querydsl.sql.types.AbstractType;
+import org.postgresql.util.PGobject;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import org.postgresql.util.PGobject;
 
 /**
  * Работа QueryDsl c jsonb
@@ -14,20 +15,12 @@ import org.postgresql.util.PGobject;
  */
 public class QueryDslJsonbType extends AbstractType<String> {
 
-    //TODO
-    private final boolean asString;
-
     public QueryDslJsonbType() {
-        this(Types.OTHER, true);
+        this(Types.OTHER);
     }
 
-    public QueryDslJsonbType(boolean asString) {
-        this(Types.OTHER, asString);
-    }
-
-    private QueryDslJsonbType(int type, boolean asString) {
+    private QueryDslJsonbType(int type) {
         super(type);
-        this.asString = asString;
     }
 
     @Override
@@ -52,12 +45,8 @@ public class QueryDslJsonbType extends AbstractType<String> {
     public void setValue(PreparedStatement st, int startIndex, String value) throws SQLException {
         if (value == null) {
             st.setObject(startIndex, value);
-        }
-        else if (asString) {
-            st.setString(startIndex, value);
-        }
-        else {
-            PGobject json = new PGobject();
+        } else {
+            final PGobject json = new PGobject();
             json.setType("jsonb");
             json.setValue(value);
             st.setObject(startIndex, json);

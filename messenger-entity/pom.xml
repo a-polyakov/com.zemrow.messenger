@@ -18,11 +18,5 @@
             <groupId>com.zemrow.messenger</groupId>
             <artifactId>messenger-constants</artifactId>
         </dependency>
-
-        <!-- QUERYDSL -->
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-sql</artifactId>
-        </dependency>
     </dependencies>
 </project>

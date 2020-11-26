@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
 
     <changeSet id="202005072100" author="a-polyakov" logicalFilePath="no_path">
         <comment>
-            Ограничение id для liquibase, только 12 чифр - дата в формате yyyyMMddhhmm
+            Ограничение id для liquibase, только 12 цифр - дата в формате yyyyMMddhhmm
         </comment>
         <addPrimaryKey tableName="databasechangelog" columnNames="id"/>
         <addUniqueConstraint tableName="databasechangelog" columnNames="orderexecuted"/>
         <sql>
-            ALTER TABLE public.databasechangelog ADD CHECK (id ~*'^20[0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9]$')
+            ALTER TABLE public.databasechangelog ADD CHECK (id
+            ~*'^20[0-9][0-9][0-1][0-9][0-3][0-9][0-2][0-9][0-5][0-9]$')
         </sql>
     </changeSet>
 
@@ -29,7 +30,8 @@
             <column name="chatType" type="VARCHAR(16)" remarks="Тип чата: чат, задание">
                 <constraints nullable="false"/>
             </column>
-            <column name="numberingId" type="BIGINT" remarks="Использованый нумиратор (для определения префикса)">
+            <column name="numberingId" type="BIGINT"
+              remarks="Использованный нумератор (для определения префикса)">
                 <constraints nullable="true"/>
             </column>
             <column name="orderNumber" type="BIGINT" remarks="Номер чата(документа)">
@@ -59,7 +61,7 @@
             <column name="chatId" type="BIGINT" remarks="ID чата">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="priority" type="BIGINT" remarks="Приоритет">
+            <column name="priority" type="BIGSERIAL" remarks="Приоритет">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -170,7 +172,7 @@
             </column>
         </createTable>
 
-        <createTable tableName="ChatWork" remarks="Отметка пользователя о затраченом времени">
+        <createTable tableName="ChatWork" remarks="Отметка пользователя о затраченном времени">
             <column name="id" type="BIGINT" remarks="ID записи">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -244,7 +246,7 @@
         </createTable>
 
         <!--
-        TODO продумать механику цетирования
+        TODO продумать механику цитирования
         -->
         <createTable tableName="Message" remarks="Сообщение">
             <column name="id" type="BIGINT" remarks="ID записи">
@@ -260,10 +262,10 @@
                 <constraints nullable="true"/>
             </column>
             <column name="childChatId" type="BIGINT"
-                    remarks="ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)">
+              remarks="ID созданного дочернего чата (при наличии в сообщении управляющего тега например задание)">
                 <constraints nullable="true"/>
             </column>
-            <column name="messageType" type="VARCHAR(16)" remarks="Тип сообщени (SIMPLE, ERROR)">
+            <column name="messageType" type="VARCHAR(16)" remarks="Тип сообщения (SIMPLE, ERROR)">
                 <constraints nullable="false"/>
             </column>
             <column name="parentMessageId" type="BIGINT" remarks="ID родительского сообщения">
@@ -390,7 +392,7 @@
             </column>
         </createTable>
 
-        <createTable tableName="Numbering" remarks="Настройка нумирации для компании и типа чата">
+        <createTable tableName="Numbering" remarks="Настройка нумерации для компании и типа чата">
             <column name="id" type="BIGINT" remarks="ID записи">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -579,7 +581,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="pageType" type="VARCHAR(32)"
-                    remarks="id части системы (грид, панель, список) для применения данного фильтра">
+              remarks="id части системы (таблица, панель, список) для применения данного фильтра">
                 <constraints nullable="false"/>
             </column>
             <column name="filterLabel" type="VARCHAR(255)" remarks="Название фильтра">
@@ -612,28 +614,32 @@
             <column name="id" type="BIGINT" remarks="ID записи">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="avatarId" type="BIGINT" remarks="Ссылка на таблицу file где хранится аватар">
-                <constraints nullable="true"/>
-            </column>
             <column name="name" type="VARCHAR(255)" remarks="Наименование пользователя">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="userType" type="VARCHAR(16)" remarks="Тип пользователя: физическое лицо, отдел, компания">
                 <constraints nullable="false"/>
             </column>
-            <!-- TODO разграничение доступа: какую информацию может видеть лубой человек какую из списка контактов -->
+            <column name="avatarId" type="BIGINT" remarks="Ссылка на таблицу file где хранится аватар">
+                <constraints nullable="true"/>
+            </column>
+            <!-- TODO разграничение доступа: какую информацию может видеть любой человек, какую из списка контактов -->
             <column name="publicInfo" type="JSONB" remarks="Json с дополнительными полями">
                 <constraints nullable="false"/>
             </column>
             <!-- TODO был в сети -->
-            <column name="userStatusId" type="BIGINT"
-                    remarks="Состояние пользователя: Не в сети, В сети, Не беспокоить">
+            <column name="userStatus" type="VARCHAR(16)"
+                    remarks="Состояние пользователя: Не в сети, В сети">
                 <constraints nullable="false"/>
+            </column>
+            <column name="userStatusLabel" type="VARCHAR(255)"
+                    remarks="Состояние пользователя которое указал пользователь">
+                <constraints nullable="true"/>
             </column>
             <column name="locale" type="VARCHAR(16)" remarks="Язык">
                 <constraints nullable="false"/>
             </column>
-            <column name="timeZone" type="VARCHAR(6)" remarks="Часовой пояс">
+            <column name="timeZone" type="VARCHAR(32)" remarks="Часовой пояс">
                 <constraints nullable="false"/>
             </column>
             <column name="createTime" type="BIGINT" remarks="Дата создания записи">
@@ -752,25 +758,12 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <!--
-        TODO Статус в сети невсети, но дополнительно пользователь может указать не беспокоить, в командировке, на совещании, в отпуске и тд
-        TODO Стратусы просто текст, для каждого может быть свой список
-        -->
+
         <createTable tableName="UserStatus" remarks="Справочник статусов пользователя">
             <column name="id" type="BIGINT" remarks="ID записи">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="label" type="VARCHAR(255)" remarks="Состояние пользователя: Не в сети, В сети, Не беспокоить">
-                <constraints nullable="false"/>
-            </column>
-            <column name="userStatusType" type="VARCHAR(16)"
-                    remarks="Тип статуса для связки наименование статуса с логикой">
-                <constraints nullable="false"/>
-            </column>
-            <column name="weight" type="int" remarks="Вес статуса">
-                <constraints nullable="false"/>
-            </column>
-            <column name="color" type="int"  remarks="Цвет статуса">
+            <column name="label" type="VARCHAR(255)" remarks="Состояние пользователя которое указал пользователь">
                 <constraints nullable="false"/>
             </column>
             <column name="createTime" type="BIGINT" remarks="Дата создания записи">
@@ -778,18 +771,6 @@
             </column>
             <column name="createdBy" type="BIGINT" remarks="Пользователь создавший запись">
                 <constraints nullable="false"/>
-            </column>
-            <column name="updateTime" type="BIGINT" remarks="Дата обновления записи">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updatedBy" type="BIGINT" remarks="Пользователь обновивший запись">
-                <constraints nullable="false"/>
-            </column>
-            <column name="deleteTime" type="BIGINT" remarks="Дата удаления записи">
-                <constraints nullable="true"/>
-            </column>
-            <column name="deletedBy" type="BIGINT" remarks="Пользователь удаливший запись">
-                <constraints nullable="true"/>
             </column>
         </createTable>
 
@@ -1038,9 +1019,6 @@
         <addForeignKeyConstraint constraintName="UserInfo_avatarId_fk"
                                  baseTableName="UserInfo" baseColumnNames="avatarId"
                                  referencedTableName="FileInfo" referencedColumnNames="id"/>
-        <addForeignKeyConstraint constraintName="UserInfo_userStatusId_fk" initiallyDeferred="true"
-                                 baseTableName="UserInfo" baseColumnNames="userStatusId"
-                                 referencedTableName="UserStatus" referencedColumnNames="id"/>
         <addForeignKeyConstraint constraintName="UserInfo_createdBy_fk"
                                  baseTableName="UserInfo" baseColumnNames="createdBy"
                                  referencedTableName="UserInfo" referencedColumnNames="id"/>
@@ -1088,12 +1066,6 @@
         <addForeignKeyConstraint constraintName="UserStatus_createdBy_fk"
                                  baseTableName="UserStatus" baseColumnNames="createdBy"
                                  referencedTableName="UserInfo" referencedColumnNames="id"/>
-        <addForeignKeyConstraint constraintName="UserStatus_updatedBy_fk"
-                                 baseTableName="UserStatus" baseColumnNames="updatedBy"
-                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
-        <addForeignKeyConstraint constraintName="UserStatus_deletedBy_fk"
-                                 baseTableName="UserStatus" baseColumnNames="deletedBy"
-                                 referencedTableName="UserInfo" referencedColumnNames="id"/>
 
         <addPrimaryKey tableName="UserTree" columnNames="parentUserId, childUserId"/>
         <addForeignKeyConstraint constraintName="UserTree_parentUserId_fk"
@@ -1113,44 +1085,22 @@
             <column name="name">system</column>
             <column name="userType">ADMIN</column>
             <column name="publicInfo">{}</column>
-            <column name="userStatusId">4</column>
+            <column name="userStatus">ONLINE</column>
             <column name="locale">en</column>
-            <column name="timeZone">MSK</column>
+            <column name="timeZone">Europe/Moscow</column>
             <column name="createTime">1588885800000</column>
             <column name="createdBy">1</column>
             <column name="updateTime">1588885800000</column>
             <column name="updatedBy">1</column>
         </insert>
         <insert tableName="UserInfo">
-            <column name="id">101</column>
+            <column name="id">10</column>
             <column name="name">ИИ</column>
             <column name="userType">ADMIN</column>
             <column name="publicInfo">{}</column>
-            <column name="userStatusId">4</column>
+            <column name="userStatus">ONLINE</column>
             <column name="locale">ru</column>
-            <column name="timeZone">MSK</column>
-            <column name="createTime">1588885800000</column>
-            <column name="createdBy">1</column>
-            <column name="updateTime">1588885800000</column>
-            <column name="updatedBy">1</column>
-        </insert>
-        <insert tableName="UserStatus">
-            <column name="id">4</column>
-            <column name="label">В сети</column>
-            <column name="userStatusType">ONLINE</column>
-            <column name="weight">1000</column>
-            <column name="color">-65536</column>
-            <column name="createTime">1588885800000</column>
-            <column name="createdBy">1</column>
-            <column name="updateTime">1588885800000</column>
-            <column name="updatedBy">1</column>
-        </insert>
-        <insert tableName="UserStatus">
-            <column name="id">104</column>
-            <column name="label">Не в сети</column>
-            <column name="userStatusType">OFFLINE</column>
-            <column name="weight">500</column>
-            <column name="color">-16711936</column>
+            <column name="timeZone">Europe/Moscow</column>
             <column name="createTime">1588885800000</column>
             <column name="createdBy">1</column>
             <column name="updateTime">1588885800000</column>

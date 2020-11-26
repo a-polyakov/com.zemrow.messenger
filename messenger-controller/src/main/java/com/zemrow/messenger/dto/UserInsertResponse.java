@@ -1,7 +1,7 @@
 package com.zemrow.messenger.dto;
 
 /**
- * TODO
+ * Регистрация пользователя
  *
  * @author Alexandr Polyakov on 2020.10.23
  */

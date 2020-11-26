@@ -31,15 +31,43 @@ public class UserInfoDao extends AbstractDaoWithId<UserInfo, UserInfoConst> {
     }
 
     /**
-     * Получить пользователя по идентификатору.
+     * TODO
      *
      * @param connection TODO
      * @param session    TODO
-     * @param id         Идентификатор пользователя.
+     * @param entity     TODO
+     */
+    @Override
+    public void insert(Connection connection, SessionStorage session, UserInfo entity) {
+        super.insert(connection, session, entity);
+    }
+
+    /**
+     * Получить пользователя по идентификатору.
+     *
+     * @param connection TODO
+     * @param userId     Идентификатор пользователя.
      * @return Пользователь.
      */
-    public UserInfo select(final Connection connection, final SessionStorage session, long id) {
-        return super.select(connection, session, id);
+    @Override
+    public UserInfo select(final Connection connection, final long userId) {
+        return super.select(connection, userId);
+    }
+
+    /**
+     * Получить имена пользователей по набору идентификаторов
+     * @param connection TODO
+     * @param session TODO
+     * @param userIdList Набор идентификаторов пользователя
+     * @return Список имен
+     */
+    public List<String> selectNameById(Connection connection, SessionStorage session, Long... userIdList) {
+        final SQLQuery<String> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
+        query.select(UserInfoConst.UserInfo.name);
+        query.from(getTable());
+        query.where(UserInfoConst.UserInfo.id.in(userIdList));
+        final List<String> result = query.fetch();
+        return result;
     }
 
     /**
@@ -58,7 +86,12 @@ public class UserInfoDao extends AbstractDaoWithId<UserInfo, UserInfoConst> {
         return result;
     }
 
-    //TODO
+    /**
+     * TODO
+     * @param connection TODO
+     * @param session    TODO
+     * @param entity     TODO
+     */
     @Override
     public void update(final Connection connection, SessionStorage session, UserInfo entity) {
         super.update(connection, session, entity);
@@ -74,34 +107,29 @@ public class UserInfoDao extends AbstractDaoWithId<UserInfo, UserInfoConst> {
      * @param limit      TODO
      * @return TODO
      */
-    public PageNavigationDto<UserTiledDto> find(final Connection connection, SessionStorage session, String userLike, int offset, int limit) {
+    public PageNavigationDto<UserTiledDto> find(final Connection connection, SessionStorage session, String userLike, long offset, long limit) {
         final SQLQuery<UserTiledDto> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
-        query.select(Projections.constructor(UserTiledDto.class, UserInfoConst.UserInfo.id,
-                UserInfoConst.UserInfo.avatarId,
-                UserInfoConst.UserInfo.name,
-                UserContactConst.UserContact.id
+        final UserInfoConst userInfo = UserInfoConst.UserInfo;
+        final UserContactConst userContact = UserContactConst.UserContact;
+        query.select(Projections.constructor(UserTiledDto.class,
+                userInfo.id,
+                userInfo.avatarId,
+                userInfo.name,
+                userContact.id
         ));
-        query.from(UserInfoConst.UserInfo);
-        query.leftJoin(UserContactConst.UserContact)
-                .on(UserContactConst.UserContact.childUserId.eq(UserInfoConst.UserInfo.id));
-        query.where(UserContactConst.UserContact.parentUserId.eq(session.getUserId()),
-                UserInfoConst.UserInfo.name.like(userLike));
-        query.orderBy(UserInfoConst.UserInfo.name.desc());
+        query.from(userInfo);
+        query.leftJoin(userContact)
+                .on(
+                        userContact.parentUserId.eq(session.getUserId()),
+                        userContact.childUserId.eq(userInfo.id)
+                );
+        query.where(
+                userInfo.name.lower().like("%" + userLike.toLowerCase() + "%")
+        );
+        query.orderBy(userInfo.name.desc());
         query.offset(offset).limit(limit);
         final List<UserTiledDto> page = query.fetch();
-
-        final SQLQuery<Long> countQuery = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
-        countQuery.select(UserInfoConst.UserInfo.id.count()
-        );
-        countQuery.from(UserInfoConst.UserInfo);
-        countQuery.leftJoin(UserContactConst.UserContact)
-                .on(UserContactConst.UserContact.childUserId.eq(UserInfoConst.UserInfo.id));
-        countQuery.where(UserContactConst.UserContact.parentUserId.eq(session.getUserId()),
-                UserInfoConst.UserInfo.name.like("%" + userLike + "%"));
-        long totalSize = countQuery.fetchOne();
-
-        final PageNavigationDto<UserTiledDto> result = new PageNavigationDto<>(page, offset, limit, totalSize);
-        result.setPage(page);
-        return result;
+        long totalSize = query.fetchCount();
+        return new PageNavigationDto<>(page, offset, limit, totalSize);
     }
 }

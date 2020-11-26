@@ -4,6 +4,7 @@ import com.querydsl.sql.codegen.OrdinalPositionComparator;
 import com.querydsl.sql.codegen.OriginalNamingStrategy;
 import com.zemrow.messenger.constants.DBConst;
 import com.zemrow.messenger.dao.QueryDslConfiguration;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,7 +20,7 @@ public class QueryDslGenerator {
         final String password) throws ClassNotFoundException, SQLException {
 
         // Актуализация констант
-        Class.forName(DBConst.DRIVER);
+        Class.forName(DBConst.DRIVER_CLASS_NAME);
         try (Connection dbConn = DriverManager.getConnection(url, username, password)) {
 
             final File targetFolder = new File("messenger-entity\\src\\main\\java");

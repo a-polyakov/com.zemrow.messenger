@@ -8,4 +8,4 @@
 # MAVEN
 target/
 #Selenium
-demo/drivers/
+drivers/

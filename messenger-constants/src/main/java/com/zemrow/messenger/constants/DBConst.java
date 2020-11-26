@@ -9,7 +9,7 @@ public class DBConst {
     /**
      * Имя класса драйвера
      */
-    public static final String DRIVER = "org.postgresql.Driver";
+    public static final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
     /**
      * Адрес БД по умолчанию
      */

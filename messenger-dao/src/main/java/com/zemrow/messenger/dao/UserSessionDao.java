@@ -1,6 +1,5 @@
 package com.zemrow.messenger.dao;
 
-import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.dml.SQLUpdateClause;
 import com.zemrow.messenger.SessionStorage;
@@ -8,6 +7,7 @@ import com.zemrow.messenger.entity.UserSession;
 import com.zemrow.messenger.entity.constants.UserSessionConst;
 
 import java.sql.Connection;
+import java.util.UUID;
 
 /**
  * DAO (data access object) для работы с сессиями пользователя
@@ -21,9 +21,11 @@ public class UserSessionDao extends AbstractDao<UserSession, UserSessionConst> {
         return UserSessionConst.UserSession;
     }
 
-    @Override
-    public SimpleExpression getKey() {
-        return UserSessionConst.UserSession.token;
+    /**
+     * Получить следующий идентификатор
+     */
+    public String nextId() {
+        return UUID.randomUUID().toString() + UUID.randomUUID().toString();
     }
 
     /**
@@ -49,7 +51,7 @@ public class UserSessionDao extends AbstractDao<UserSession, UserSessionConst> {
         final SQLQuery<UserSession> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
         query.select(getTable());
         query.from(getTable());
-        query.where(getKey().eq(token));
+        query.where(getTable().token.eq(token));
         final UserSession result = query.fetchOne();
         return result;
     }
@@ -65,7 +67,7 @@ public class UserSessionDao extends AbstractDao<UserSession, UserSessionConst> {
         final SQLUpdateClause query = new SQLUpdateClause(connection, QueryDslConfiguration.CUSTOM, getTable());
         query.set(UserSessionConst.UserSession.deleteTime, System.currentTimeMillis());
         query.set(UserSessionConst.UserSession.deletedBy, session.getUserId());
-        query.where(getKey().eq(token));
+        query.where(getTable().token.eq(token));
         query.execute();
     }
 
@@ -81,7 +83,7 @@ public class UserSessionDao extends AbstractDao<UserSession, UserSessionConst> {
         final SQLUpdateClause query = new SQLUpdateClause(connection, QueryDslConfiguration.CUSTOM, getTable());
         query.set(UserSessionConst.UserSession.deleteTime, entity.getDeleteTime());
         query.set(UserSessionConst.UserSession.deletedBy, entity.getDeletedBy());
-        query.where(getKey().eq(entity.getToken()));
+        query.where(getTable().token.eq(entity.getToken()));
         query.execute();
     }
 }

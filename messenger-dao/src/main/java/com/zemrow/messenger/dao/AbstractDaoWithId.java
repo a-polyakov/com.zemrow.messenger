@@ -1,5 +1,6 @@
 package com.zemrow.messenger.dao;
 
+import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.sql.RelationalPath;
 import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.dml.DefaultMapper;
@@ -9,6 +10,7 @@ import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.entity.AbstractEntityWithId;
 
 import java.sql.Connection;
+import java.util.UUID;
 
 /**
  * Универсальное DAO (data access object) реализующее базовые методы работы с БД для таблиц имеющих id
@@ -28,14 +30,27 @@ import java.sql.Connection;
  */
 public abstract class AbstractDaoWithId<E extends AbstractEntityWithId, Q extends RelationalPath> extends AbstractDao<E, Q> {
     /**
+     * SQL константа идентификатора записи
+     *
+     * @return SQL константа
+     */
+    public abstract SimpleExpression getKey();
+
+    /**
+     * Получить следующий идентификатор
+     */
+    public long nextId() {
+        return UUID.randomUUID().getLeastSignificantBits();
+    }
+
+    /**
      * Получить запись по id
      *
-     * @param connection TODO
-     * @param session    TODO
-     * @param id         Идентификатор записи
+     * @param connection - TODO
+     * @param id         - Идентификатор записи
      * @return запись
      */
-    protected E select(final Connection connection, final SessionStorage session, long id) {
+    protected E select(final Connection connection, long id) {
         final SQLQuery<E> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
         query.select(getTable());
         query.from(getTable());
@@ -50,6 +65,7 @@ public abstract class AbstractDaoWithId<E extends AbstractEntityWithId, Q extend
      * @param connection TODO
      * @param session    TODO
      * @param entity     TODO
+     * TODO return
      */
     protected void update(final Connection connection, final SessionStorage session, E entity) {
         entity.preUpdate(session);
@@ -80,7 +96,7 @@ public abstract class AbstractDaoWithId<E extends AbstractEntityWithId, Q extend
      * @param id         TODO
      */
     protected void markAsDeleted(final Connection connection, final SessionStorage session, long id) {
-        final E entity = select(connection, session, id);
+        final E entity = select(connection, id);
         markAsDeleted(connection, session, entity);
     }
 

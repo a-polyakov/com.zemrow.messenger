@@ -11,10 +11,15 @@ import com.querydsl.codegen.Serializer;
 import com.querydsl.codegen.SerializerConfig;
 import com.querydsl.core.util.BeanUtils;
 import com.querydsl.sql.codegen.OrdinalPositionComparator;
-
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Настройка генерации entity
@@ -130,7 +135,6 @@ public class QueryDslEntitySerializer implements Serializer {
 
         // preInsert, preUpdate, preDelete
         addPreMethod(model, writer,
-            hasId,
             hasCreateTime,
             hasCreatedBy,
             hasUpdateTime,
@@ -176,7 +180,6 @@ public class QueryDslEntitySerializer implements Serializer {
     }
 
     private void addPreMethod(EntityType model, CodeWriter writer,
-        boolean hasId,
         boolean hasCreateTime,
         boolean hasCreatedBy,
         boolean hasUpdateTime,
@@ -189,15 +192,9 @@ public class QueryDslEntitySerializer implements Serializer {
         // TODO validation not null, size
 
         // preInsert
-        if (hasId || hasCreateTime || hasCreatedBy || hasUpdateTime || hasUpdatedBy) {
+        if (hasCreateTime || hasCreatedBy || hasUpdateTime || hasUpdatedBy) {
             writer.line("@Override");
             writer.beginPublicMethod(new SimpleType("void"), "preInsert", parameterSessionStorage);
-            if (hasId) {
-                //TODO
-//                writer.line("if (id == null) {");
-//                writer.line("    id = UUID.randomUUID().getMostSignificantBits();");
-//                writer.line("}");
-            }
             if (hasCreateTime) {
                 writer.line("if (createTime == null) {");
                 writer.line("    createTime = System.currentTimeMillis();");
@@ -255,7 +252,7 @@ public class QueryDslEntitySerializer implements Serializer {
 
     //TODO
     private Set<String> getAnnotationTypes(EntityType model) {
-        Set<String> imports = new HashSet<String>();
+        Set<String> imports = new HashSet<>();
         for (Annotation annotation : model.getAnnotations()) {
             imports.add(annotation.annotationType().getName());
         }

@@ -1,0 +1,167 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TODO",
+    "description": "TODO",
+    "version": "20200507",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "Пользователь"
+    },
+    {
+      "name": "userSession",
+      "description": "Сессия пользователя"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "userInsert",
+        "summary": "Регистрация пользователя",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "TODO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInsertResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userSession": {
+      "post": {
+        "tags": [
+          "userSession"
+        ],
+        "operationId": "userSessionInsert",
+        "summary": "Вход в систему",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSessionInsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "TODO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserSessionInsertResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserInsertRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Наименование пользователя"
+          },
+          "password": {
+            "type": "string",
+            "description": "Пароль"
+          },
+          "locale": {
+            "type": "string",
+            "description": "Язык"
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "Часовой пояс"
+          }
+        },
+        "required": [
+          "username",
+          "password",
+          "locale",
+          "timeZone"
+        ]
+      },
+      "UserInsertResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "description": "ID пользователя",
+            "format": "int64"
+          },
+          "token": {
+            "type": "string",
+            "description": "Уникальный идентификатор сессии, сложный для подбора"
+          }
+        }
+      },
+      "UserSessionInsertRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Наименование пользователя"
+          },
+          "password": {
+            "type": "string",
+            "description": "Пароль"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "UserSessionInsertResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "description": "ID пользователя",
+            "format": "int64"
+          },
+          "token": {
+            "type": "string",
+            "description": "Уникальный идентификатор сессии, сложный для подбора"
+          }
+        }
+      }
+    }
+  }
+}

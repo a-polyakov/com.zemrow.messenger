@@ -58,10 +58,11 @@ public class ChatTiledDto extends AbstractDto {
     private Long deadline;
     /**
      * Сейчас работают.
+     * TODO
      */
     private List<Long> workNowUserId;
     /**
-     * Количество непрочитаных сообщений.
+     * Количество непрочитанных сообщений.
      */
     private Long unreadMessageCount;
 
@@ -71,10 +72,22 @@ public class ChatTiledDto extends AbstractDto {
     public ChatTiledDto() {
     }
 
-    public ChatTiledDto(Long chatId, ChatTypeEnum chatType, Long userContactId, Long avatarId, String number, String label, Long lastMessageTime, String lastMessageText, Long executorUserId, Long deadline, List<Long> workNowUserId, Long unreadMessageCount) {
+    public ChatTiledDto(Long chatId,
+                        ChatTypeEnum chatType,
+                        Long userContactId,
+                        String userContactLabel,
+                        Long avatarId,
+                        String number,
+                        String label,
+                        Long lastMessageTime,
+                        String lastMessageText,
+                        Long executorUserId,
+                        Long deadline,
+                        Long unreadMessageCount) {
         this.chatId = chatId;
         this.chatType = chatType;
         this.userContactId = userContactId;
+        this.userContactLabel = userContactLabel;
         this.avatarId = avatarId;
         this.number = number;
         this.label = label;
@@ -82,7 +95,32 @@ public class ChatTiledDto extends AbstractDto {
         this.lastMessageText = lastMessageText;
         this.executorUserId = executorUserId;
         this.deadline = deadline;
-        this.workNowUserId = workNowUserId;
+        this.unreadMessageCount = unreadMessageCount;
+    }
+
+    public ChatTiledDto(Long chatId,
+                        String chatType,
+                        Long userContactId,
+                        String userContactLabel,
+                        Long avatarId,
+                        String number,
+                        String label,
+                        Long lastMessageTime,
+                        String lastMessageText,
+                        Long executorUserId,
+                        Long deadline,
+                        Long unreadMessageCount) {
+        this.chatId = chatId;
+        this.chatType = ChatTypeEnum.valueOf(chatType);
+        this.userContactId = userContactId;
+        this.userContactLabel = userContactLabel;
+        this.avatarId = avatarId;
+        this.number = number;
+        this.label = label;
+        this.lastMessageTime = lastMessageTime;
+        this.lastMessageText = lastMessageText;
+        this.executorUserId = executorUserId;
+        this.deadline = deadline;
         this.unreadMessageCount = unreadMessageCount;
     }
 

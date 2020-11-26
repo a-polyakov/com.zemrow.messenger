@@ -1,15 +1,26 @@
 package com.zemrow.messenger.dao;
 
-import com.querydsl.core.types.NullExpression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.SimpleExpression;
+import com.querydsl.sql.SQLExpressions;
 import com.querydsl.sql.SQLQuery;
 import com.zemrow.messenger.SessionStorage;
 import com.zemrow.messenger.dto.ChatTiledDto;
 import com.zemrow.messenger.dto.PageNavigationDto;
 import com.zemrow.messenger.entity.Chat;
-import com.zemrow.messenger.entity.constants.*;
+import com.zemrow.messenger.entity.constants.ChatConst;
+import com.zemrow.messenger.entity.constants.ChatTagGroupConst;
+import com.zemrow.messenger.entity.constants.ChatToUserConst;
+import com.zemrow.messenger.entity.constants.ChatToUserLastMessageConst;
+import com.zemrow.messenger.entity.constants.MessageConst;
+import com.zemrow.messenger.entity.constants.MessageTagConst;
+import com.zemrow.messenger.entity.constants.MessageToUserConst;
+import com.zemrow.messenger.entity.constants.NumberingConst;
+import com.zemrow.messenger.entity.constants.UserContactConst;
+import com.zemrow.messenger.entity.constants.UserInfoConst;
 import com.zemrow.messenger.entity.enums.TagGroupEnum;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
@@ -20,6 +31,9 @@ import java.util.List;
  * @author Alexandr Polyakov on 2018.04.15
  */
 public class ChatDao extends AbstractDaoWithId<Chat, ChatConst> {
+
+    private static final Logger log = LogManager.getLogger(ChatDao.class);
+
     @Override
     public ChatConst getTable() {
         return ChatConst.Chat;
@@ -31,14 +45,27 @@ public class ChatDao extends AbstractDaoWithId<Chat, ChatConst> {
     }
 
     /**
+     * Добавление записи
+     *
+     * @param connection TODO
+     * @param session    TODO
+     * @param chat       Чат
+     */
+    @Override
+    public void insert(final Connection connection, final SessionStorage session, Chat chat) {
+        super.insert(connection, session, chat);
+    }
+
+    /**
      * Получить чат по идентификатору.
      *
-     * @param id Идентификатор чата.
+     * @param connection TODO
+     * @param id         Идентификатор чата.
      * @return Чат.
      */
     @Override
-    protected Chat select(Connection connection, SessionStorage session, long id) {
-        return super.select(connection, session, id);
+    protected Chat select(Connection connection, long id) {
+        return super.select(connection, id);
     }
 
     /**
@@ -62,7 +89,7 @@ public class ChatDao extends AbstractDaoWithId<Chat, ChatConst> {
      * @param limit      TODO
      * @return TODO
      */
-    public PageNavigationDto<ChatTiledDto> listLast(final Connection connection, SessionStorage session, int offset, int limit) {
+    public PageNavigationDto<ChatTiledDto> listLast(final Connection connection, SessionStorage session, long offset, long limit) {
         final ChatConst c = new ChatConst("c");
         final ChatToUserConst c2u = new ChatToUserConst("c2u");
         final UserContactConst uc = new UserContactConst("uc");
@@ -74,32 +101,48 @@ public class ChatDao extends AbstractDaoWithId<Chat, ChatConst> {
         final MessageTagConst executor = new MessageTagConst("executor");
         final ChatTagGroupConst deadlineCtg = new ChatTagGroupConst("deadlineCtg");
         final MessageTagConst deadline = new MessageTagConst("deadline");
+        final MessageConst unreadm = new MessageConst("unreadm");
+        final MessageToUserConst unreadm2u = new MessageToUserConst("unreadm2u");
 
         final SQLQuery<ChatTiledDto> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
+
+        // TODO Статус пользователя
+        // TODO Чат добавлен в избранное
+        // TODO workNowUserId
         query.select(
                 Projections.constructor(ChatTiledDto.class,
-                        c.id, // chatId
-                        c.chatType, // chatType
-                        uc.id, // userContactId
-                        uc.label, // userContactLabel
-                        u2.avatarId, // avatarId
-                        // TODO Статус пользователя
-                        // TODO Чат добавлен в избранное
-                        n.prefix.concat(c.orderNumber.stringValue()), // number
-                        c.label, // label
-                        m.createTime, // lastMessageTime
-                        m.text, // lastMessageText
-                        executor.value, // executorUserId
-                        deadline.value, // deadline
-                        NullExpression.DEFAULT, // TODO workNowUserId
-                        NullExpression.DEFAULT // unreadMessageCount
-//                " (select count(unreadm." + MessageConst.ID + ") " +
-//                        "  from " + MessageDao.TABLE + " unreadm, " +
-//                        "    " + MessageToUserDao.TABLE + " unreadm2u " +
-//                        "  where " +
-//                        "    unreadm." + MessageConst.CHAT_ID + "=c." + ChatConst.ID +
-//                        "    and unreadm2u." + MessageToUserConst.MESSAGE_ID + " = unreadm." + MessageConst.ID +
-//                        "    and unreadm2u." + MessageToUserConst.USER_ID + " = c2u." + ChatToUserConst.ID + ") as unreadMessageCount " +
+                        new Class[]{
+                                Long.class,
+                                String.class, // ChatTypeEnum
+                                Long.class,
+                                String.class,
+                                Long.class,
+                                String.class,
+                                String.class,
+                                Long.class,
+                                String.class,
+                                Long.class,
+                                Long.class,
+                                Long.class
+                        },
+                        c.id.as("chatId"),
+                        c.chatType.as("chatType"),
+                        uc.id.as("userContactId"),
+                        uc.label.as("userContactLabel"),
+                        u2.avatarId.as("avatarId"),
+                        n.prefix.concat(c.orderNumber.stringValue()).as("number"),
+                        c.label.as("label"),
+                        m.createTime.as("lastMessageTime"),
+                        m.text.as("lastMessageText"),
+                        executor.value.castToNum(Long.class).as("executorUserId"),
+                        deadline.value.castToNum(Long.class).as("deadline"),
+                        SQLExpressions
+                                .select(unreadm.id.count())
+                                .from(unreadm, unreadm2u)
+                                .where(unreadm.chatId.eq(c.id),
+                                        unreadm2u.messageId.eq(unreadm.id),
+                                        unreadm2u.userId.eq(c2u.userId)
+                                ).as("unreadMessageCount")
                 )
         );
         // чат
@@ -123,13 +166,33 @@ public class ChatDao extends AbstractDaoWithId<Chat, ChatConst> {
         // Плановая дата завершения
         query.leftJoin(deadlineCtg).on(deadlineCtg.chatId.eq(c.id), deadlineCtg.tagGroup.eq(TagGroupEnum.DEADLINE));
         query.leftJoin(deadline).on(deadline.id.eq(deadlineCtg.messageTagId));
-        query.where(c2u.userId.eq(session.getUserId()));
+        query.where(
+                c2u.userId.eq(session.getUserId()),
+                c.deleteTime.isNull() // чат не должен быть удален
+                // TODO контакт был создан мной или принят
+        );
         query.orderBy(m.createTime.desc(), c.createTime.desc());
         query.offset(offset);
         query.limit(limit);
+        log.debug(query);
         final List<ChatTiledDto> page = query.fetch();
+        final long totalSize = query.fetchCount();
+        final PageNavigationDto<ChatTiledDto> result = new PageNavigationDto(page, offset, limit, totalSize);
+        return result;
+    }
 
-        final PageNavigationDto<ChatTiledDto> result = new PageNavigationDto<>(page, offset, limit, 0L/*TODO*/);
+    /**
+     * TODO
+     * @param connection TODO
+     * @param chatId идентификатор чата
+     * @return идентификаторы пользователей из чата
+     */
+    public List<Long> selectUserIdByChatId(Connection connection, Long chatId) {
+        final SQLQuery<Long> query = new SQLQuery(connection, QueryDslConfiguration.CUSTOM);
+        query.select(ChatToUserConst.ChatToUser.userId);
+        query.from(ChatToUserConst.ChatToUser);
+        query.where(ChatToUserConst.ChatToUser.chatId.eq(chatId));
+        final List<Long> result = query.fetch();
         return result;
     }
 }

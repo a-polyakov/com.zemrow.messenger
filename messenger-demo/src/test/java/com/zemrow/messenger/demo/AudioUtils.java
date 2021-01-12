@@ -14,7 +14,9 @@ import java.net.URLEncoder;
 /**
  * Синтез речи
  * <p>
- * TODO RHVoice
+ * TODO Проверить
+ * RHVoice
+ * https://apihost.ru/voice
  *
  * @author Alexandr Polyakov on 2019.01.14
  */

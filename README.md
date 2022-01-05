@@ -68,7 +68,7 @@ TODO Android и IOS приложение представляют из себя 
   
 ## Схема данных
 
-![database_schema.png](readme/database_schema.png)
+![database_schema.svg](readme/database_schema.svg)
 
 ## Работа с мессенджером
 

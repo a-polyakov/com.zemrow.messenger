@@ -46,7 +46,7 @@ public class UserEntryPointConst extends com.querydsl.sql.RelationalPathBase<Use
     public static final String VALIDATE = "validate";
 
     /**
-     * Способ(система) авторизации: логин_пароль, vk.com, google, ...
+     * Способ авторизации. Например: логин_пароль, vk.com, google, ...
      */
     public static final String ENTRY_POINT_TYPE = "entryPointType";
 
@@ -106,7 +106,7 @@ public class UserEntryPointConst extends com.querydsl.sql.RelationalPathBase<Use
     public final BooleanPath validate = createBoolean(VALIDATE);
 
     /**
-     * Способ(система) авторизации: логин_пароль, vk.com, google, ...
+     * Способ авторизации. Например: логин_пароль, vk.com, google, ...
      */
     public final EnumPath<EntryPointTypeEnum> entryPointType = createEnum(ENTRY_POINT_TYPE, EntryPointTypeEnum.class);
 
@@ -149,6 +149,16 @@ public class UserEntryPointConst extends com.querydsl.sql.RelationalPathBase<Use
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<UserEntryPoint> userentrypoint_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserEntryPoint_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserEntryPoint_userId_fk = createForeignKey(userId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserEntryPoint_updatedBy_fk = createForeignKey(updatedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserEntryPoint_deletedBy_fk = createForeignKey(deletedBy, "id");
 
     public UserEntryPointConst(String variable) {
         super(UserEntryPoint.class, forVariable(variable), "public", "UserEntryPoint");

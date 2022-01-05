@@ -50,7 +50,7 @@ public class ChatToUserConst extends com.querydsl.sql.RelationalPathBase<ChatToU
     public static final String FAVORITE = "favorite";
 
     /**
-     * Тип участника: обычный, скрытый только для чтения, скрытый полный доступ
+     * Тип участника. Например: обычный, скрытый только для чтения, скрытый полный доступ
      */
     public static final String CHAT_TO_USER_TYPE = "chatToUserType";
 
@@ -110,7 +110,7 @@ public class ChatToUserConst extends com.querydsl.sql.RelationalPathBase<ChatToU
     public final BooleanPath favorite = createBoolean(FAVORITE);
 
     /**
-     * Тип участника: обычный, скрытый только для чтения, скрытый полный доступ
+     * Тип участника. Например: обычный, скрытый только для чтения, скрытый полный доступ
      */
     public final EnumPath<ChatToUserTypeEnum> chatToUserType = createEnum(CHAT_TO_USER_TYPE, ChatToUserTypeEnum.class);
 
@@ -148,6 +148,18 @@ public class ChatToUserConst extends com.querydsl.sql.RelationalPathBase<ChatToU
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<ChatToUser> chattouser_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatToUser_updatedBy_fk = createForeignKey(updatedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatToUser_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> ChatToUser_chatId_fk = createForeignKey(chatId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatToUser_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatToUser_userId_fk = createForeignKey(userId, "id");
 
     public ChatToUserConst(String variable) {
         super(ChatToUser.class, forVariable(variable), "public", "ChatToUser");

@@ -56,6 +56,12 @@ public class ChatTreeConst extends com.querydsl.sql.RelationalPathBase<ChatTree>
      */
     public final NumberPath<Integer> distance = createNumber(DISTANCE, Integer.class);
 
+    public final com.querydsl.sql.PrimaryKey<ChatTree> ChatTree_pkey = createPrimaryKey(parentChatId, childChatId);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> ChatTree_childChatId_fk = createForeignKey(childChatId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> ChatTree_parentChatId_fk = createForeignKey(parentChatId, "id");
+
     public ChatTreeConst(String variable) {
         super(ChatTree.class, forVariable(variable), "public", "ChatTree");
         addMetadata();

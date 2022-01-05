@@ -1,14 +1,14 @@
 package com.zemrow.messenger.entity;
 
 /**
- * Класс сгенерирован автоматически, для таблицы ChatToUserLastMessage(Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.) из БД
+ * Класс сгенерирован автоматически, для таблицы ChatToUserLastMessage(Последнее сообщение для пользователя в чате. Для упрощения поиска последнего сообщения. Данные являются избыточными, возможно восстановить.) из БД
  * 
  * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
 public class ChatToUserLastMessage extends AbstractEntity {
 
     /**
-     * Пользователи в чате (ID чата и ID пользователя)
+     * Пользователь в чата. ID чата и ID пользователя
      */
     private Long chatToUserId;
 
@@ -18,14 +18,14 @@ public class ChatToUserLastMessage extends AbstractEntity {
     private Long messageId;
 
     /**
-     * Создать Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.
+     * Создать Последнее сообщение для пользователя в чате. Для упрощения поиска последнего сообщения. Данные являются избыточными, возможно восстановить.
      */
     public ChatToUserLastMessage() {
     }
 
     /**
-     * Создать Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.
-     * @param chatToUserId Пользователи в чате (ID чата и ID пользователя)
+     * Создать Последнее сообщение для пользователя в чате. Для упрощения поиска последнего сообщения. Данные являются избыточными, возможно восстановить.
+     * @param chatToUserId Пользователь в чата. ID чата и ID пользователя
      * @param messageId ID сообщения
      */
     public ChatToUserLastMessage(Long chatToUserId, Long messageId) {
@@ -34,14 +34,14 @@ public class ChatToUserLastMessage extends AbstractEntity {
     }
 
     /**
-     * Получение пользователи в чате (id чата и id пользователя)
+     * Получение пользователь в чата. id чата и id пользователя
      */
     public Long getChatToUserId() {
         return chatToUserId;
     }
 
     /**
-     * Установить пользователи в чате (id чата и id пользователя)
+     * Установить пользователь в чата. id чата и id пользователя
      */
     public void setChatToUserId(Long chatToUserId) {
         this.chatToUserId = chatToUserId;

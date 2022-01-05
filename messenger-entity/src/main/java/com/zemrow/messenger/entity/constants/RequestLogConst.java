@@ -53,7 +53,7 @@ public class RequestLogConst extends com.querydsl.sql.RelationalPathBase<Request
     public static final String END_INVOKE = "endInvoke";
 
     /**
-     * Ошибка если была (stacktrace)
+     * Ошибка. Если была - stacktrace.
      */
     public static final String ERROR_STACK_TRACE = "errorStackTrace";
 
@@ -83,9 +83,11 @@ public class RequestLogConst extends com.querydsl.sql.RelationalPathBase<Request
     public final NumberPath<Long> endInvoke = createNumber(END_INVOKE, Long.class);
 
     /**
-     * Ошибка если была (stacktrace)
+     * Ошибка. Если была - stacktrace.
      */
     public final StringPath errorStackTrace = createString(ERROR_STACK_TRACE);
+
+    public final com.querydsl.sql.PrimaryKey<RequestLog> requestlog_pkey = createPrimaryKey(id);
 
     public RequestLogConst(String variable) {
         super(RequestLog.class, forVariable(variable), "public", "RequestLog");

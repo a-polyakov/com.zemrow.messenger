@@ -15,7 +15,7 @@ import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * Класс сгенерирован автоматически, для таблицы ChatTagGroup(Групповые теги чата (для упрощения поиска последнего тега из группы). Данные являются избыточными, возможно восстановить.) из БД
+ * Класс сгенерирован автоматически, для таблицы ChatTagGroup(Групповые теги чата. Для упрощения поиска последнего тега из группы. Данные являются избыточными, возможно восстановить.) из БД
  * 
  * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
@@ -24,7 +24,7 @@ public class ChatTagGroupConst extends com.querydsl.sql.RelationalPathBase<ChatT
     private static final long serialVersionUID = -1717584828;
 
     /**
-     * Групповые теги чата (для упрощения поиска последнего тега из группы). Данные являются избыточными, возможно восстановить.
+     * Групповые теги чата. Для упрощения поиска последнего тега из группы. Данные являются избыточными, возможно восстановить.
      */
     public static final ChatTagGroupConst ChatTagGroup = new ChatTagGroupConst("ChatTagGroup");
 
@@ -34,7 +34,7 @@ public class ChatTagGroupConst extends com.querydsl.sql.RelationalPathBase<ChatT
     public static final String CHAT_ID = "chatId";
 
     /**
-     * Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
+     * Группа тегов. Если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
     public static final String TAG_GROUP = "tagGroup";
 
@@ -49,7 +49,7 @@ public class ChatTagGroupConst extends com.querydsl.sql.RelationalPathBase<ChatT
     public final NumberPath<Long> chatId = createNumber(CHAT_ID, Long.class);
 
     /**
-     * Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
+     * Группа тегов. Если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
     public final EnumPath<TagGroupEnum> tagGroup = createEnum(TAG_GROUP, TagGroupEnum.class);
 
@@ -57,6 +57,12 @@ public class ChatTagGroupConst extends com.querydsl.sql.RelationalPathBase<ChatT
      * ID тега из сообщения
      */
     public final NumberPath<Long> messageTagId = createNumber(MESSAGE_TAG_ID, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<ChatTagGroup> ChatTagGroup_pkey = createPrimaryKey(chatId, tagGroup);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> ChatTagGroup_chatId_fk = createForeignKey(chatId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.MessageTag> ChatTagGroup_messageTagId_fk = createForeignKey(messageTagId, "id");
 
     public ChatTagGroupConst(String variable) {
         super(ChatTagGroup.class, forVariable(variable), "public", "ChatTagGroup");

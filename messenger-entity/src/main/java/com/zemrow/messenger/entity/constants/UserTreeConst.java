@@ -56,6 +56,12 @@ public class UserTreeConst extends com.querydsl.sql.RelationalPathBase<UserTree>
      */
     public final NumberPath<Integer> distance = createNumber(DISTANCE, Integer.class);
 
+    public final com.querydsl.sql.PrimaryKey<UserTree> UserTree_pkey = createPrimaryKey(parentUserId, childUserId);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserTree_childUserId_fk = createForeignKey(childUserId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserTree_parentUserId_fk = createForeignKey(parentUserId, "id");
+
     public UserTreeConst(String variable) {
         super(UserTree.class, forVariable(variable), "public", "UserTree");
         addMetadata();

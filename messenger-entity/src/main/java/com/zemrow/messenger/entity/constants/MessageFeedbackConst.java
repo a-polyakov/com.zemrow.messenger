@@ -46,6 +46,8 @@ public class MessageFeedbackConst extends com.querydsl.sql.RelationalPathBase<Me
      */
     public final NumberPath<Integer> feedback = createNumber(FEEDBACK, Integer.class);
 
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Message> MessageFeedback_messageId_fk = createForeignKey(messageId, "id");
+
     public MessageFeedbackConst(String variable) {
         super(MessageFeedback.class, forVariable(variable), "public", "MessageFeedback");
         addMetadata();

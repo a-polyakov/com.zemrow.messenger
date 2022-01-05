@@ -3,7 +3,7 @@ package com.zemrow.messenger.entity;
 import com.zemrow.messenger.SessionStorage;
 
 /**
- * Класс сгенерирован автоматически, для таблицы ChatWork(Отметка пользователя о затраченом времени) из БД
+ * Класс сгенерирован автоматически, для таблицы ChatWork(Отметка пользователя о затраченном времени) из БД
  * 
  * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
@@ -50,13 +50,13 @@ public class ChatWork extends AbstractEntityWithId {
     private Long deletedBy;
 
     /**
-     * Создать Отметка пользователя о затраченом времени
+     * Создать Отметка пользователя о затраченном времени
      */
     public ChatWork() {
     }
 
     /**
-     * Создать Отметка пользователя о затраченом времени
+     * Создать Отметка пользователя о затраченном времени
      * @param id ID записи
      * @param chatId ID чата
      * @param userId ID пользователя

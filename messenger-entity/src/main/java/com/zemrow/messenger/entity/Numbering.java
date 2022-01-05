@@ -3,7 +3,7 @@ package com.zemrow.messenger.entity;
 import com.zemrow.messenger.SessionStorage;
 
 /**
- * Класс сгенерирован автоматически, для таблицы Numbering(Настройка нумирации для компании и типа чата) из БД
+ * Класс сгенерирован автоматически, для таблицы Numbering(Настройка нумерации для компании и типа чата) из БД
  * 
  * @author com.zemrow.messenger.db.querydsl.QueryDslEntitySerializer on 2020.10.23
  */
@@ -55,13 +55,13 @@ public class Numbering extends AbstractEntityWithId {
     private Long deletedBy;
 
     /**
-     * Создать Настройка нумирации для компании и типа чата
+     * Создать Настройка нумерации для компании и типа чата
      */
     public Numbering() {
     }
 
     /**
-     * Создать Настройка нумирации для компании и типа чата
+     * Создать Настройка нумерации для компании и типа чата
      * @param id ID записи
      * @param userId id пользователя(компания, отдел)
      * @param prefix Префикс

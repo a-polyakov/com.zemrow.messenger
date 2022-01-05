@@ -26,7 +26,7 @@ public class ChatToUser extends AbstractEntityWithId {
     private Boolean favorite;
 
     /**
-     * Тип участника: обычный, скрытый только для чтения, скрытый полный доступ
+     * Тип участника. Например: обычный, скрытый только для чтения, скрытый полный доступ
      */
     private ChatToUserTypeEnum chatToUserType;
 
@@ -77,7 +77,7 @@ public class ChatToUser extends AbstractEntityWithId {
      * @param chatId ID чата
      * @param userId ID пользователя
      * @param favorite Избранный чат
-     * @param chatToUserType Тип участника: обычный, скрытый только для чтения, скрытый полный доступ
+     * @param chatToUserType Тип участника. Например: обычный, скрытый только для чтения, скрытый полный доступ
      * @param mute Отключить уведомления
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
@@ -172,14 +172,14 @@ public class ChatToUser extends AbstractEntityWithId {
     }
 
     /**
-     * Получение тип участника: обычный, скрытый только для чтения, скрытый полный доступ
+     * Получение тип участника. например: обычный, скрытый только для чтения, скрытый полный доступ
      */
     public ChatToUserTypeEnum getChatToUserType() {
         return chatToUserType;
     }
 
     /**
-     * Установить тип участника: обычный, скрытый только для чтения, скрытый полный доступ
+     * Установить тип участника. например: обычный, скрытый только для чтения, скрытый полный доступ
      */
     public void setChatToUserType(ChatToUserTypeEnum chatToUserType) {
         this.chatToUserType = chatToUserType;

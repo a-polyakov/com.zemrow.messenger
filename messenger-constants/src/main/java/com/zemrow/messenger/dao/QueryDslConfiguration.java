@@ -45,6 +45,7 @@ public class QueryDslConfiguration {
         CUSTOM.register("Tag", "tagType", new EnumByNameType(TagTypeEnum.class));
         CUSTOM.register("UserContact", "userContactStatus", new EnumByNameType(UserContactStatusEnum.class));
         CUSTOM.register("UserEntryPoint", "entryPointType", new EnumByNameType(EntryPointTypeEnum.class));
+        CUSTOM.register("UserFilter", "data", new QueryDslJsonbType());
         CUSTOM.register("UserFilter", "pageType", new EnumByNameType(FilterPageTypeEnum.class));
         CUSTOM.register("UserInfo", "locale", new LocaleType());
         CUSTOM.register("UserInfo", "timeZone", QueryDslZoneIdAsVarcharType.DEFAULT);

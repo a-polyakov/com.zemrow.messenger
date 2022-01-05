@@ -21,7 +21,7 @@ public class UserContact extends AbstractEntityWithId {
     private Long childUserId;
 
     /**
-     * Статус контакта (Запрошен, принят, отклонен)
+     * Статус контакта. Запрошен, принят, отклонен.
      */
     private UserContactStatusEnum userContactStatus;
 
@@ -76,7 +76,7 @@ public class UserContact extends AbstractEntityWithId {
      * @param id ID записи
      * @param parentUserId ID пользователя родителя
      * @param childUserId ID пользователя потомка
-     * @param userContactStatus Статус контакта (Запрошен, принят, отклонен)
+     * @param userContactStatus Статус контакта. Запрошен, принят, отклонен.
      * @param label Наименование контакта
      * @param chatId ID чата
      * @param createTime Дата создания записи
@@ -158,14 +158,14 @@ public class UserContact extends AbstractEntityWithId {
     }
 
     /**
-     * Получение статус контакта (запрошен, принят, отклонен)
+     * Получение статус контакта. запрошен, принят, отклонен.
      */
     public UserContactStatusEnum getUserContactStatus() {
         return userContactStatus;
     }
 
     /**
-     * Установить статус контакта (запрошен, принят, отклонен)
+     * Установить статус контакта. запрошен, принят, отклонен.
      */
     public void setUserContactStatus(UserContactStatusEnum userContactStatus) {
         this.userContactStatus = userContactStatus;

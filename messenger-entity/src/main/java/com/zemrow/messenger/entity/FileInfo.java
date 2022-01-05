@@ -26,7 +26,7 @@ public class FileInfo extends AbstractEntityWithId {
     private Long fileSize;
 
     /**
-     * Место хранения в файловой системе, на основе UUID
+     * Место хранения. В файловой системе, на основе UUID
      */
     private String path;
 
@@ -36,12 +36,12 @@ public class FileInfo extends AbstractEntityWithId {
     private FileAccessTypeEnum fileAccessType;
 
     /**
-     * Контрольная сумма, для поиска дубликатов
+     * Контрольная сумма. Для поиска дубликатов
      */
     private Integer crc32;
 
     /**
-     * Дата последнего скачивания файла, для архивирования редко используемых
+     * Дата последнего скачивания файла. Для архивирования редко используемых
      */
     private Long lastOpenTime;
 
@@ -82,10 +82,10 @@ public class FileInfo extends AbstractEntityWithId {
      * @param name Наименование файла
      * @param mimeType MIME-тип файла
      * @param fileSize Размер файла
-     * @param path Место хранения в файловой системе, на основе UUID
+     * @param path Место хранения. В файловой системе, на основе UUID
      * @param fileAccessType Тип доступа
-     * @param crc32 Контрольная сумма, для поиска дубликатов
-     * @param lastOpenTime Дата последнего скачивания файла, для архивирования редко используемых
+     * @param crc32 Контрольная сумма. Для поиска дубликатов
+     * @param lastOpenTime Дата последнего скачивания файла. Для архивирования редко используемых
      * @param gzipOn Файл заархивирован
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
@@ -171,14 +171,14 @@ public class FileInfo extends AbstractEntityWithId {
     }
 
     /**
-     * Получение место хранения в файловой системе, на основе uuid
+     * Получение место хранения. в файловой системе, на основе uuid
      */
     public String getPath() {
         return path;
     }
 
     /**
-     * Установить место хранения в файловой системе, на основе uuid
+     * Установить место хранения. в файловой системе, на основе uuid
      */
     public void setPath(String path) {
         this.path = path;
@@ -199,28 +199,28 @@ public class FileInfo extends AbstractEntityWithId {
     }
 
     /**
-     * Получение контрольная сумма, для поиска дубликатов
+     * Получение контрольная сумма. для поиска дубликатов
      */
     public Integer getCrc32() {
         return crc32;
     }
 
     /**
-     * Установить контрольная сумма, для поиска дубликатов
+     * Установить контрольная сумма. для поиска дубликатов
      */
     public void setCrc32(Integer crc32) {
         this.crc32 = crc32;
     }
 
     /**
-     * Получение дата последнего скачивания файла, для архивирования редко используемых
+     * Получение дата последнего скачивания файла. для архивирования редко используемых
      */
     public Long getLastOpenTime() {
         return lastOpenTime;
     }
 
     /**
-     * Установить дата последнего скачивания файла, для архивирования редко используемых
+     * Установить дата последнего скачивания файла. для архивирования редко используемых
      */
     public void setLastOpenTime(Long lastOpenTime) {
         this.lastOpenTime = lastOpenTime;

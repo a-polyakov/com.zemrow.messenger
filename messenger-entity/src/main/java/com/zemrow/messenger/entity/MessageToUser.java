@@ -22,12 +22,12 @@ public class MessageToUser extends AbstractEntityWithId {
     private Long userId;
 
     /**
-     * Статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)
+     * Статус сообщения для конкретного пользователя. Просмотрен/не просмотрен и т.д.
      */
     private MessageStatusEnum messageStatus;
 
     /**
-     * Реакция на сообщение (like/dislike)
+     * Реакция на сообщение. like/dislike
      */
     private MessageFeedbackEnum messageFeedback;
 
@@ -72,8 +72,8 @@ public class MessageToUser extends AbstractEntityWithId {
      * @param id ID записи
      * @param messageId ID сообщения
      * @param userId ID пользователя
-     * @param messageStatus Статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)
-     * @param messageFeedback Реакция на сообщение (like/dislike)
+     * @param messageStatus Статус сообщения для конкретного пользователя. Просмотрен/не просмотрен и т.д.
+     * @param messageFeedback Реакция на сообщение. like/dislike
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
      * @param updateTime Дата обновления записи
@@ -152,28 +152,28 @@ public class MessageToUser extends AbstractEntityWithId {
     }
 
     /**
-     * Получение статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)
+     * Получение статус сообщения для конкретного пользователя. просмотрен/не просмотрен и т.д.
      */
     public MessageStatusEnum getMessageStatus() {
         return messageStatus;
     }
 
     /**
-     * Установить статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)
+     * Установить статус сообщения для конкретного пользователя. просмотрен/не просмотрен и т.д.
      */
     public void setMessageStatus(MessageStatusEnum messageStatus) {
         this.messageStatus = messageStatus;
     }
 
     /**
-     * Получение реакция на сообщение (like/dislike)
+     * Получение реакция на сообщение. like/dislike
      */
     public MessageFeedbackEnum getMessageFeedback() {
         return messageFeedback;
     }
 
     /**
-     * Установить реакция на сообщение (like/dislike)
+     * Установить реакция на сообщение. like/dislike
      */
     public void setMessageFeedback(MessageFeedbackEnum messageFeedback) {
         this.messageFeedback = messageFeedback;

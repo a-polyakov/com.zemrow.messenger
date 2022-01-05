@@ -8,206 +8,203 @@ hide empty methods
 'Скрыть поля и методы
 'hide members
 
-    class UserInfo{
-        Long avatarId
-        String name
-        UserTypeEnum userType
-        Map<String, String> publicInfo
-        Long userStatusId
-        Locale locale
-        TimeZone timeZone
-    }
-    class Chat{
-        String label
-        ChatTypeEnum chatType
-        Long numberingId
-        Long orderNumber
-    }
-    class Message {
-        Long chatId
-        String text
-        Long fileId
-        Long childChatId
-        MessageTypeEnum messageType
-        Long parentMessageId
-    }
-    class FileInfo{
-    	String name
-    	String mimeType
-    	Long fileSize
-    	String path
-    	FileAccessTypeEnum fileAccessType
-    	Integer crc32
-    	Long lastOpenTime
-    	Boolean gzipOn
-    }
-    class MessageLog {
-        Long messageId
-        String oldText
-    }
-    class MessageTag {
-        Long messageId
-        Long tagId
-        String value
-    }
-    class MessageToUser {
-        Long messageId
-        Long userId
-        MessageStatusEnum messageStatus
-        FeedbackFeedbackEnum feedbackFeedback
-    }
-    class MessageFeedback {
-        Long messageId
-        Integer feedback
-    }
-    class Tag{
-        String tag
-        TagTypeEnum tagType
-        String description
-        Boolean leftMenuShow
-        Boolean headerShow
-        TagGroupEnum tagGroup
-    }
-    class UserContact{
-        Long parentUserId
-        Long childUserId
-        UserContactStatusEnum userContactStatus
-        String label
-        Long chatId
-    }
-    class UserFilter {
-         Long userId
-         FilterPageTypeEnum pageType
-         String filterLabel
-         JSON data
-    }
-    class UserLink {
-         Long parentUserId
-         Long childUserId
-         UserLinkEnum userLinkType
-    }
-    class UserLog {
-    	Long userId
-        public String fieldName
-        public String fieldOldValue
-        public String fieldNewValue
-        public String comment
-    }
-    class UserStatus  {
-        String label
-        UserStatusTypeEnum userStatusType
-        Integer weight
-        Integer color
-    }
-    class UserTree {
-         Long parentUserId
-         Long childUserId
-         Integer distance
-    }
-    class ChatToUser{
-        Long chatId
-        Long userId
-        boolean favorite
-        ChatToUserTypeEnum chatToUserType
-        boolean mute
-    }
-    class ChatToUserLastMessage{
-        Long chatToUserId
-        Long messageId
-    }
-    class ChatTree{
-        Long parentChatId
-        Long childChatId
-        Integer distance
-    }
-    class ChatPriority{
-        Long chatId
-        Long priority
-    }
-    class ChatWork{
-        Long chatId
-        Long userId
-        Long startTime
-        Long endTime
-    }
-    class ChatReminder{
-        Long chatId
-        Long userId
-        String text
-        Long reminderTime
-    }
-    class ChatTagGroup {
-        Long chatId
-        TagGroupEnum tagGroup
-        Long messageTagId
-    }
-    class Numbering {
-        Long userId
-        String prefix
-        Long maxNumber
-    }
-    class UserEntryPoint {
-        Long userId
-        Boolean validate
-        EntryPointTypeEnum entryPointType
-        String clientId
-        String credential
-	}
-    class UserSession  {
-        Long userEntryPointId
-        String token
-        Long userEntryPointId
-    }
-    class UserSessionFail  {
-        Long userEntryPointId
-        String ipAddress
-        String comment
-    }
-    class RequestLog {
-        String token
-        String eventId
-        Long startInvoke
-        Long endInvoke
-        String errorStackTrace
-    }
-
-UserInfo -[#00FF00]- UserContact
-UserInfo -[#00FF00]left-{ UserEntryPoint
-UserInfo -[#00FF00]-{ UserFilter
-UserInfo -[#00FF00]-{ UserLink
-UserInfo -[#00FF00]-{ UserLog
-UserInfo -[#00FF00]-{ UserTree
-UserInfo -[#00FF00]-{ UserStatus
-UserInfo -[#00FF00]-{ ChatWork
-UserInfo -[#00FF00]-{ ChatReminder
-UserInfo -[#00FF00]-{ ChatToUser
-UserInfo -[#00FF00]-{ MessageToUser
-UserInfo -[#00FF00]-{ Numbering
-
-UserInfo -[#000000]right-{ Chat
-
-Chat -[#FF0000]-{ ChatReminder
-Chat -[#FF0000]-{ ChatTagGroup
-Chat -[#FF0000]-{ ChatToUser
-Chat -[#FF0000]-{ ChatTree
-Chat -[#FF0000]-{ ChatWork
-Chat -[#FF0000]-{ UserContact
-Chat -[#FF0000]- ChatPriority
-
-Chat -[#000000]right-{ Message
-
-Message -[#0000FF]- Message : hierarchy
-Message -[#0000FF]-{ MessageToUser
-Message -[#0000FF]-{ MessageLog
-Message -[#0000FF]-{ MessageTag
-Message -[#0000FF]-{ ChatToUserLastMessage
-Message }-[#000000]- FileInfo
-Message -[#0000FF]- MessageFeedback
-
-MessageTag }-[#000000]- Tag
-UserEntryPoint -[#000000]down-{ UserSession
-UserSession -[#000000]down-{ RequestLog
-UserEntryPoint -[#000000]-{ UserSessionFail
+class Chat <<Чат>>{
+    {field} String label; // Наименование чата
+    {field} ChatTypeEnum chatType; // Тип чата: чат, задание
+    {field} Long numberingId; // Использованный нумератор (для определения префикса)
+    {field} Long orderNumber; // Номер чата(документа)
+}
+class ChatPriority <<Приоритет задания>>{
+    {field} Long chatId; // ID чата
+    {field} Long priority; // Приоритет
+}
+class ChatReminder <<Напоминание>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} String text; // Текст напоминания
+    {field} Long reminderTime; // Дата напоминания
+}
+class ChatTagGroup <<Групповые теги чата>>{
+    {field} Long chatId; // ID чата
+    {field} TagGroupEnum tagGroup; // Группа тегов
+    {field} Long messageTagId; // ID тега из сообщения
+}
+class ChatToUser <<Пользователи в чате>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} Boolean favorite; // Избранный чат
+    {field} ChatToUserTypeEnum chatToUserType; // Тип участника
+    {field} Boolean mute; // Отключить уведомления
+}
+class ChatToUserLastMessage <<Последнее сообщение для пользователя в чате>>{
+    {field} Long chatToUserId; // Пользователь в чата
+    {field} Long messageId; // ID сообщения
+}
+class ChatTree <<Дерево задач>>{
+    {field} Long parentChatId; // ID родительского чата
+    {field} Long childChatId; // ID дочернего чата
+    {field} Integer distance; // Разность уровней
+}
+class ChatWork <<Отметка пользователя о затраченном времени>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} Long startTime; // Дата начала работы
+    {field} Long endTime; // Дата окончания работы
+}
+class FileInfo <<Файл>>{
+	{field} String name; // Наименование файла
+	{field} String mimeType; // MIME-тип файла
+	{field} Long fileSize; // Размер файла
+	{field} String path; // Место хранения
+	{field} FileAccessTypeEnum fileAccessType; // Тип доступа
+	{field} Integer crc32; // Контрольная сумма
+	{field} Long lastOpenTime; // Дата последнего скачивания файла
+	{field} Boolean gzipOn; // Файл заархивирован
+}
+class Message <<Сообщение>>{
+   {field} Long chatId; // ID чата
+   {field} String text; // Текст
+   {field} Long fileId; // ID прикрепленного файла
+   {field} Long childChatId; // ID созданного чата
+   {field} MessageTypeEnum messageType; // Тип сообщения (SIMPLE, ERROR)
+   {field} Long parentMessageId; // ID родительского сообщения
+}
+class MessageFeedback <<Итоговый голос по сообщению>>{
+    {field} Long messageId; // ID сообщения
+    {field} Integer feedback; // Итоговый голос по сообщению
+}
+class MessageLog <<История сообщения>>{
+    {field} Long messageId; // ID сообщения
+    {field} String oldText; // Предыдущий текст
+}
+class MessageTag <<Тег сообщения>>{
+    {field} Long messageId; // ID сообщения
+    {field} Long tagId; // ID тега
+    {field} String value; // Значение тега
+}
+class MessageToUser <<Связка сообщения с пользователем>>{
+    {field}Long messageId; // ID сообщения
+    {field}Long userId; // ID пользователя
+    {field}MessageStatusEnum messageStatus; // Статус сообщения для конкретного пользователя
+    {field}MessageFeedbackEnum messageFeedback; // Реакция на сообщение
+}
+class Numbering <<Настройка нумерации для компании и типа чата>>{
+    {field} Long userId; // id пользователя(компания, отдел)
+    {field} String prefix; // Префикс
+    {field} Long maxNumber; // Последний выданный номер
+}
+class RequestLog <<Логи вызовов сервисов>>{
+    {field} String token; // Уникальный идентификатор сессии пользователя
+    {field} String eventId; // Идентификатор события
+    {field} Long startInvoke; // Время запуска
+    {field} Long endInvoke; // Время окончания
+    {field} String errorStackTrace; // Ошибка
+}
+class Tag <<Полный перечень тегов>>{
+    {field} String tag; // Тег
+    {field} TagTypeEnum tagType; // Тип тега для связки наименование тега с логикой
+    {field} String description; // Описание тега для автокомплита
+    {field} Boolean leftMenuShow; // Показывать ли в левом меню
+    {field} Boolean headerShow; // Показывать ли в заголовке чата
+    {field} TagGroupEnum tagGroup; // Группа тегов
+}
+class UserContact <<Контакты пользователя>>{
+    {field} Long parentUserId; // ID пользователя родителя
+    {field} Long childUserId; // ID пользователя потомка
+    {field} UserContactStatusEnum userContactStatus; // Статус контакта
+    {field} String label; // Наименование контакта
+    {field} Long chatId; // ID чата
+}
+class UserEntryPoint <<Способы авторизации пользователя>>{
+    {field} Long userId; // ID пользователя
+    {field} Boolean validate; // Прошел ли подтверждение
+    {field} EntryPointTypeEnum entryPointType; // Способ авторизации
+    {field} String clientId; // Идентификатор в системе авторизации (логин)
+    {field} String credential; // Удостоверение личности в системе авторизации (пароль)
+}
+class UserFilter <<Пользовательский фильтр>>{
+     {field} Long userId; // ID пользователя
+     {field} FilterPageTypeEnum pageType; // ID части системы
+     {field} String filterLabel; // Название фильтра
+     {field} JSON data; // Данные фильтра в формате JSON
+}
+class UserInfo <<Пользователь>>{
+   {field} String name; // Наименование пользователя
+   {field} UserTypeEnum userType; // Тип пользователя
+   {field} Long avatarId; // Ссылка на таблицу file где хранится аватар
+   {field} Map<String, String> publicInfo; // Json с дополнительными полями
+   {field} UserStatusEnum userStatus; // Состояние пользователя
+   {field} String userStatusLabel; // Статус который указал пользователь
+   {field} Locale locale; // Язык
+   {field} ZoneId timeZone; // Часовой пояс
+}
+class UserLink <<Организационная структура пользователей>>{
+     {field} Long parentUserId; // ID пользователя родителя
+     {field} Long childUserId; // ID пользователя потомка
+     {field} UserLinkTypeEnum userLinkType; // Тип связи
+}
+class UserLog <<История изменения пользователь>>{
+	{field} Long userId; // ID пользователя
+    {field} String fieldName; // Поле
+    {field} String fieldOldValue; // Старое значение
+    {field} String fieldNewValue; // Новое значение
+    {field} String comment; // Комментарий
+}
+class UserSession <<Сессия пользователя>>{
+    {field} String token ; // Уникальный идентификатор сессии
+    {field} Long userEntryPointId; // Точка входа пользователя
+}
+class UserSessionFail <<Неудачные попытки войти в систему>>{
+    {field} Long userEntryPointId; // Точка входа пользователя
+    {field} String ipAddress; // IP адрес клиента
+    {field} String comment; // Сообщение об ошибке
+}
+class UserStatus <<Справочник статусов пользователя>>{
+    {field} String label; // Статус который указал пользователь
+}
+class UserTree <<Дерево пользователей>>{
+     {field} Long parentUserId; // ID родительского пользователя
+     {field} Long childUserId; // ID дочернего пользователя
+     {field} Integer distance; // Разность уровней
+}
+Chat::numberingId }-- Numbering
+ChatPriority::chatId }-[#FF0000]- Chat
+ChatReminder::chatId }-[#FF0000]- Chat
+ChatReminder::userId }-[#00FF00]- UserInfo
+ChatTagGroup::chatId }-[#FF0000]- Chat
+ChatTagGroup::messageTagId }-- MessageTag
+ChatToUser::chatId }-[#FF0000]- Chat
+ChatToUser::userId }-[#00FF00]- UserInfo
+ChatToUserLastMessage::chatToUserId }-up- ChatToUser
+ChatToUserLastMessage::messageId }-[#0000FF]- Message
+ChatTree }-[#FF0000]- Chat
+ChatWork::chatId }-[#FF0000]- Chat
+ChatWork::userId }-[#00FF00]- UserInfo
+Message::chatId }-[#FF0000]left- Chat
+Message::childChatId }-[#FF0000]- Chat
+Message::fileId }-- FileInfo
+Message::parentMessageId -[#0000FF]- Message : hierarchy
+MessageFeedback::messageId }-[#0000FF]- Message
+MessageLog::messageId }-[#0000FF]- Message
+MessageTag::messageId }-[#0000FF]- Message
+MessageTag::tagId }-- Tag
+MessageToUser::messageId }-[#0000FF]- Message
+MessageToUser::userId }-[#00FF00]- UserInfo
+Numbering::userId }-[#00FF00]- UserInfo
+UserContact::chatId }-[#FF0000]- Chat
+UserContact::childUserId }-[#00FF00]- UserInfo
+UserContact::parentUserId }-[#00FF00]- UserInfo
+UserEntryPoint::userId }-[#00FF00]right- UserInfo
+UserFilter::userId }-[#00FF00]- UserInfo
+UserInfo::avatarId }-- FileInfo
+UserLink }-[#00FF00]- UserInfo
+UserLog::userId }-[#00FF00]- UserInfo
+UserSession::userEntryPointId }-up- UserEntryPoint
+UserSessionFail::userEntryPointId }-- UserEntryPoint
+UserTree }-[#00FF00]- UserInfo
+UserStatus::createdBy }-[#00FF00]- UserInfo
+Chat::createdBy }-[#000000]left- UserInfo
+RequestLog::token }-[#000000]up- UserSession::token
 
 UserLink -[hidden]down- UserTree
 UserStatus -[hidden]down- UserLog
@@ -216,6 +213,5 @@ UserFilter -[hidden]down- Numbering
 UserContact -[hidden]down- ChatWork
 ChatWork -[hidden]down- ChatReminder
 ChatTagGroup -[hidden]down- ChatTree
-ChatToUser -down- ChatToUserLastMessage
 
 @enduml

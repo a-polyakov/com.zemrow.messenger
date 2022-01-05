@@ -45,7 +45,7 @@ public class UserContactConst extends com.querydsl.sql.RelationalPathBase<UserCo
     public static final String CHILD_USER_ID = "childUserId";
 
     /**
-     * Статус контакта (Запрошен, принят, отклонен)
+     * Статус контакта. Запрошен, принят, отклонен.
      */
     public static final String USER_CONTACT_STATUS = "userContactStatus";
 
@@ -105,7 +105,7 @@ public class UserContactConst extends com.querydsl.sql.RelationalPathBase<UserCo
     public final NumberPath<Long> childUserId = createNumber(CHILD_USER_ID, Long.class);
 
     /**
-     * Статус контакта (Запрошен, принят, отклонен)
+     * Статус контакта. Запрошен, принят, отклонен.
      */
     public final EnumPath<UserContactStatusEnum> userContactStatus = createEnum(USER_CONTACT_STATUS, UserContactStatusEnum.class);
 
@@ -148,6 +148,20 @@ public class UserContactConst extends com.querydsl.sql.RelationalPathBase<UserCo
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<UserContact> usercontact_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserContact_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserContact_parentUserId_fk = createForeignKey(parentUserId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserContact_childUserId_fk = createForeignKey(childUserId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserContact_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> UserContact_chatId_fk = createForeignKey(chatId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserContact_updatedBy_fk = createForeignKey(updatedBy, "id");
 
     public UserContactConst(String variable) {
         super(UserContact.class, forVariable(variable), "public", "UserContact");

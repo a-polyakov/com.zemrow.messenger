@@ -51,7 +51,7 @@ public class FileInfoConst extends com.querydsl.sql.RelationalPathBase<FileInfo>
     public static final String FILE_SIZE = "fileSize";
 
     /**
-     * Место хранения в файловой системе, на основе UUID
+     * Место хранения. В файловой системе, на основе UUID
      */
     public static final String PATH = "path";
 
@@ -61,12 +61,12 @@ public class FileInfoConst extends com.querydsl.sql.RelationalPathBase<FileInfo>
     public static final String FILE_ACCESS_TYPE = "fileAccessType";
 
     /**
-     * Контрольная сумма, для поиска дубликатов
+     * Контрольная сумма. Для поиска дубликатов
      */
     public static final String CRC32 = "crc32";
 
     /**
-     * Дата последнего скачивания файла, для архивирования редко используемых
+     * Дата последнего скачивания файла. Для архивирования редко используемых
      */
     public static final String LAST_OPEN_TIME = "lastOpenTime";
 
@@ -116,7 +116,7 @@ public class FileInfoConst extends com.querydsl.sql.RelationalPathBase<FileInfo>
     public final NumberPath<Long> fileSize = createNumber(FILE_SIZE, Long.class);
 
     /**
-     * Место хранения в файловой системе, на основе UUID
+     * Место хранения. В файловой системе, на основе UUID
      */
     public final StringPath path = createString(PATH);
 
@@ -126,12 +126,12 @@ public class FileInfoConst extends com.querydsl.sql.RelationalPathBase<FileInfo>
     public final EnumPath<FileAccessTypeEnum> fileAccessType = createEnum(FILE_ACCESS_TYPE, FileAccessTypeEnum.class);
 
     /**
-     * Контрольная сумма, для поиска дубликатов
+     * Контрольная сумма. Для поиска дубликатов
      */
     public final NumberPath<Integer> crc32 = createNumber(CRC32, Integer.class);
 
     /**
-     * Дата последнего скачивания файла, для архивирования редко используемых
+     * Дата последнего скачивания файла. Для архивирования редко используемых
      */
     public final NumberPath<Long> lastOpenTime = createNumber(LAST_OPEN_TIME, Long.class);
 
@@ -159,6 +159,12 @@ public class FileInfoConst extends com.querydsl.sql.RelationalPathBase<FileInfo>
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<FileInfo> fileinfo_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> FileInfo_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> FileInfo_deletedBy_fk = createForeignKey(deletedBy, "id");
 
     public FileInfoConst(String variable) {
         super(FileInfo.class, forVariable(variable), "public", "FileInfo");

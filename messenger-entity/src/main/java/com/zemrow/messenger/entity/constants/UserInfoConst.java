@@ -3,9 +3,11 @@ package com.zemrow.messenger.entity.constants;
 import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.SimplePath;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
 import com.zemrow.messenger.entity.UserInfo;
+import com.zemrow.messenger.entity.enums.UserStatusEnum;
 import com.zemrow.messenger.entity.enums.UserTypeEnum;
 
 import java.sql.Types;
@@ -35,19 +37,19 @@ public class UserInfoConst extends com.querydsl.sql.RelationalPathBase<UserInfo>
     public static final String ID = "id";
 
     /**
-     * Ссылка на таблицу file где хранится аватар
-     */
-    public static final String AVATAR_ID = "avatarId";
-
-    /**
      * Наименование пользователя
      */
     public static final String NAME = "name";
 
     /**
-     * Тип пользователя: физическое лицо, отдел, компания
+     * Тип пользователя. Например: физическое лицо, отдел, компания
      */
     public static final String USER_TYPE = "userType";
+
+    /**
+     * Ссылка на таблицу file где хранится аватар
+     */
+    public static final String AVATAR_ID = "avatarId";
 
     /**
      * Json с дополнительными полями
@@ -55,9 +57,14 @@ public class UserInfoConst extends com.querydsl.sql.RelationalPathBase<UserInfo>
     public static final String PUBLIC_INFO = "publicInfo";
 
     /**
-     * Состояние пользователя: Не в сети, В сети, Не беспокоить
+     * Состояние пользователя. Не в сети, В сети
      */
-    public static final String USER_STATUS_ID = "userStatusId";
+    public static final String USER_STATUS = "userStatus";
+
+    /**
+     * Статус который указал пользователь
+     */
+    public static final String USER_STATUS_LABEL = "userStatusLabel";
 
     /**
      * Язык
@@ -105,19 +112,19 @@ public class UserInfoConst extends com.querydsl.sql.RelationalPathBase<UserInfo>
     public final NumberPath<Long> id = createNumber(ID, Long.class);
 
     /**
-     * Ссылка на таблицу file где хранится аватар
-     */
-    public final NumberPath<Long> avatarId = createNumber(AVATAR_ID, Long.class);
-
-    /**
      * Наименование пользователя
      */
     public final StringPath name = createString(NAME);
 
     /**
-     * Тип пользователя: физическое лицо, отдел, компания
+     * Тип пользователя. Например: физическое лицо, отдел, компания
      */
     public final EnumPath<UserTypeEnum> userType = createEnum(USER_TYPE, UserTypeEnum.class);
+
+    /**
+     * Ссылка на таблицу file где хранится аватар
+     */
+    public final NumberPath<Long> avatarId = createNumber(AVATAR_ID, Long.class);
 
     /**
      * Json с дополнительными полями
@@ -125,19 +132,24 @@ public class UserInfoConst extends com.querydsl.sql.RelationalPathBase<UserInfo>
     public final StringPath publicInfo = createString(PUBLIC_INFO);
 
     /**
-     * Состояние пользователя: Не в сети, В сети, Не беспокоить
+     * Состояние пользователя. Не в сети, В сети
      */
-    public final NumberPath<Long> userStatusId = createNumber(USER_STATUS_ID, Long.class);
+    public final EnumPath<UserStatusEnum> userStatus = createEnum(USER_STATUS, UserStatusEnum.class);
+
+    /**
+     * Статус который указал пользователь
+     */
+    public final StringPath userStatusLabel = createString(USER_STATUS_LABEL);
 
     /**
      * Язык
      */
-    public final StringPath locale = createString(LOCALE);
+    public final SimplePath<java.util.Locale> locale = createSimple(LOCALE, java.util.Locale.class);
 
     /**
      * Часовой пояс
      */
-    public final StringPath timeZone = createString(TIME_ZONE);
+    public final SimplePath<java.time.ZoneId> timeZone = createSimple(TIME_ZONE, java.time.ZoneId.class);
 
     /**
      * Дата создания записи
@@ -169,6 +181,16 @@ public class UserInfoConst extends com.querydsl.sql.RelationalPathBase<UserInfo>
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
 
+    public final com.querydsl.sql.PrimaryKey<UserInfo> userinfo_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<UserInfo> UserInfo_updatedBy_fk = createForeignKey(updatedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<UserInfo> UserInfo_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.FileInfo> UserInfo_avatarId_fk = createForeignKey(avatarId, "id");
+
+    public final com.querydsl.sql.ForeignKey<UserInfo> UserInfo_createdBy_fk = createForeignKey(createdBy, "id");
+
     public UserInfoConst(String variable) {
         super(UserInfo.class, forVariable(variable), "public", "UserInfo");
         addMetadata();
@@ -186,19 +208,20 @@ public class UserInfoConst extends com.querydsl.sql.RelationalPathBase<UserInfo>
 
     public void addMetadata() {
         addMetadata(id, ColumnMetadata.named(ID).withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(avatarId, ColumnMetadata.named(AVATAR_ID).withIndex(2).ofType(Types.BIGINT).withSize(19));
-        addMetadata(name, ColumnMetadata.named(NAME).withIndex(3).ofType(Types.VARCHAR).withSize(255).notNull());
-        addMetadata(userType, ColumnMetadata.named(USER_TYPE).withIndex(4).ofType(Types.VARCHAR).withSize(16).notNull());
+        addMetadata(name, ColumnMetadata.named(NAME).withIndex(2).ofType(Types.VARCHAR).withSize(255).notNull());
+        addMetadata(userType, ColumnMetadata.named(USER_TYPE).withIndex(3).ofType(Types.VARCHAR).withSize(16).notNull());
+        addMetadata(avatarId, ColumnMetadata.named(AVATAR_ID).withIndex(4).ofType(Types.BIGINT).withSize(19));
         addMetadata(publicInfo, ColumnMetadata.named(PUBLIC_INFO).withIndex(5).ofType(Types.OTHER).withSize(2147483647).notNull());
-        addMetadata(userStatusId, ColumnMetadata.named(USER_STATUS_ID).withIndex(6).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(locale, ColumnMetadata.named(LOCALE).withIndex(7).ofType(Types.VARCHAR).withSize(16).notNull());
-        addMetadata(timeZone, ColumnMetadata.named(TIME_ZONE).withIndex(8).ofType(Types.VARCHAR).withSize(6).notNull());
-        addMetadata(createTime, ColumnMetadata.named(CREATE_TIME).withIndex(9).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(createdBy, ColumnMetadata.named(CREATED_BY).withIndex(10).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(updateTime, ColumnMetadata.named(UPDATE_TIME).withIndex(11).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(updatedBy, ColumnMetadata.named(UPDATED_BY).withIndex(12).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(deleteTime, ColumnMetadata.named(DELETE_TIME).withIndex(13).ofType(Types.BIGINT).withSize(19));
-        addMetadata(deletedBy, ColumnMetadata.named(DELETED_BY).withIndex(14).ofType(Types.BIGINT).withSize(19));
+        addMetadata(userStatus, ColumnMetadata.named(USER_STATUS).withIndex(6).ofType(Types.VARCHAR).withSize(16).notNull());
+        addMetadata(userStatusLabel, ColumnMetadata.named(USER_STATUS_LABEL).withIndex(7).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(locale, ColumnMetadata.named(LOCALE).withIndex(8).ofType(Types.VARCHAR).withSize(16).notNull());
+        addMetadata(timeZone, ColumnMetadata.named(TIME_ZONE).withIndex(9).ofType(Types.VARCHAR).withSize(32).notNull());
+        addMetadata(createTime, ColumnMetadata.named(CREATE_TIME).withIndex(10).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(createdBy, ColumnMetadata.named(CREATED_BY).withIndex(11).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(updateTime, ColumnMetadata.named(UPDATE_TIME).withIndex(12).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(updatedBy, ColumnMetadata.named(UPDATED_BY).withIndex(13).ofType(Types.BIGINT).withSize(19).notNull());
+        addMetadata(deleteTime, ColumnMetadata.named(DELETE_TIME).withIndex(14).ofType(Types.BIGINT).withSize(19));
+        addMetadata(deletedBy, ColumnMetadata.named(DELETED_BY).withIndex(15).ofType(Types.BIGINT).withSize(19));
     }
 
 }

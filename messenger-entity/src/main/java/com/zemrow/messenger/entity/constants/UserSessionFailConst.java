@@ -87,6 +87,12 @@ public class UserSessionFailConst extends com.querydsl.sql.RelationalPathBase<Us
      */
     public final NumberPath<Long> createdBy = createNumber(CREATED_BY, Long.class);
 
+    public final com.querydsl.sql.PrimaryKey<UserSessionFail> usersessionfail_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserSessionFail_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserEntryPoint> UserSessionFail_userEntryPointId_fk = createForeignKey(userEntryPointId, "id");
+
     public UserSessionFailConst(String variable) {
         super(UserSessionFail.class, forVariable(variable), "public", "UserSessionFail");
         addMetadata();

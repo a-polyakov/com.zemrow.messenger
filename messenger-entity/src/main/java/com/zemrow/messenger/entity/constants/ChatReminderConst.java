@@ -117,6 +117,16 @@ public class ChatReminderConst extends com.querydsl.sql.RelationalPathBase<ChatR
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
 
+    public final com.querydsl.sql.PrimaryKey<ChatReminder> chatreminder_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatReminder_userId_fk = createForeignKey(userId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatReminder_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> ChatReminder_chatId_fk = createForeignKey(chatId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatReminder_createdBy_fk = createForeignKey(createdBy, "id");
+
     public ChatReminderConst(String variable) {
         super(ChatReminder.class, forVariable(variable), "public", "ChatReminder");
         addMetadata();

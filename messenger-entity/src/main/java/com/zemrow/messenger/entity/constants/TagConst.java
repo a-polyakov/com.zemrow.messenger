@@ -62,7 +62,7 @@ public class TagConst extends com.querydsl.sql.RelationalPathBase<Tag> {
     public static final String HEADER_SHOW = "headerShow";
 
     /**
-     * Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
+     * Группа тегов. Если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
     public static final String TAG_GROUP = "tagGroup";
 
@@ -127,7 +127,7 @@ public class TagConst extends com.querydsl.sql.RelationalPathBase<Tag> {
     public final BooleanPath headerShow = createBoolean(HEADER_SHOW);
 
     /**
-     * Группа тегов, если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
+     * Группа тегов. Если в одном задании встречаются несколько тегов из одной группы, то считается что активен только один последний из группы
      */
     public final EnumPath<TagGroupEnum> tagGroup = createEnum(TAG_GROUP, TagGroupEnum.class);
 
@@ -160,6 +160,14 @@ public class TagConst extends com.querydsl.sql.RelationalPathBase<Tag> {
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<Tag> tag_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Tag_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Tag_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Tag_updatedBy_fk = createForeignKey(updatedBy, "id");
 
     public TagConst(String variable) {
         super(Tag.class, forVariable(variable), "public", "Tag");

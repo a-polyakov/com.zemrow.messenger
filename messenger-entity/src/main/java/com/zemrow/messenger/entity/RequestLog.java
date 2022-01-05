@@ -1,7 +1,5 @@
 package com.zemrow.messenger.entity;
 
-import com.zemrow.messenger.SessionStorage;
-
 /**
  * Класс сгенерирован автоматически, для таблицы RequestLog(Логи вызовов сервисов) из БД
  * 
@@ -30,7 +28,7 @@ public class RequestLog extends AbstractEntityWithId {
     private Long endInvoke;
 
     /**
-     * Ошибка если была (stacktrace)
+     * Ошибка. Если была - stacktrace.
      */
     private String errorStackTrace;
 
@@ -47,7 +45,7 @@ public class RequestLog extends AbstractEntityWithId {
      * @param eventId Идентификатор события
      * @param startInvoke Время запуска
      * @param endInvoke Время окончания
-     * @param errorStackTrace Ошибка если была (stacktrace)
+     * @param errorStackTrace Ошибка. Если была - stacktrace.
      */
     public RequestLog(Long id, String token, String eventId, Long startInvoke, Long endInvoke, String errorStackTrace) {
         this.id = id;
@@ -56,10 +54,6 @@ public class RequestLog extends AbstractEntityWithId {
         this.startInvoke = startInvoke;
         this.endInvoke = endInvoke;
         this.errorStackTrace = errorStackTrace;
-    }
-
-    @Override
-    public void preInsert(SessionStorage session) {
     }
 
     /**
@@ -119,14 +113,14 @@ public class RequestLog extends AbstractEntityWithId {
     }
 
     /**
-     * Получение ошибка если была (stacktrace)
+     * Получение ошибка. если была - stacktrace.
      */
     public String getErrorStackTrace() {
         return errorStackTrace;
     }
 
     /**
-     * Установить ошибка если была (stacktrace)
+     * Установить ошибка. если была - stacktrace.
      */
     public void setErrorStackTrace(String errorStackTrace) {
         this.errorStackTrace = errorStackTrace;

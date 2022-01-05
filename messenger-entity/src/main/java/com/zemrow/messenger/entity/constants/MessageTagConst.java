@@ -43,7 +43,7 @@ public class MessageTagConst extends com.querydsl.sql.RelationalPathBase<Message
     public static final String TAG_ID = "tagId";
 
     /**
-     * Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
+     * Значение тега. ID чата, дата в ms, ID пользователя в зависимости от типа тега.
      */
     public static final String VALUE = "value";
 
@@ -93,7 +93,7 @@ public class MessageTagConst extends com.querydsl.sql.RelationalPathBase<Message
     public final NumberPath<Long> tagId = createNumber(TAG_ID, Long.class);
 
     /**
-     * Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
+     * Значение тега. ID чата, дата в ms, ID пользователя в зависимости от типа тега.
      */
     public final StringPath value = createString(VALUE);
 
@@ -126,6 +126,18 @@ public class MessageTagConst extends com.querydsl.sql.RelationalPathBase<Message
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<MessageTag> messagetag_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> MessageTag_updatedBy_fk = createForeignKey(updatedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Message> MessageTag_messageId_fk = createForeignKey(messageId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> MessageTag_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Tag> MessageTag_tagId_fk = createForeignKey(tagId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> MessageTag_deletedBy_fk = createForeignKey(deletedBy, "id");
 
     public MessageTagConst(String variable) {
         super(MessageTag.class, forVariable(variable), "public", "MessageTag");

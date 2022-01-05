@@ -46,6 +46,10 @@ public class ChatPriorityConst extends com.querydsl.sql.RelationalPathBase<ChatP
      */
     public final NumberPath<Long> priority = createNumber(PRIORITY, Long.class);
 
+    public final com.querydsl.sql.PrimaryKey<ChatPriority> chatpriority_pkey = createPrimaryKey(chatId);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> ChatPriority_chatId_fk = createForeignKey(chatId, "id");
+
     public ChatPriorityConst(String variable) {
         super(ChatPriority.class, forVariable(variable), "public", "ChatPriority");
         addMetadata();

@@ -1,16 +1,16 @@
 package com.zemrow.messenger.db.querydsl;
 
-import com.google.common.base.Function;
-import com.mysema.codegen.CodeWriter;
-import com.mysema.codegen.model.Parameter;
-import com.mysema.codegen.model.SimpleType;
-import com.mysema.codegen.model.Types;
+import com.querydsl.codegen.EntitySerializer;
 import com.querydsl.codegen.EntityType;
 import com.querydsl.codegen.Property;
-import com.querydsl.codegen.Serializer;
 import com.querydsl.codegen.SerializerConfig;
+import com.querydsl.codegen.utils.CodeWriter;
+import com.querydsl.codegen.utils.model.Parameter;
+import com.querydsl.codegen.utils.model.SimpleType;
+import com.querydsl.codegen.utils.model.Types;
 import com.querydsl.core.util.BeanUtils;
 import com.querydsl.sql.codegen.OrdinalPositionComparator;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -20,13 +20,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Настройка генерации entity
  *
  * @author Alexandr Polyakov on 2020.05.07
  */
-public class QueryDslEntitySerializer implements Serializer {
+public class QueryDslEntitySerializer implements EntitySerializer {
 
     private static final Function<Property, Parameter> propertyToParameter = new Function<Property, Parameter>() {
         @Override

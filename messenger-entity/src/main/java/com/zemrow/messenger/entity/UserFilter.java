@@ -16,7 +16,7 @@ public class UserFilter extends AbstractEntityWithId {
     private Long userId;
 
     /**
-     * id части системы (грид, панель, список) для применения данного фильтра
+     * ID части системы. Таблица, панель, список для применения данного фильтра
      */
     private FilterPageTypeEnum pageType;
 
@@ -70,7 +70,7 @@ public class UserFilter extends AbstractEntityWithId {
      * Создать Пользовательский фильтр
      * @param id ID записи
      * @param userId ID пользователя
-     * @param pageType id части системы (грид, панель, список) для применения данного фильтра
+     * @param pageType ID части системы. Таблица, панель, список для применения данного фильтра
      * @param filterLabel Название фильтра
      * @param data Данные фильтра в формате JSON
      * @param createTime Дата создания записи
@@ -137,14 +137,14 @@ public class UserFilter extends AbstractEntityWithId {
     }
 
     /**
-     * Получение id части системы (грид, панель, список) для применения данного фильтра
+     * Получение id части системы. таблица, панель, список для применения данного фильтра
      */
     public FilterPageTypeEnum getPageType() {
         return pageType;
     }
 
     /**
-     * Установить id части системы (грид, панель, список) для применения данного фильтра
+     * Установить id части системы. таблица, панель, список для применения данного фильтра
      */
     public void setPageType(FilterPageTypeEnum pageType) {
         this.pageType = pageType;

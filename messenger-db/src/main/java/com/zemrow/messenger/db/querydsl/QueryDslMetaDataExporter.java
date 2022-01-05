@@ -1,13 +1,5 @@
 package com.zemrow.messenger.db.querydsl;
 
-import com.google.common.base.Function;
-import com.google.common.io.Files;
-import com.mysema.codegen.CodeWriter;
-import com.mysema.codegen.JavaWriter;
-import com.mysema.codegen.model.ClassType;
-import com.mysema.codegen.model.SimpleType;
-import com.mysema.codegen.model.Type;
-import com.mysema.codegen.model.TypeCategory;
 import com.querydsl.codegen.CodegenModule;
 import com.querydsl.codegen.EntityType;
 import com.querydsl.codegen.Property;
@@ -15,6 +7,12 @@ import com.querydsl.codegen.QueryTypeFactory;
 import com.querydsl.codegen.Serializer;
 import com.querydsl.codegen.SimpleSerializerConfig;
 import com.querydsl.codegen.TypeMappings;
+import com.querydsl.codegen.utils.CodeWriter;
+import com.querydsl.codegen.utils.JavaWriter;
+import com.querydsl.codegen.utils.model.ClassType;
+import com.querydsl.codegen.utils.model.SimpleType;
+import com.querydsl.codegen.utils.model.Type;
+import com.querydsl.codegen.utils.model.TypeCategory;
 import com.querydsl.sql.ColumnMetadata;
 import com.querydsl.sql.Configuration;
 import com.querydsl.sql.SchemaAndTable;
@@ -24,10 +22,12 @@ import com.querydsl.sql.codegen.SQLCodegenModule;
 import com.querydsl.sql.codegen.support.ForeignKeyData;
 import com.querydsl.sql.codegen.support.InverseForeignKeyData;
 import com.querydsl.sql.codegen.support.PrimaryKeyData;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,7 +42,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nullable;
+import java.util.function.Function;
 
 /**
  * Копия MetaDataExporter с добавлением комментариев к полям
@@ -65,7 +65,7 @@ public class QueryDslMetaDataExporter {
     private final SQLCodegenModule module = new SQLCodegenModule();
 
     /**
-     * Список сгенерированых классаов
+     * Список сгенерированых классов
      */
     private final Set<String> classes = new HashSet<>();
 
@@ -75,7 +75,6 @@ public class QueryDslMetaDataExporter {
 
     private String beanPackageName;
 
-    @Nullable
     private Serializer beanSerializer;
 
     private final Map<EntityType, Type> entityToWrapped = new HashMap<>();
@@ -112,13 +111,13 @@ public class QueryDslMetaDataExporter {
     }
 
     protected EntityType createEntityType(SchemaAndTable schemaAndTable,
-        final String className) {
+                                          final String className) {
         EntityType classModel;
 
         String beanPackage = normalizePackage(beanPackageName, schemaAndTable);
         String simpleName = module.getBeanPrefix() + className + module.getBeanSuffix();
         Type classTypeModel = new SimpleType(TypeCategory.ENTITY,
-            beanPackage + "." + simpleName, beanPackage, simpleName, false, false);
+                beanPackage + "." + simpleName, beanPackage, simpleName, false, false);
         classModel = new EntityType(classTypeModel, module.get(Function.class, CodegenModule.VARIABLE_NAME_FUNCTION_CLASS));
 
         Type mappedType = queryTypeFactory.create(classModel);
@@ -139,23 +138,24 @@ public class QueryDslMetaDataExporter {
     }
 
     protected Property createProperty(EntityType classModel,
-        String propertyName, Type typeModel) {
+                                      String propertyName, Type typeModel) {
         return new Property(
-            classModel,
-            propertyName,
-            propertyName,
-            typeModel,
-            Collections.<String>emptyList(),
-            false);
+                classModel,
+                propertyName,
+                propertyName,
+                typeModel,
+                Collections.<String>emptyList(),
+                false);
     }
 
     /**
      * Export the tables based on the given database metadata
      *
      * @param md database metadata
+     * @return
      * @throws SQLException
      */
-    public void export(DatabaseMetaData md) throws SQLException {
+    public List<EntityType> export(DatabaseMetaData md) throws SQLException {
         module.bind(SQLCodegenModule.BEAN_PACKAGE_NAME, beanPackageName);
 
         classes.clear();
@@ -167,7 +167,7 @@ public class QueryDslMetaDataExporter {
         configuration = module.get(Configuration.class);
 
         keyDataFactory = new KeyDataFactory(namingStrategy, beanPackageName,
-            module.getBeanPrefix(), module.getBeanSuffix(), schemaToPackage);
+                module.getBeanPrefix(), module.getBeanSuffix(), schemaToPackage);
 
         List<String> types = new ArrayList<String>(2);
         if (exportTables) {
@@ -190,6 +190,7 @@ public class QueryDslMetaDataExporter {
         }
 
         write(new File(targetFolder + File.separator + module.getPackageName().replace('.', File.separatorChar), "TablesConst.java"), resultEntityTypeList);
+        return resultEntityTypeList;
     }
 
     private EntityType handleTable(DatabaseMetaData md, ResultSet tables) throws SQLException {
@@ -213,7 +214,7 @@ public class QueryDslMetaDataExporter {
         if (exportPrimaryKeys) {
             // collect primary keys
             Map<String, PrimaryKeyData> primaryKeyData = keyDataFactory
-                .getPrimaryKeys(md, catalog, schema, tableName);
+                    .getPrimaryKeys(md, catalog, schema, tableName);
             if (!primaryKeyData.isEmpty()) {
                 classModel.getData().put(PrimaryKeyData.class, primaryKeyData.values());
             }
@@ -223,7 +224,7 @@ public class QueryDslMetaDataExporter {
             if (exportDirectForeignKeys) {
                 // collect foreign keys
                 Map<String, ForeignKeyData> foreignKeyData = keyDataFactory
-                    .getImportedKeys(md, catalog, schema, tableName);
+                        .getImportedKeys(md, catalog, schema, tableName);
                 if (!foreignKeyData.isEmpty()) {
                     Collection<ForeignKeyData> foreignKeysToGenerate = new HashSet<ForeignKeyData>();
                     for (ForeignKeyData fkd : foreignKeyData.values()) {
@@ -241,7 +242,7 @@ public class QueryDslMetaDataExporter {
             if (exportInverseForeignKeys) {
                 // collect inverse foreign keys
                 Map<String, InverseForeignKeyData> inverseForeignKeyData = keyDataFactory
-                    .getExportedKeys(md, catalog, schema, tableName);
+                        .getExportedKeys(md, catalog, schema, tableName);
                 if (!inverseForeignKeyData.isEmpty()) {
                     classModel.getData().put(InverseForeignKeyData.class, inverseForeignKeyData.values());
                 }
@@ -267,26 +268,25 @@ public class QueryDslMetaDataExporter {
         String normalizedColumnName = namingStrategy.normalizeColumnName(columnName);
         int columnType = columns.getInt("DATA_TYPE");
         String typeName = columns.getString("TYPE_NAME");
-        Number columnSize = (Number)columns.getObject("COLUMN_SIZE");
-        Number columnDigits = (Number)columns.getObject("DECIMAL_DIGITS");
+        Number columnSize = (Number) columns.getObject("COLUMN_SIZE");
+        Number columnDigits = (Number) columns.getObject("DECIMAL_DIGITS");
         int columnIndex = columns.getInt("ORDINAL_POSITION");
         int nullable = columns.getInt("NULLABLE");
         final String remarks = columns.getString(REMARKS);
 
         String propertyName = namingStrategy.getPropertyName(normalizedColumnName, classModel);
         Class<?> clazz = configuration.getJavaType(columnType,
-            typeName,
-            columnSize != null ? columnSize.intValue() : 0,
-            columnDigits != null ? columnDigits.intValue() : 0,
-            tableName, columnName);
+                typeName,
+                columnSize != null ? columnSize.intValue() : 0,
+                columnDigits != null ? columnDigits.intValue() : 0,
+                tableName, columnName);
         if (clazz == null) {
             clazz = Object.class;
         }
         TypeCategory fieldType = TypeCategory.get(clazz.getName());
         if (Number.class.isAssignableFrom(clazz)) {
             fieldType = TypeCategory.NUMERIC;
-        }
-        else if (Enum.class.isAssignableFrom(clazz)) {
+        } else if (Enum.class.isAssignableFrom(clazz)) {
             fieldType = TypeCategory.ENUM;
         }
         Type typeModel = new ClassType(fieldType, clazz);
@@ -318,8 +318,7 @@ public class QueryDslMetaDataExporter {
 
             String otherPath = entityToWrapped.get(type).getFullName().replace('.', File.separatorChar) + fileSuffix;
             write(serializer, new File(targetFolder, otherPath), type);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
@@ -327,7 +326,7 @@ public class QueryDslMetaDataExporter {
     private void write(Serializer serializer, File targetFile, EntityType type) throws IOException {
         if (!classes.add(targetFile.getPath())) {
             throw new IllegalStateException("Attempted to write multiple times to " +
-                targetFile.getPath() + ", please check your configuration");
+                    targetFile.getPath() + ", please check your configuration");
         }
         StringWriter w = new StringWriter();
         CodeWriter writer = new JavaWriter(w);
@@ -337,17 +336,16 @@ public class QueryDslMetaDataExporter {
         boolean generate = true;
         byte[] bytes = w.toString().getBytes(sourceEncoding);
         if (targetFile.exists() && targetFile.length() == bytes.length) {
-            String str = Files.toString(targetFile, Charset.forName(sourceEncoding));
+            String str = new String(Files.readAllBytes(targetFile.toPath()), Charset.forName(sourceEncoding));
             if (str.equals(w.toString())) {
                 generate = false;
             }
-        }
-        else {
+        } else {
             targetFile.getParentFile().mkdirs();
         }
 
         if (generate) {
-            Files.write(bytes, targetFile);
+            Files.write(targetFile.toPath(), bytes);
         }
     }
 
@@ -356,18 +354,18 @@ public class QueryDslMetaDataExporter {
             try {
                 if (!classes.add(targetFile.getPath())) {
                     throw new IllegalStateException("Attempted to write multiple times to " +
-                        targetFile.getPath() + ", please check your configuration");
+                            targetFile.getPath() + ", please check your configuration");
                 }
                 StringWriter w = new StringWriter();
                 CodeWriter writer = new JavaWriter(w);
 
                 writer.packageDecl(module.getPackageName());
                 writer.javadoc("Класс сгенерирован автоматически, для БД"
-                    , ""
-                    , "@author " + getClass().getName() + " on " + DATE_FORMAT.format(new Date()));
+                        , ""
+                        , "@author " + getClass().getName() + " on " + DATE_FORMAT.format(new Date()));
                 writer.beginClass(new SimpleType("TablesConst"));
                 for (EntityType table : tables) {
-                    String remarks = (String)table.getData().get(QueryDslMetaDataExporter.REMARKS);
+                    String remarks = (String) table.getData().get(QueryDslMetaDataExporter.REMARKS);
                     if (remarks != null) {
                         writer.javadoc(remarks);
                     }
@@ -378,9 +376,8 @@ public class QueryDslMetaDataExporter {
                 byte[] bytes = w.toString().getBytes(sourceEncoding);
                 targetFile.getParentFile().mkdirs();
 
-                Files.write(bytes, targetFile);
-            }
-            catch (IOException e) {
+                Files.write(targetFile.toPath(), bytes);
+            } catch (IOException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
         }
@@ -429,7 +426,7 @@ public class QueryDslMetaDataExporter {
      *
      * @param beanPackageName package name for bean sources
      */
-    public void setBeanPackageName(@Nullable String beanPackageName) {
+    public void setBeanPackageName(String beanPackageName) {
         this.beanPackageName = beanPackageName;
     }
 

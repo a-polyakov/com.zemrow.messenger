@@ -44,7 +44,7 @@ public class UserLinkConst extends com.querydsl.sql.RelationalPathBase<UserLink>
     public static final String CHILD_USER_ID = "childUserId";
 
     /**
-     * Тип связи (подчинение, замена)
+     * Тип связи
      */
     public static final String USER_LINK_TYPE = "userLinkType";
 
@@ -84,7 +84,7 @@ public class UserLinkConst extends com.querydsl.sql.RelationalPathBase<UserLink>
     public final NumberPath<Long> childUserId = createNumber(CHILD_USER_ID, Long.class);
 
     /**
-     * Тип связи (подчинение, замена)
+     * Тип связи
      */
     public final EnumPath<UserLinkTypeEnum> userLinkType = createEnum(USER_LINK_TYPE, UserLinkTypeEnum.class);
 
@@ -107,6 +107,16 @@ public class UserLinkConst extends com.querydsl.sql.RelationalPathBase<UserLink>
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<UserLink> userlink_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserLink_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserLink_childUserId_fk = createForeignKey(childUserId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserLink_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserLink_parentUserId_fk = createForeignKey(parentUserId, "id");
 
     public UserLinkConst(String variable) {
         super(UserLink.class, forVariable(variable), "public", "UserLink");

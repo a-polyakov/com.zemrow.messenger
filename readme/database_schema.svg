@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentScriptType="application/ecmascript" contentStyleType="text/css"
+     height="1071px" preserveAspectRatio="none" style="width:4723px;height:1071px;background:#FFFFFF;" version="1.1"
+     viewBox="0 0 4723 1071" width="4723px" zoomAndPan="magnify">
+    <defs>
+        <filter height="300%" id="f11f2w9jzy39g7" width="300%" x="-1" y="-1">
+            <feGaussianBlur result="blurOut" stdDeviation="2.0"/>
+            <feColorMatrix in="blurOut" result="blurOut2" type="matrix"
+                           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+            <feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/>
+            <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+        </filter>
+    </defs>
+    <g><!--MD5=[50d4997affe4b7e1b12b08ba12feba96]
+class Chat-->
+        <rect codeLine="10" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="97.1563" id="Chat"
+              style="stroke:#A80036;stroke-width:1.5;" width="479" x="2444" y="549"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="39" x="2664" y="565.1387">«Чат»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="29" x="2669"
+              y="579.1074">Chat
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="2445" x2="2922" y1="586.9375" y2="586.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="203" x="2450"
+              y="601.1479">String label; // Наименование чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="299" x="2450"
+              y="613.9526">ChatTypeEnum chatType; // Тип чата: чат, задание
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="467" x="2450"
+              y="626.7573">Long numberingId; // Использованный нумератор (для определения префикса)
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="268" x="2450"
+              y="639.562">Long orderNumber; // Номер чата(документа)
+        </text><!--MD5=[64e39be3d8082960547474a2f36e8708]
+class ChatPriority-->
+        <rect codeLine="16" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="71.5469" id="ChatPriority"
+              style="stroke:#A80036;stroke-width:1.5;" width="167" x="2745" y="372"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="148" x="2754.5" y="388.1387">«Приоритет задания»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="72" x="2792.5"
+              y="402.1074">ChatPriority
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="2746" x2="2911" y1="409.9375" y2="409.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="128" x="2751"
+              y="424.1479">Long chatId; // ID чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="155" x="2751"
+              y="436.9526">Long priority; // Приоритет
+        </text><!--MD5=[5e20fd6d54c12d8bfc277d1661e61561]
+class ChatReminder-->
+        <rect codeLine="20" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="97.1563" id="ChatReminder"
+              style="stroke:#A80036;stroke-width:1.5;" width="256" x="1479.5" y="359.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="104" x="1555.5" y="375.6387">«Напоминание»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="88" x="1563.5"
+              y="389.6074">ChatReminder
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="1480.5" x2="1734.5" y1="397.4375" y2="397.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="128" x="1485.5"
+              y="411.6479">Long chatId; // ID чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="185" x="1485.5"
+              y="424.4526">Long userId; // ID пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="195" x="1485.5"
+              y="437.2573">String text; // Текст напоминания
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="244" x="1485.5"
+              y="450.062">Long reminderTime; // Дата напоминания
+        </text><!--MD5=[53e81f0d97a6d3de6ffbcfc0dc076b96]
+class ChatTagGroup-->
+        <rect codeLine="26" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="84.3516" id="ChatTagGroup"
+              style="stroke:#A80036;stroke-width:1.5;" width="277" x="3529" y="195.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="155" x="3590" y="211.6387">«Групповые теги чата»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="90" x="3622.5"
+              y="225.6074">ChatTagGroup
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="3530" x2="3805" y1="233.4375" y2="233.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="128" x="3535"
+              y="247.6479">Long chatId; // ID чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="244" x="3535"
+              y="260.4526">TagGroupEnum tagGroup; // Группа тегов
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="265" x="3535"
+              y="273.2573">Long messageTagId; // ID тега из сообщения
+        </text><!--MD5=[598c0361e2cebabc3fab18563dc1f3d4]
+class ChatToUser-->
+        <rect codeLine="31" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="109.9609" id="ChatToUser"
+              style="stroke:#A80036;stroke-width:1.5;" width="340" x="2513.5" y="182.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="154" x="2606.5" y="198.6387">«Пользователи в чате»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="73" x="2647"
+              y="212.6074">ChatToUser
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="2514.5" x2="2852.5" y1="220.4375" y2="220.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="128" x="2519.5"
+              y="234.6479">Long chatId; // ID чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="185" x="2519.5"
+              y="247.4526">Long userId; // ID пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="203" x="2519.5"
+              y="260.2573">Boolean favorite; // Избранный чат
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="328" x="2519.5"
+              y="273.062">ChatToUserTypeEnum chatToUserType; // Тип участника
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="248" x="2519.5"
+              y="285.8667">Boolean mute; // Отключить уведомления
+        </text><!--MD5=[d3326a1b62734ec14a897323433a5d0e]
+class ChatToUserLastMessage-->
+        <rect codeLine="38" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="71.5469" id="ChatToUserLastMessage"
+              style="stroke:#A80036;stroke-width:1.5;" width="336" x="3271.5" y="372"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="334" x="3272.5" y="388.1387">«Последнее сообщение для пользователя в чате»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="155" x="3362"
+              y="402.1074">ChatToUserLastMessage
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="3272.5" x2="3606.5" y1="409.9375" y2="409.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="253" x="3277.5"
+              y="424.1479">Long chatToUserId; // Пользователь в чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="196" x="3277.5"
+              y="436.9526">Long messageId; // ID сообщения
+        </text><!--MD5=[62d6c8de31c356bae635663c79290019]
+class ChatTree-->
+        <rect codeLine="42" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="84.3516" id="ChatTree"
+              style="stroke:#A80036;stroke-width:1.5;" width="273" x="2955" y="364.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="106" x="3038.5" y="380.6387">«Дерево задач»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="57" x="3063"
+              y="394.6074">ChatTree
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="2956" x2="3227" y1="402.4375" y2="402.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="261" x="2961"
+              y="416.6479">Long parentChatId; // ID родительского чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="223" x="2961"
+              y="429.4526">Long childChatId; // ID дочернего чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="218" x="2961"
+              y="442.2573">Integer distance; // Разность уровней
+        </text><!--MD5=[aaa92641b0b30be6a67d945dfdd68555]
+class ChatWork-->
+        <rect codeLine="47" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="97.1563" id="ChatWork"
+              style="stroke:#A80036;stroke-width:1.5;" width="334" x="1424.5" y="189"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="332" x="1425.5" y="205.1387">«Отметка пользователя о затраченном времени»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="60" x="1561.5"
+              y="219.1074">ChatWork
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="1425.5" x2="1757.5" y1="226.9375" y2="226.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="128" x="1430.5"
+              y="241.1479">Long chatId; // ID чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="185" x="1430.5"
+              y="253.9526">Long userId; // ID пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="231" x="1430.5"
+              y="266.7573">Long startTime; // Дата начала работы
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="246" x="1430.5"
+              y="279.562">Long endTime; // Дата окончания работы
+        </text><!--MD5=[cf7dacd8f7ef753f28ab609139658ae0]
+class FileInfo-->
+        <rect codeLine="53" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="148.375" id="FileInfo"
+              style="stroke:#A80036;stroke-width:1.5;" width="362" x="2580.5" y="735"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="48" x="2737.5" y="751.1387">«Файл»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="44" x="2739.5"
+              y="765.1074">FileInfo
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="2581.5" x2="2941.5" y1="772.9375" y2="772.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="219" x="2586.5"
+              y="787.1479">String name; // Наименование файла
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="213" x="2586.5"
+              y="799.9526">String mimeType; // MIME-тип файла
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="176" x="2586.5"
+              y="812.7573">Long fileSize; // Размер файла
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="178" x="2586.5"
+              y="825.562">String path; // Место хранения
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="299" x="2586.5"
+              y="838.3667">FileAccessTypeEnum fileAccessType; // Тип доступа
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="212" x="2586.5"
+              y="851.1714">Integer crc32; // Контрольная сумма
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="350" x="2586.5"
+              y="863.9761">Long lastOpenTime; // Дата последнего скачивания файла
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="233" x="2586.5"
+              y="876.7808">Boolean gzipOn; // Файл заархивирован
+        </text><!--MD5=[bea5b0d46523efab5ea1c1d339f396f0]
+class Message-->
+        <rect codeLine="63" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="122.7656" id="Message"
+              style="stroke:#A80036;stroke-width:1.5;" width="415" x="3522" y="538"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="90" x="3684.5" y="554.1387">«Сообщение»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="56" x="3701.5"
+              y="568.1074">Message
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="3523" x2="3936" y1="575.9375" y2="575.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="128" x="3528"
+              y="590.1479">Long chatId; // ID чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="113" x="3528"
+              y="602.9526">String text; // Текст
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="233" x="3528"
+              y="615.7573">Long fileId; // ID прикрепленного файла
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="228" x="3528"
+              y="628.562">Long childChatId; // ID созданного чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="403" x="3528"
+              y="641.3667">MessageTypeEnum messageType; // Тип сообщения (SIMPLE, ERROR)
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="325" x="3528"
+              y="654.1714">Long parentMessageId; // ID родительского сообщения
+        </text><!--MD5=[fa227a0ff43892594083d4953c115e1b]
+class MessageFeedback-->
+        <rect codeLine="71" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="71.5469" id="MessageFeedback"
+              style="stroke:#A80036;stroke-width:1.5;" width="313" x="3729" y="372"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="221" x="3775" y="388.1387">«Итоговый голос по сообщению»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="117" x="3827"
+              y="402.1074">MessageFeedback
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="3730" x2="4041" y1="409.9375" y2="409.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="196" x="3735"
+              y="424.1479">Long messageId; // ID сообщения
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="301" x="3735"
+              y="436.9526">Integer feedback; // Итоговый голос по сообщению
+        </text><!--MD5=[767114e114d8ab9e6152ce660e6efb54]
+class MessageLog-->
+        <rect codeLine="75" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="71.5469" id="MessageLog"
+              style="stroke:#A80036;stroke-width:1.5;" width="228" x="4093.5" y="372"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="148" x="4133.5" y="388.1387">«История сообщения»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="78" x="4168.5"
+              y="402.1074">MessageLog
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="4094.5" x2="4320.5" y1="409.9375" y2="409.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="196" x="4099.5"
+              y="424.1479">Long messageId; // ID сообщения
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="216" x="4099.5"
+              y="436.9526">String oldText; // Предыдущий текст
+        </text><!--MD5=[f7e73c2b2d97cd11f4510978dd660298]
+class MessageTag-->
+        <rect codeLine="79" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="84.3516" id="MessageTag"
+              style="stroke:#A80036;stroke-width:1.5;" width="208" x="4372.5" y="366"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="114" x="4419.5" y="382.1387">«Тег сообщения»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="79" x="4437"
+              y="396.1074">MessageTag
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="4373.5" x2="4579.5" y1="403.9375" y2="403.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="196" x="4378.5"
+              y="418.1479">Long messageId; // ID сообщения
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="121" x="4378.5"
+              y="430.9526">Long tagId; // ID тега
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="176" x="4378.5"
+              y="443.7573">String value; // Значение тега
+        </text><!--MD5=[c307d276951ef465ab9610fb5f211284]
+class MessageToUser-->
+        <rect codeLine="84" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="97.1563" id="MessageToUser"
+              style="stroke:#A80036;stroke-width:1.5;" width="551" x="2071" y="359.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="252" x="2220.5" y="375.6387">«Связка сообщения с пользователем»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="100" x="2296.5"
+              y="389.6074">MessageToUser
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="2072" x2="2621" y1="397.4375" y2="397.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="196" x="2077"
+              y="411.6479">Long messageId; // ID сообщения
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="185" x="2077"
+              y="424.4526">Long userId; // ID пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="539" x="2077"
+              y="437.2573">MessageStatusEnum messageStatus; // Статус сообщения для конкретного пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="405" x="2077"
+              y="450.062">MessageFeedbackEnum messageFeedback; // Реакция на сообщение
+        </text><!--MD5=[7bd5d4feb19205f374eb4be865ccd4ed]
+class Numbering-->
+        <rect codeLine="90" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="84.3516" id="Numbering"
+              style="stroke:#A80036;stroke-width:1.5;" width="344" x="1210.5" y="768"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="342" x="1211.5" y="784.1387">«Настройка нумерации для компании и типа чата»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="68" x="1348.5"
+              y="798.1074">Numbering
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="1211.5" x2="1553.5" y1="805.9375" y2="805.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="293" x="1216.5"
+              y="820.1479">Long userId; // id пользователя(компания, отдел)
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="143" x="1216.5"
+              y="832.9526">String prefix; // Префикс
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="289" x="1216.5"
+              y="845.7573">Long maxNumber; // Последний выданный номер
+        </text><!--MD5=[471547a1beccf24acee40657f6383e97]
+class RequestLog-->
+        <rect codeLine="95" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="109.9609" id="RequestLog"
+              style="stroke:#A80036;stroke-width:1.5;" width="402" x="42.5" y="948"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="167" x="160" y="964.1387">«Логи вызовов сервисов»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="74" x="206.5"
+              y="978.1074">RequestLog
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="43.5" x2="443.5" y1="985.9375" y2="985.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="390" x="48.5"
+              y="1000.1479">String token; // Уникальный идентификатор сессии пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="250" x="48.5"
+              y="1012.9526">String eventId; // Идентификатор события
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="201" x="48.5"
+              y="1025.7573">Long startInvoke; // Время запуска
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="212" x="48.5"
+              y="1038.562">Long endInvoke; // Время окончания
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="198" x="48.5"
+              y="1051.3667">String errorStackTrace; // Ошибка
+        </text><!--MD5=[39d6d2ea03de602dbf4d534e70c872a9]
+class Tag-->
+        <rect codeLine="102" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="122.7656" id="Tag"
+              style="stroke:#A80036;stroke-width:1.5;" width="465" x="4244" y="535"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="172" x="4390.5" y="551.1387">«Полный перечень тегов»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="23" x="4465"
+              y="565.1074">Tag
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="4245" x2="4708" y1="572.9375" y2="572.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="96" x="4250"
+              y="587.1479">String tag; // Тег
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="453" x="4250"
+              y="599.9526">TagTypeEnum tagType; // Тип тега для связки наименование тега с логикой
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="324" x="4250"
+              y="612.7573">String description; // Описание тега для автокомплита
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="325" x="4250"
+              y="625.562">Boolean leftMenuShow; // Показывать ли в левом меню
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="339" x="4250"
+              y="638.3667">Boolean headerShow; // Показывать ли в заголовке чата
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="244" x="4250"
+              y="651.1714">TagGroupEnum tagGroup; // Группа тегов
+        </text><!--MD5=[5095d67904c7febe922037daf83707fd]
+class UserContact-->
+        <rect codeLine="110" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="109.9609" id="UserContact"
+              style="stroke:#A80036;stroke-width:1.5;" width="382" x="1561.5" y="7"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="176" x="1664.5" y="23.1387">«Контакты пользователя»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="78" x="1713.5"
+              y="37.1074">UserContact
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="1562.5" x2="1942.5" y1="44.9375" y2="44.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="284" x="1567.5"
+              y="59.1479">Long parentUserId; // ID пользователя родителя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="266" x="1567.5"
+              y="71.9526">Long childUserId; // ID пользователя потомка
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="370" x="1567.5"
+              y="84.7573">UserContactStatusEnum userContactStatus; // Статус контакта
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="231" x="1567.5"
+              y="97.562">String label; // Наименование контакта
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="128" x="1567.5"
+              y="110.3667">Long chatId; // ID чата
+        </text><!--MD5=[fac54954970c22193abeb35e46b921f8]
+class UserEntryPoint-->
+        <rect codeLine="117" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="109.9609" id="UserEntryPoint"
+              style="stroke:#A80036;stroke-width:1.5;" width="473" x="7" y="542.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="257" x="115" y="558.6387">«Способы авторизации пользователя»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="93" x="197"
+              y="572.6074">UserEntryPoint
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="479" y1="580.4375" y2="580.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="185" x="13"
+              y="594.6479">Long userId; // ID пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="279" x="13"
+              y="607.4526">Boolean validate; // Прошел ли подтверждение
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="347" x="13"
+              y="620.2573">EntryPointTypeEnum entryPointType; // Способ авторизации
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="385" x="13"
+              y="633.062">String clientId; // Идентификатор в системе авторизации (логин)
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="461" x="13"
+              y="645.8667">String credential; // Удостоверение личности в системе авторизации (пароль)
+        </text><!--MD5=[111dd3a53ab72bc57e13df6b101fc84f]
+class UserFilter-->
+        <rect codeLine="124" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="97.1563" id="UserFilter"
+              style="stroke:#A80036;stroke-width:1.5;" width="309" x="402" y="359"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="190" x="461.5" y="375.1387">«Пользовательский фильтр»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="60" x="526.5"
+              y="389.1074">UserFilter
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="403" x2="710" y1="396.9375" y2="396.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="185" x="408"
+              y="411.1479">Long userId; // ID пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="297" x="408"
+              y="423.9526">FilterPageTypeEnum pageType; // ID части системы
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="227" x="408"
+              y="436.7573">String filterLabel; // Название фильтра
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="282" x="408"
+              y="449.562">JSON data; // Данные фильтра в формате JSON
+        </text><!--MD5=[9e94af7e26ddd61f16675ec5a7d7b75f]
+class UserInfo-->
+        <rect codeLine="130" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="148.375" id="UserInfo"
+              style="stroke:#A80036;stroke-width:1.5;" width="401" x="1182" y="523"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="106" x="1329.5" y="539.1387">«Пользователь»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="52" x="1356.5"
+              y="553.1074">UserInfo
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="1183" x2="1582" y1="560.9375" y2="560.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="263" x="1188"
+              y="575.1479">String name; // Наименование пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="271" x="1188"
+              y="587.9526">UserTypeEnum userType; // Тип пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="362" x="1188"
+              y="600.7573">Long avatarId; // Ссылка на таблицу file где хранится аватар
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="389" x="1188"
+              y="613.562">Map&lt;String, String&gt; publicInfo; // Json с дополнительными полями
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="333" x="1188"
+              y="626.3667">UserStatusEnum userStatus; // Состояние пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="378" x="1188"
+              y="639.1714">String userStatusLabel; // Статус который указал пользователь
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="123" x="1188"
+              y="651.9761">Locale locale; // Язык
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="199" x="1188"
+              y="664.7808">ZoneId timeZone; // Часовой пояс
+        </text><!--MD5=[93db165eacfa337ce6ab0ec334cce3ba]
+class UserLink-->
+        <rect codeLine="140" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="84.3516" id="UserLink"
+              style="stroke:#A80036;stroke-width:1.5;" width="311" x="904" y="194"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="309" x="905" y="210.1387">«Организационная структура пользователей»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="53" x="1033"
+              y="224.1074">UserLink
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="905" x2="1214" y1="231.9375" y2="231.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="284" x="910"
+              y="246.1479">Long parentUserId; // ID пользователя родителя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="266" x="910"
+              y="258.9526">Long childUserId; // ID пользователя потомка
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="265" x="910"
+              y="271.7573">UserLinkTypeEnum userLinkType; // Тип связи
+        </text><!--MD5=[bde32dbce8b4aeaf0a2d47db4d2b4402]
+class UserLog-->
+        <rect codeLine="145" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="109.9609" id="UserLog"
+              style="stroke:#A80036;stroke-width:1.5;" width="246" x="614.5" y="182"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="240" x="617.5" y="198.1387">«История изменения пользователь»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="51" x="712"
+              y="212.1074">UserLog
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="615.5" x2="859.5" y1="219.9375" y2="219.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="185" x="620.5"
+              y="234.1479">Long userId; // ID пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="144" x="620.5"
+              y="246.9526">String fieldName; // Поле
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="234" x="620.5"
+              y="259.7573">String fieldOldValue; // Старое значение
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="232" x="620.5"
+              y="272.562">String fieldNewValue; // Новое значение
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="191" x="620.5"
+              y="285.3667">String comment; // Комментарий
+        </text><!--MD5=[c5b08e60048ef1bcd788d24cf324082e]
+class UserSession-->
+        <rect codeLine="152" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="71.5469" id="UserSession"
+              style="stroke:#A80036;stroke-width:1.5;" width="319" x="83" y="774.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="154" x="165.5" y="790.6387">«Сессия пользователя»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="78" x="203.5"
+              y="804.6074">UserSession
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="84" x2="401" y1="812.4375" y2="812.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="307" x="89"
+              y="826.6479">String token ; // Уникальный идентификатор сессии
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="305" x="89"
+              y="839.4526">Long userEntryPointId; // Точка входа пользователя
+        </text><!--MD5=[aa6133fcef624dc6c2bd849f1cb7671c]
+class UserSessionFail-->
+        <rect codeLine="156" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="84.3516" id="UserSessionFail"
+              style="stroke:#A80036;stroke-width:1.5;" width="317" x="34" y="365.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="260" x="62.5" y="381.6387">«Неудачные попытки войти в систему»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="99" x="143"
+              y="395.6074">UserSessionFail
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="35" x2="350" y1="403.4375" y2="403.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="305" x="40"
+              y="417.6479">Long userEntryPointId; // Точка входа пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="217" x="40"
+              y="430.4526">String ipAddress; // IP адрес клиента
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="248" x="40"
+              y="443.2573">String comment; // Сообщение об ошибке
+        </text><!--MD5=[51fd3fce36c976f35b405d5800336138]
+class UserStatus-->
+        <rect codeLine="161" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="58.7422" id="UserStatus"
+              style="stroke:#A80036;stroke-width:1.5;" width="324" x="969.5" y="31"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="251" x="1006" y="47.1387">«Справочник статусов пользователя»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="70" x="1096.5"
+              y="61.1074">UserStatus
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="970.5" x2="1292.5" y1="68.9375" y2="68.9375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="312" x="975.5"
+              y="83.1479">String label; // Статус который указал пользователь
+        </text><!--MD5=[888415192639fa12476d67e1e73a9763]
+class UserTree-->
+        <rect codeLine="164" fill="#FEFECE" filter="url(#f11f2w9jzy39g7)" height="84.3516" id="UserTree"
+              style="stroke:#A80036;stroke-width:1.5;" width="329" x="895" y="364.5"/>
+        <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+              textLength="167" x="976" y="380.6387">«Дерево пользователей»
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="57" x="1031"
+              y="394.6074">UserTree
+        </text>
+        <line style="stroke:#A80036;stroke-width:1.5;" x1="896" x2="1223" y1="402.4375" y2="402.4375"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="317" x="901"
+              y="416.6479">Long parentUserId; // ID родительского пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="279" x="901"
+              y="429.4526">Long childUserId; // ID дочернего пользователя
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="218" x="901"
+              y="442.2573">Integer distance; // Разность уровней
+        </text><!--MD5=[544c4697e20bb968cf63afbf274fc9cd]
+reverse link Chat to Numbering-->
+        <path codeLine="169" d="M2435.35,622.52 C2110.27,623.93 1739.45,709.52 1536.1,763.92 " fill="none"
+              id="Chat-backto-Numbering" style="stroke:#A80036;stroke-width:1.0;"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="2435.5001" x2="2443.5" y1="622.5286" y2="614.5001"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="2435.5001" x2="2443.5" y1="622.5286" y2="630.4999"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="2435.5001" x2="2443.5" y1="622.5286" y2="622.5"/><!--MD5=[8db35ae5b3c49fedfd4f084352922564]
+reverse link ChatPriority to Chat-->
+        <path codeLine="170"
+              d="M2919.64,424.96 C2919.94,430.41 2915.99,438.83 2912.5,445 C2888.16,488.08 2845.8,520.99 2804.08,544.89 "
+              fill="none" id="ChatPriority-backto-Chat" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2919.469" x2="2913.5" y1="424.8264" y2="425.469"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2919.469" x2="2913.5" y1="424.8264" y2="413.531"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2919.469" x2="2913.5" y1="424.8264" y2="419.5"/><!--MD5=[87baaea23102a51a446371daa9c85a73]
+reverse link ChatReminder to Chat-->
+        <path codeLine="171"
+              d="M1744.85,406.69 C1823.42,410.31 1832.41,465.29 1912.5,489 C2083.21,539.53 2282.41,566.26 2435.57,580.3 "
+              fill="none" id="ChatReminder-backto-Chat" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1744.4978" x2="1736.5" y1="406.6857" y2="414.4978"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1744.4978" x2="1736.5" y1="406.6857" y2="398.5022"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1744.4978" x2="1736.5" y1="406.6857" y2="406.5"/><!--MD5=[6895834304f533deb8aacc90418b500e]
+reverse link ChatReminder to UserInfo-->
+        <path codeLine="172"
+              d="M1470.32,419.43 C1446.52,425.57 1459.35,461.04 1444.5,489 C1439.33,498.73 1433.73,508.86 1428.09,518.82 "
+              fill="none" id="ChatReminder-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1470.5509" x2="1478.5" y1="419.4007" y2="410.5509"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1470.5509" x2="1478.5" y1="419.4007" y2="426.4491"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1470.5509" x2="1478.5" y1="419.4007" y2="418.5"/><!--MD5=[c1a78fdb3067bf1d139782767548f701]
+reverse link ChatTagGroup to Chat-->
+        <path codeLine="173"
+              d="M3815.21,246.35 C3819.65,253.23 3812.46,269.21 3806.5,280.5 C3780.13,330.47 3742.86,314.47 3703.5,355 C3664.94,394.71 3680.43,428.66 3633.5,458 C3519.62,529.21 3172.53,565.26 2931.04,582.19 "
+              fill="none" id="ChatTagGroup-backto-Chat" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="3814.8391" x2="3807.5" y1="246.1841" y2="250.3391"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="3814.8391" x2="3807.5" y1="246.1841" y2="235.6609"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="3814.8391" x2="3807.5" y1="246.1841" y2="243"/><!--MD5=[07fe91c94da46ff55ce1f783dd9042a0]
+reverse link ChatTagGroup to MessageTag-->
+        <path codeLine="174"
+              d="M3815.62,267.01 C4052.09,267.54 4115.61,291.49 4347.5,355 C4355.04,357.06 4362.74,359.42 4370.45,361.96 "
+              fill="none" id="ChatTagGroup-backto-MessageTag" style="stroke:#A80036;stroke-width:1.0;"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3815.5" x2="3807.5" y1="267" y2="275"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3815.5" x2="3807.5" y1="267" y2="259"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3815.5" x2="3807.5" y1="267" y2="267"/><!--MD5=[e477c4083eb73e5dfc97d8b3145f27b1]
+reverse link ChatToUser to Chat-->
+        <path codeLine="175"
+              d="M2862.76,231.55 C2879.47,239.12 2867.12,272.63 2853.5,293.5 C2817.69,348.38 2758.87,302.62 2719.5,355 C2678.28,409.84 2674.88,491.96 2677.9,544.64 "
+              fill="none" id="ChatToUser-backto-Chat" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2862.3633" x2="2854.5" y1="231.4726" y2="237.8633"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2862.3633" x2="2854.5" y1="231.4726" y2="222.1367"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2862.3633" x2="2854.5" y1="231.4726" y2="230"/><!--MD5=[cafbac6aa85de456d3c86bdea00ae0ff]
+reverse link ChatToUser to UserInfo-->
+        <path codeLine="176"
+              d="M2504.44,242.02 C2297.53,242.87 2241.39,277.04 2045.5,355 C1934.15,399.31 1922.72,444.36 1811.5,489 C1741.62,517.05 1662.28,539.24 1591,555.95 "
+              fill="none" id="ChatToUser-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="2504.5001" x2="2512.5" y1="242.0286" y2="234.0001"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="2504.5001" x2="2512.5" y1="242.0286" y2="249.9999"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="2504.5001" x2="2512.5" y1="242.0286" y2="242"/><!--MD5=[2462f135bc2ea8947f8eb2191f35b944]
+link ChatToUser to ChatToUserLastMessage-->
+        <path codeLine="177"
+              d="M2861.68,255.82 C3003.82,274.14 3188.27,306.4 3245.5,355 C3266.37,372.72 3245.51,410.04 3262.42,417.99 "
+              fill="none" id="ChatToUser-to-ChatToUserLastMessage" style="stroke:#A80036;stroke-width:1.0;"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3262.6367" x2="3270.5" y1="418.0274" y2="411.6367"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3262.6367" x2="3270.5" y1="418.0274" y2="427.3633"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3262.6367" x2="3270.5" y1="418.0274" y2="419.5"/><!--MD5=[b1ec43b60caab66238028746c51366f8]
+reverse link ChatToUserLastMessage to Message-->
+        <path codeLine="178"
+              d="M3616.61,432.12 C3649.82,436.65 3713.9,465.22 3728.5,488 C3737.11,501.43 3740.08,517.89 3740.22,533.84 "
+              fill="none" id="ChatToUserLastMessage-backto-Message" style="stroke:#0000FF;stroke-width:1.0;"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="3616.4764" x2="3608.5" y1="432.1147" y2="439.4764"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="3616.4764" x2="3608.5" y1="432.1147" y2="423.5236"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="3616.4764" x2="3608.5" y1="432.1147" y2="431.5"/><!--MD5=[9784789a5e05e1eaa24764d3c26010da]
+reverse link ChatTree to Chat-->
+        <path codeLine="179" d="M2995.18,451.88 C2934.65,479.78 2856.39,515.83 2793.44,544.84 " fill="none"
+              id="ChatTree-backto-Chat" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2995.2013" x2="2999.1284" y1="451.8716" y2="448.53"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2995.2013" x2="3005.8116" y1="451.8716" y2="448.53"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2995.2013" x2="3002.47" y1="451.8716" y2="448.53"/><!--MD5=[e73c45300ac28ca555799024a2e87096]
+reverse link ChatWork to Chat-->
+        <path codeLine="180"
+              d="M1767.83,236.19 C1911.03,242.68 1861.45,418.41 1994.5,489 C2069.68,528.89 2270.17,557.09 2435.61,574.41 "
+              fill="none" id="ChatWork-backto-Chat" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1767.4982" x2="1759.5" y1="236.1714" y2="243.9982"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1767.4982" x2="1759.5" y1="236.1714" y2="228.0018"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1767.4982" x2="1759.5" y1="236.1714" y2="236"/><!--MD5=[a32fc8be8c83bfecbb1d386ac5b684b6]
+reverse link ChatWork to UserInfo-->
+        <path codeLine="181" d="M1415.39,249.37 C1369.52,265.58 1371.04,421.87 1376.57,518.81 " fill="none"
+              id="ChatWork-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1415.6112" x2="1423.5" y1="249.3291" y2="240.1112"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1415.6112" x2="1423.5" y1="249.3291" y2="255.8888"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1415.6112" x2="1423.5" y1="249.3291" y2="248"/><!--MD5=[2d2341981838ea285ebdc0397f6bb4dd]
+link Chat to Message-->
+        <path codeLine="182" d="M2931.24,591.56 C3097.93,588.63 3322.95,585.5 3521.5,585.5 " fill="none"
+              id="Chat-to-Message" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="3513.5" x2="3521.5" y1="585.5" y2="577.5"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="3513.5" x2="3521.5" y1="585.5" y2="593.5"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="3513.5" x2="3521.5" y1="585.5" y2="585.5"/><!--MD5=[fa4d0c271d07d54aa2aaa87cebf8a5d0]
+reverse link Message to Chat-->
+        <path codeLine="183" d="M3521.5,621.5 C3326.95,621.5 3107.08,614.67 2941.52,608.15 " fill="none"
+              id="Message-backto-Chat" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2939.1938" x2="2930.8854" y1="608.0546" y2="607.74"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2939.1938" x2="2931.5146" y1="608.0546" y2="607.74"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="2939.1938" x2="2931.2" y1="608.0546" y2="607.74"/><!--MD5=[122fa2d6361f3424b96472c98c0a0bef]
+reverse link Message to FileInfo-->
+        <path codeLine="184" d="M3513.36,609.54 C3309.95,611.31 3086.92,679.08 2937.01,734.93 " fill="none"
+              id="Message-backto-FileInfo" style="stroke:#A80036;stroke-width:1.0;"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3513.5001" x2="3521.5" y1="609.5286" y2="601.5001"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3513.5001" x2="3521.5" y1="609.5286" y2="617.4999"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="3513.5001" x2="3521.5" y1="609.5286" y2="609.5"/><!--MD5=[d4948a4f278a14feceade0fa64016804]
+link Message to Message-->
+        <path codeLine="185"
+              d="M3732.85,639.48 C3747.96,595.07 3747.16,480 3730,480 C3719.77,480 3715.35,505.09 3716.66,533.88 "
+              fill="none" id="Message-Message" style="stroke:#0000FF;stroke-width:1.0;"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="59" x="3700"
+              y="471.0669">hierarchy
+        </text><!--MD5=[fae0d654462ab7c1da6fc0916acc12b0]
+reverse link MessageFeedback to Message-->
+        <path codeLine="186"
+              d="M4049.77,424.66 C4050.43,430.17 4046.49,438.93 4042.5,445 C4017.27,483.43 3979.3,512.32 3938.42,533.95 "
+              fill="none" id="MessageFeedback-backto-Message" style="stroke:#0000FF;stroke-width:1.0;"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4049.6796" x2="4043.5" y1="424.5807" y2="425.6796"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4049.6796" x2="4043.5" y1="424.5807" y2="413.3204"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4049.6796" x2="4043.5" y1="424.5807" y2="419.5"/><!--MD5=[67fe9d3650823ec362e0d12296a2372b]
+reverse link MessageLog to Message-->
+        <path codeLine="187"
+              d="M4328.92,424.42 C4330.04,430.04 4326.18,439.21 4321.5,445 C4273.71,504.04 4094.04,544.13 3945.04,567.99 "
+              fill="none" id="MessageLog-backto-Message" style="stroke:#0000FF;stroke-width:1.0;"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4328.8569" x2="4322.5" y1="424.3569" y2="425.8569"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4328.8569" x2="4322.5" y1="424.3569" y2="413.1431"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4328.8569" x2="4322.5" y1="424.3569" y2="419.5"/><!--MD5=[4c8fc28137b373b823e381afa6d527d6]
+reverse link MessageTag to Message-->
+        <path codeLine="188"
+              d="M4363.43,415.46 C4352.87,422.22 4361.2,444.89 4347.5,458 C4324.67,479.86 4313.5,479.04 4283.5,489 C4174.51,525.18 4049.14,550.56 3945.27,567.44 "
+              fill="none" id="MessageTag-backto-Message" style="stroke:#0000FF;stroke-width:1.0;"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4363.7256" x2="4371.5" y1="415.3864" y2="405.7256"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4363.7256" x2="4371.5" y1="415.3864" y2="421.2744"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="4363.7256" x2="4371.5" y1="415.3864" y2="413.5"/><!--MD5=[8afb08af77afe8a3f69ec4c2a3fec21e]
+reverse link MessageTag to Tag-->
+        <path codeLine="189" d="M4589.79,426.11 C4628.85,432.53 4584.26,488.68 4540.05,534.61 " fill="none"
+              id="MessageTag-backto-Tag" style="stroke:#A80036;stroke-width:1.0;"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="4589.4786" x2="4581.5" y1="426.0852" y2="433.4786"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="4589.4786" x2="4581.5" y1="426.0852" y2="417.5214"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="4589.4786" x2="4581.5" y1="426.0852" y2="425.5"/><!--MD5=[42f84e829b209498ac653c691236541f]
+reverse link MessageToUser to Message-->
+        <path codeLine="190"
+              d="M2631.55,406.86 C2672.25,410.71 2676.15,443.93 2719.5,458 C2984.6,544.05 3305.8,576.26 3513.73,588.31 "
+              fill="none" id="MessageToUser-backto-Message" style="stroke:#0000FF;stroke-width:1.0;"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="2631.4914" x2="2623.5" y1="406.8717" y2="414.4914"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="2631.4914" x2="2623.5" y1="406.8717" y2="398.5086"/>
+        <line style="stroke:#0000FF;stroke-width:1.0;" x1="2631.4914" x2="2623.5" y1="406.8717" y2="406.5"/><!--MD5=[2cdbd496f4fb54661f27a74e1ff15522]
+reverse link MessageToUser to UserInfo-->
+        <path codeLine="191"
+              d="M2062.3,418.65 C1985,421.54 1971.89,465.41 1893.5,489 C1795.55,518.47 1684.63,542.66 1591.22,560.49 "
+              fill="none" id="MessageToUser-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="2062.5013" x2="2070.5" y1="418.6428" y2="410.5013"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="2062.5013" x2="2070.5" y1="418.6428" y2="426.4987"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="2062.5013" x2="2070.5" y1="418.6428" y2="418.5"/><!--MD5=[830006fbc05bcedc1430a26295ecfb88]
+reverse link Numbering to UserInfo-->
+        <path codeLine="192"
+              d="M1563.38,813.08 C1574.43,806.01 1563.8,780.92 1554.5,764 C1531.64,722.41 1500.25,737.33 1465.5,705 C1455.49,695.68 1445.75,685.07 1436.68,674.23 "
+              fill="none" id="Numbering-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1563.2711" x2="1555.5" y1="813.1001" y2="822.7711"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1563.2711" x2="1555.5" y1="813.1001" y2="807.2289"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1563.2711" x2="1555.5" y1="813.1001" y2="815"/><!--MD5=[257034a0fc04871134fa66e64a1e44ae]
+reverse link UserContact to Chat-->
+        <path codeLine="193"
+              d="M1952.83,103.22 C2102.21,111.5 1927.91,347.8 2045.5,458 C2102.24,511.17 2281.52,546.85 2435.64,568.51 "
+              fill="none" id="UserContact-backto-Chat" style="stroke:#FF0000;stroke-width:1.0;"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1952.4971" x2="1944.5" y1="103.2146" y2="110.9971"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1952.4971" x2="1944.5" y1="103.2146" y2="95.0029"/>
+        <line style="stroke:#FF0000;stroke-width:1.0;" x1="1952.4971" x2="1944.5" y1="103.2146" y2="103"/><!--MD5=[ad815b89d6f0844199299f0ae45c7521]
+reverse link UserContact to UserInfo-->
+        <path codeLine="194"
+              d="M1952.76,66.8 C1990.28,75.16 1923.79,146.5 1923.5,147 C1844.16,281.14 1878.74,355.32 1761.5,458 C1713.32,500.2 1651.16,529.8 1591.18,550.41 "
+              fill="none" id="UserContact-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1952.4628" x2="1944.5" y1="66.7706" y2="73.9628"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1952.4628" x2="1944.5" y1="66.7706" y2="58.0372"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1952.4628" x2="1944.5" y1="66.7706" y2="66"/><!--MD5=[ad815b89d6f0844199299f0ae45c7521]
+reverse link UserContact to UserInfo-->
+        <path codeLine="195"
+              d="M1552.48,54.13 C1468.75,56.88 1445.43,103.42 1399.5,178 C1335.4,282.08 1348.32,430.02 1364.64,519 "
+              fill="none" id="UserContact-backto-UserInfo-1" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1552.501" x2="1560.5" y1="54.1286" y2="46.001"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1552.501" x2="1560.5" y1="54.1286" y2="61.999"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1552.501" x2="1560.5" y1="54.1286" y2="54"/><!--MD5=[d664f9994b3630d38f332bba11ebdaf0]
+reverse link UserEntryPoint to UserInfo-->
+        <path codeLine="196" d="M481.5,589.5 C714.41,599.4 981.21,605.91 1163.48,606.26 " fill="none"
+              id="UserEntryPoint-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1165.72" x2="1173.7343" y1="606.2557" y2="606.27"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1165.72" x2="1173.7057" y1="606.2557" y2="606.27"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1165.72" x2="1173.72" y1="606.2557" y2="606.27"/><!--MD5=[c37d75161a64003994aba7dcff7efd24]
+reverse link UserFilter to UserInfo-->
+        <path codeLine="197"
+              d="M720.75,407.62 C746.34,415.75 717.27,466.26 745.5,489 C810.29,541.17 1013.96,568.64 1173.76,582.52 "
+              fill="none" id="UserFilter-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="720.4279" x2="712.5" y1="407.5713" y2="414.4279"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="720.4279" x2="712.5" y1="407.5713" y2="398.5721"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="720.4279" x2="712.5" y1="407.5713" y2="406.5"/><!--MD5=[8a6849558e7e349f580814cc3b71fd78]
+reverse link UserInfo to FileInfo-->
+        <path codeLine="198" d="M1592.62,596.52 C1948.03,597.95 2352.49,692.59 2580.33,754.77 " fill="none"
+              id="UserInfo-backto-FileInfo" style="stroke:#A80036;stroke-width:1.0;"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="1592.4999" x2="1584.5" y1="596.5286" y2="604.4999"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="1592.4999" x2="1584.5" y1="596.5286" y2="588.5001"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="1592.4999" x2="1584.5" y1="596.5286" y2="596.5"/><!--MD5=[49ec211ea2ec80d107b55ecb1060c153]
+reverse link UserLink to UserInfo-->
+        <path codeLine="199"
+              d="M952.04,282.42 C922.55,300.46 894.15,324.37 877.5,355 C855.64,395.22 849.71,421.63 877.5,458 C914.57,506.51 1051.86,541.98 1173.95,564.73 "
+              fill="none" id="UserLink-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="952.27" x2="955.0677" y1="282.2723" y2="278.19"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="952.27" x2="963.2323" y1="282.2723" y2="278.19"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="952.27" x2="959.15" y1="282.2723" y2="278.19"/><!--MD5=[7180d248b9d2cfd8215bedac7cbab669]
+reverse link UserLog to UserInfo-->
+        <path codeLine="200"
+              d="M869.46,230.42 C884.28,237.38 862.56,268.58 860.5,294 C854.6,366.76 814.2,395.25 851.5,458 C885.44,515.09 1040.07,550.79 1173.77,571.46 "
+              fill="none" id="UserLog-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="869.3739" x2="861.5" y1="230.4147" y2="236.8739"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="869.3739" x2="861.5" y1="230.4147" y2="221.1261"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="869.3739" x2="861.5" y1="230.4147" y2="229"/><!--MD5=[cf8c8107ad14cdb1663a515d9f4f046f]
+link UserEntryPoint to UserSession-->
+        <path codeLine="201" d="M308.78,654.75 C382.17,722.28 482.42,826.37 411.9,833.6 " fill="none"
+              id="UserEntryPoint-to-UserSession" style="stroke:#A80036;stroke-width:1.0;"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="411.4914" x2="403.5" y1="833.629" y2="841.9914"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="411.4914" x2="403.5" y1="833.629" y2="826.0086"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="411.4914" x2="403.5" y1="833.629" y2="834"/><!--MD5=[2980f70e2b7b1cd8800585f45288d825]
+reverse link UserSessionFail to UserEntryPoint-->
+        <path codeLine="202"
+              d="M359.96,415.45 C364.64,422.1 355.95,438.7 351.5,451.5 C340.47,483.23 319.66,513.71 299.23,538.38 "
+              fill="none" id="UserSessionFail-backto-UserEntryPoint" style="stroke:#A80036;stroke-width:1.0;"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="359.9396" x2="352.5" y1="415.4416" y2="419.9396"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="359.9396" x2="352.5" y1="415.4416" y2="405.0604"/>
+        <line style="stroke:#A80036;stroke-width:1.0;" x1="359.9396" x2="352.5" y1="415.4416" y2="412.5"/><!--MD5=[15ccadf305903ec46c3baa32fe3e76a1]
+reverse link UserTree to UserInfo-->
+        <path codeLine="203" d="M1137.16,452.7 C1171.29,472.57 1212.33,496.45 1251,518.96 " fill="none"
+              id="UserTree-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1136.8923" x2="1125.9526" y1="452.5574" y2="448.53"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1136.8923" x2="1134.0074" y1="452.5574" y2="448.53"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1136.8923" x2="1129.98" y1="452.5574" y2="448.53"/><!--MD5=[cc066c1a0e64d2ac1c97097072459f6a]
+reverse link UserStatus to UserInfo-->
+        <path codeLine="204"
+              d="M1172.05,99.21 C1192.72,120.64 1216.76,148.87 1232.5,178 C1300.85,304.48 1265.59,356.55 1321.5,489 C1325.68,498.91 1330.59,509.06 1335.77,518.96 "
+              fill="none" id="UserStatus-backto-UserInfo" style="stroke:#00FF00;stroke-width:1.0;"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1171.905" x2="1160.5922" y1="99.0778" y2="93.35"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1171.905" x2="1172.0478" y1="99.0778" y2="93.35"/>
+        <line style="stroke:#00FF00;stroke-width:1.0;" x1="1171.905" x2="1166.32" y1="99.0778" y2="93.35"/><!--MD5=[c54e4238446e43e4ece106f0f33d69c7]
+link UserInfo to Chat-->
+        <path codeLine="205" d="M1591.18,596.5 C1869.96,596.5 2148.73,596.5 2427.51,596.5 " fill="none"
+              id="UserInfo-to-Chat" style="stroke:#000000;stroke-width:1.0;"/>
+        <line style="stroke:#000000;stroke-width:1.0;" x1="2427.75" x2="2435.75" y1="596.5" y2="588.5"/>
+        <line style="stroke:#000000;stroke-width:1.0;" x1="2427.75" x2="2435.75" y1="596.5" y2="604.5"/>
+        <line style="stroke:#000000;stroke-width:1.0;" x1="2427.75" x2="2435.75" y1="596.5" y2="596.5"/><!--MD5=[3a6d06bff158afe1c95067b860b4c38c]
+link UserSession to RequestLog-->
+        <path codeLine="206" d="M403.5,822 C479.69,822 521.45,982.4 453.81,994.3 " fill="none"
+              id="UserSession-to-RequestLog" style="stroke:#000000;stroke-width:1.0;"/>
+        <line style="stroke:#000000;stroke-width:1.0;" x1="453.4718" x2="445.5" y1="994.3285" y2="1002.9718"/>
+        <line style="stroke:#000000;stroke-width:1.0;" x1="453.4718" x2="445.5" y1="994.3285" y2="987.0282"/>
+        <line style="stroke:#000000;stroke-width:1.0;" x1="453.4718" x2="445.5" y1="994.3285" y2="995"/><!--MD5=[f6e8789d75a2e8e049ac575c27f67822]
+link UserLink to UserTree--><!--MD5=[16a74ae26ff7c863d626c290a647e199]
+link UserStatus to UserLog--><!--MD5=[fd7ceadcef795859b34c59c95ba369a8]
+link UserLog to UserFilter--><!--MD5=[5baffe0dc86a8ee849a3e8358644dc35]
+link UserFilter to Numbering--><!--MD5=[8e38171643c79c7614b7ec11bfdc6bf4]
+link UserContact to ChatWork--><!--MD5=[115df630a93e269f43370d9461362106]
+link ChatWork to ChatReminder--><!--MD5=[be0144ea8a809c19d4e75bcf6c9ed7ea]
+link ChatTagGroup to ChatTree--><!--MD5=[5a99b546edba4785a147cfddc39e83e7]
+@startuml
+'Скрыть иконку класса
+hide circle
+'Скрыть раздел с полями если он пустой
+hide empty fields
+'Скрыть раздел с методами если он пустой
+hide empty methods
+'Скрыть поля и методы
+'hide members
+
+class Chat <<Чат>>{
+    {field} String label; // Наименование чата
+    {field} ChatTypeEnum chatType; // Тип чата: чат, задание
+    {field} Long numberingId; // Использованный нумератор (для определения префикса)
+    {field} Long orderNumber; // Номер чата(документа)
+}
+class ChatPriority <<Приоритет задания>>{
+    {field} Long chatId; // ID чата
+    {field} Long priority; // Приоритет
+}
+class ChatReminder <<Напоминание>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} String text; // Текст напоминания
+    {field} Long reminderTime; // Дата напоминания
+}
+class ChatTagGroup <<Групповые теги чата>>{
+    {field} Long chatId; // ID чата
+    {field} TagGroupEnum tagGroup; // Группа тегов
+    {field} Long messageTagId; // ID тега из сообщения
+}
+class ChatToUser <<Пользователи в чате>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} Boolean favorite; // Избранный чат
+    {field} ChatToUserTypeEnum chatToUserType; // Тип участника
+    {field} Boolean mute; // Отключить уведомления
+}
+class ChatToUserLastMessage <<Последнее сообщение для пользователя в чате>>{
+    {field} Long chatToUserId; // Пользователь в чата
+    {field} Long messageId; // ID сообщения
+}
+class ChatTree <<Дерево задач>>{
+    {field} Long parentChatId; // ID родительского чата
+    {field} Long childChatId; // ID дочернего чата
+    {field} Integer distance; // Разность уровней
+}
+class ChatWork <<Отметка пользователя о затраченном времени>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} Long startTime; // Дата начала работы
+    {field} Long endTime; // Дата окончания работы
+}
+class FileInfo <<Файл>>{
+	{field} String name; // Наименование файла
+	{field} String mimeType; // MIME-тип файла
+	{field} Long fileSize; // Размер файла
+	{field} String path; // Место хранения
+	{field} FileAccessTypeEnum fileAccessType; // Тип доступа
+	{field} Integer crc32; // Контрольная сумма
+	{field} Long lastOpenTime; // Дата последнего скачивания файла
+	{field} Boolean gzipOn; // Файл заархивирован
+}
+class Message <<Сообщение>>{
+   {field} Long chatId; // ID чата
+   {field} String text; // Текст
+   {field} Long fileId; // ID прикрепленного файла
+   {field} Long childChatId; // ID созданного чата
+   {field} MessageTypeEnum messageType; // Тип сообщения (SIMPLE, ERROR)
+   {field} Long parentMessageId; // ID родительского сообщения
+}
+class MessageFeedback <<Итоговый голос по сообщению>>{
+    {field} Long messageId; // ID сообщения
+    {field} Integer feedback; // Итоговый голос по сообщению
+}
+class MessageLog <<История сообщения>>{
+    {field} Long messageId; // ID сообщения
+    {field} String oldText; // Предыдущий текст
+}
+class MessageTag <<Тег сообщения>>{
+    {field} Long messageId; // ID сообщения
+    {field} Long tagId; // ID тега
+    {field} String value; // Значение тега
+}
+class MessageToUser <<Связка сообщения с пользователем>>{
+    {field}Long messageId; // ID сообщения
+    {field}Long userId; // ID пользователя
+    {field}MessageStatusEnum messageStatus; // Статус сообщения для конкретного пользователя
+    {field}MessageFeedbackEnum messageFeedback; // Реакция на сообщение
+}
+class Numbering <<Настройка нумерации для компании и типа чата>>{
+    {field} Long userId; // id пользователя(компания, отдел)
+    {field} String prefix; // Префикс
+    {field} Long maxNumber; // Последний выданный номер
+}
+class RequestLog <<Логи вызовов сервисов>>{
+    {field} String token; // Уникальный идентификатор сессии пользователя
+    {field} String eventId; // Идентификатор события
+    {field} Long startInvoke; // Время запуска
+    {field} Long endInvoke; // Время окончания
+    {field} String errorStackTrace; // Ошибка
+}
+class Tag <<Полный перечень тегов>>{
+    {field} String tag; // Тег
+    {field} TagTypeEnum tagType; // Тип тега для связки наименование тега с логикой
+    {field} String description; // Описание тега для автокомплита
+    {field} Boolean leftMenuShow; // Показывать ли в левом меню
+    {field} Boolean headerShow; // Показывать ли в заголовке чата
+    {field} TagGroupEnum tagGroup; // Группа тегов
+}
+class UserContact <<Контакты пользователя>>{
+    {field} Long parentUserId; // ID пользователя родителя
+    {field} Long childUserId; // ID пользователя потомка
+    {field} UserContactStatusEnum userContactStatus; // Статус контакта
+    {field} String label; // Наименование контакта
+    {field} Long chatId; // ID чата
+}
+class UserEntryPoint <<Способы авторизации пользователя>>{
+    {field} Long userId; // ID пользователя
+    {field} Boolean validate; // Прошел ли подтверждение
+    {field} EntryPointTypeEnum entryPointType; // Способ авторизации
+    {field} String clientId; // Идентификатор в системе авторизации (логин)
+    {field} String credential; // Удостоверение личности в системе авторизации (пароль)
+}
+class UserFilter <<Пользовательский фильтр>>{
+     {field} Long userId; // ID пользователя
+     {field} FilterPageTypeEnum pageType; // ID части системы
+     {field} String filterLabel; // Название фильтра
+     {field} JSON data; // Данные фильтра в формате JSON
+}
+class UserInfo <<Пользователь>>{
+   {field} String name; // Наименование пользователя
+   {field} UserTypeEnum userType; // Тип пользователя
+   {field} Long avatarId; // Ссылка на таблицу file где хранится аватар
+   {field} Map<String, String> publicInfo; // Json с дополнительными полями
+   {field} UserStatusEnum userStatus; // Состояние пользователя
+   {field} String userStatusLabel; // Статус который указал пользователь
+   {field} Locale locale; // Язык
+   {field} ZoneId timeZone; // Часовой пояс
+}
+class UserLink <<Организационная структура пользователей>>{
+     {field} Long parentUserId; // ID пользователя родителя
+     {field} Long childUserId; // ID пользователя потомка
+     {field} UserLinkTypeEnum userLinkType; // Тип связи
+}
+class UserLog <<История изменения пользователь>>{
+	{field} Long userId; // ID пользователя
+    {field} String fieldName; // Поле
+    {field} String fieldOldValue; // Старое значение
+    {field} String fieldNewValue; // Новое значение
+    {field} String comment; // Комментарий
+}
+class UserSession <<Сессия пользователя>>{
+    {field} String token ; // Уникальный идентификатор сессии
+    {field} Long userEntryPointId; // Точка входа пользователя
+}
+class UserSessionFail <<Неудачные попытки войти в систему>>{
+    {field} Long userEntryPointId; // Точка входа пользователя
+    {field} String ipAddress; // IP адрес клиента
+    {field} String comment; // Сообщение об ошибке
+}
+class UserStatus <<Справочник статусов пользователя>>{
+    {field} String label; // Статус который указал пользователь
+}
+class UserTree <<Дерево пользователей>>{
+     {field} Long parentUserId; // ID родительского пользователя
+     {field} Long childUserId; // ID дочернего пользователя
+     {field} Integer distance; // Разность уровней
+}
+Chat::numberingId }- - Numbering
+ChatPriority::chatId }-[#FF0000]- Chat
+ChatReminder::chatId }-[#FF0000]- Chat
+ChatReminder::userId }-[#00FF00]- UserInfo
+ChatTagGroup::chatId }-[#FF0000]- Chat
+ChatTagGroup::messageTagId }- - MessageTag
+ChatToUser::chatId }-[#FF0000]- Chat
+ChatToUser::userId }-[#00FF00]- UserInfo
+ChatToUserLastMessage::chatToUserId }-up- ChatToUser
+ChatToUserLastMessage::messageId }-[#0000FF]- Message
+ChatTree }-[#FF0000]- Chat
+ChatWork::chatId }-[#FF0000]- Chat
+ChatWork::userId }-[#00FF00]- UserInfo
+Message::chatId }-[#FF0000]left- Chat
+Message::childChatId }-[#FF0000]- Chat
+Message::fileId }- - FileInfo
+Message::parentMessageId -[#0000FF]- Message : hierarchy
+MessageFeedback::messageId }-[#0000FF]- Message
+MessageLog::messageId }-[#0000FF]- Message
+MessageTag::messageId }-[#0000FF]- Message
+MessageTag::tagId }- - Tag
+MessageToUser::messageId }-[#0000FF]- Message
+MessageToUser::userId }-[#00FF00]- UserInfo
+Numbering::userId }-[#00FF00]- UserInfo
+UserContact::chatId }-[#FF0000]- Chat
+UserContact::childUserId }-[#00FF00]- UserInfo
+UserContact::parentUserId }-[#00FF00]- UserInfo
+UserEntryPoint::userId }-[#00FF00]right- UserInfo
+UserFilter::userId }-[#00FF00]- UserInfo
+UserInfo::avatarId }- - FileInfo
+UserLink }-[#00FF00]- UserInfo
+UserLog::userId }-[#00FF00]- UserInfo
+UserSession::userEntryPointId }-up- UserEntryPoint
+UserSessionFail::userEntryPointId }- - UserEntryPoint
+UserTree }-[#00FF00]- UserInfo
+UserStatus::createdBy }-[#00FF00]- UserInfo
+Chat::createdBy }-[#000000]left- UserInfo
+RequestLog::token }-[#000000]up- UserSession::token
+
+UserLink -[hidden]down- UserTree
+UserStatus -[hidden]down- UserLog
+UserLog -[hidden]down- UserFilter
+UserFilter -[hidden]down- Numbering
+UserContact -[hidden]down- ChatWork
+ChatWork -[hidden]down- ChatReminder
+ChatTagGroup -[hidden]down- ChatTree
+@enduml
+
+@startuml
+hide circle
+hide empty fields
+hide empty methods
+
+class Chat <<Чат>>{
+    {field} String label; // Наименование чата
+    {field} ChatTypeEnum chatType; // Тип чата: чат, задание
+    {field} Long numberingId; // Использованный нумератор (для определения префикса)
+    {field} Long orderNumber; // Номер чата(документа)
+}
+class ChatPriority <<Приоритет задания>>{
+    {field} Long chatId; // ID чата
+    {field} Long priority; // Приоритет
+}
+class ChatReminder <<Напоминание>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} String text; // Текст напоминания
+    {field} Long reminderTime; // Дата напоминания
+}
+class ChatTagGroup <<Групповые теги чата>>{
+    {field} Long chatId; // ID чата
+    {field} TagGroupEnum tagGroup; // Группа тегов
+    {field} Long messageTagId; // ID тега из сообщения
+}
+class ChatToUser <<Пользователи в чате>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} Boolean favorite; // Избранный чат
+    {field} ChatToUserTypeEnum chatToUserType; // Тип участника
+    {field} Boolean mute; // Отключить уведомления
+}
+class ChatToUserLastMessage <<Последнее сообщение для пользователя в чате>>{
+    {field} Long chatToUserId; // Пользователь в чата
+    {field} Long messageId; // ID сообщения
+}
+class ChatTree <<Дерево задач>>{
+    {field} Long parentChatId; // ID родительского чата
+    {field} Long childChatId; // ID дочернего чата
+    {field} Integer distance; // Разность уровней
+}
+class ChatWork <<Отметка пользователя о затраченном времени>>{
+    {field} Long chatId; // ID чата
+    {field} Long userId; // ID пользователя
+    {field} Long startTime; // Дата начала работы
+    {field} Long endTime; // Дата окончания работы
+}
+class FileInfo <<Файл>>{
+	{field} String name; // Наименование файла
+	{field} String mimeType; // MIME-тип файла
+	{field} Long fileSize; // Размер файла
+	{field} String path; // Место хранения
+	{field} FileAccessTypeEnum fileAccessType; // Тип доступа
+	{field} Integer crc32; // Контрольная сумма
+	{field} Long lastOpenTime; // Дата последнего скачивания файла
+	{field} Boolean gzipOn; // Файл заархивирован
+}
+class Message <<Сообщение>>{
+   {field} Long chatId; // ID чата
+   {field} String text; // Текст
+   {field} Long fileId; // ID прикрепленного файла
+   {field} Long childChatId; // ID созданного чата
+   {field} MessageTypeEnum messageType; // Тип сообщения (SIMPLE, ERROR)
+   {field} Long parentMessageId; // ID родительского сообщения
+}
+class MessageFeedback <<Итоговый голос по сообщению>>{
+    {field} Long messageId; // ID сообщения
+    {field} Integer feedback; // Итоговый голос по сообщению
+}
+class MessageLog <<История сообщения>>{
+    {field} Long messageId; // ID сообщения
+    {field} String oldText; // Предыдущий текст
+}
+class MessageTag <<Тег сообщения>>{
+    {field} Long messageId; // ID сообщения
+    {field} Long tagId; // ID тега
+    {field} String value; // Значение тега
+}
+class MessageToUser <<Связка сообщения с пользователем>>{
+    {field}Long messageId; // ID сообщения
+    {field}Long userId; // ID пользователя
+    {field}MessageStatusEnum messageStatus; // Статус сообщения для конкретного пользователя
+    {field}MessageFeedbackEnum messageFeedback; // Реакция на сообщение
+}
+class Numbering <<Настройка нумерации для компании и типа чата>>{
+    {field} Long userId; // id пользователя(компания, отдел)
+    {field} String prefix; // Префикс
+    {field} Long maxNumber; // Последний выданный номер
+}
+class RequestLog <<Логи вызовов сервисов>>{
+    {field} String token; // Уникальный идентификатор сессии пользователя
+    {field} String eventId; // Идентификатор события
+    {field} Long startInvoke; // Время запуска
+    {field} Long endInvoke; // Время окончания
+    {field} String errorStackTrace; // Ошибка
+}
+class Tag <<Полный перечень тегов>>{
+    {field} String tag; // Тег
+    {field} TagTypeEnum tagType; // Тип тега для связки наименование тега с логикой
+    {field} String description; // Описание тега для автокомплита
+    {field} Boolean leftMenuShow; // Показывать ли в левом меню
+    {field} Boolean headerShow; // Показывать ли в заголовке чата
+    {field} TagGroupEnum tagGroup; // Группа тегов
+}
+class UserContact <<Контакты пользователя>>{
+    {field} Long parentUserId; // ID пользователя родителя
+    {field} Long childUserId; // ID пользователя потомка
+    {field} UserContactStatusEnum userContactStatus; // Статус контакта
+    {field} String label; // Наименование контакта
+    {field} Long chatId; // ID чата
+}
+class UserEntryPoint <<Способы авторизации пользователя>>{
+    {field} Long userId; // ID пользователя
+    {field} Boolean validate; // Прошел ли подтверждение
+    {field} EntryPointTypeEnum entryPointType; // Способ авторизации
+    {field} String clientId; // Идентификатор в системе авторизации (логин)
+    {field} String credential; // Удостоверение личности в системе авторизации (пароль)
+}
+class UserFilter <<Пользовательский фильтр>>{
+     {field} Long userId; // ID пользователя
+     {field} FilterPageTypeEnum pageType; // ID части системы
+     {field} String filterLabel; // Название фильтра
+     {field} JSON data; // Данные фильтра в формате JSON
+}
+class UserInfo <<Пользователь>>{
+   {field} String name; // Наименование пользователя
+   {field} UserTypeEnum userType; // Тип пользователя
+   {field} Long avatarId; // Ссылка на таблицу file где хранится аватар
+   {field} Map<String, String> publicInfo; // Json с дополнительными полями
+   {field} UserStatusEnum userStatus; // Состояние пользователя
+   {field} String userStatusLabel; // Статус который указал пользователь
+   {field} Locale locale; // Язык
+   {field} ZoneId timeZone; // Часовой пояс
+}
+class UserLink <<Организационная структура пользователей>>{
+     {field} Long parentUserId; // ID пользователя родителя
+     {field} Long childUserId; // ID пользователя потомка
+     {field} UserLinkTypeEnum userLinkType; // Тип связи
+}
+class UserLog <<История изменения пользователь>>{
+	{field} Long userId; // ID пользователя
+    {field} String fieldName; // Поле
+    {field} String fieldOldValue; // Старое значение
+    {field} String fieldNewValue; // Новое значение
+    {field} String comment; // Комментарий
+}
+class UserSession <<Сессия пользователя>>{
+    {field} String token ; // Уникальный идентификатор сессии
+    {field} Long userEntryPointId; // Точка входа пользователя
+}
+class UserSessionFail <<Неудачные попытки войти в систему>>{
+    {field} Long userEntryPointId; // Точка входа пользователя
+    {field} String ipAddress; // IP адрес клиента
+    {field} String comment; // Сообщение об ошибке
+}
+class UserStatus <<Справочник статусов пользователя>>{
+    {field} String label; // Статус который указал пользователь
+}
+class UserTree <<Дерево пользователей>>{
+     {field} Long parentUserId; // ID родительского пользователя
+     {field} Long childUserId; // ID дочернего пользователя
+     {field} Integer distance; // Разность уровней
+}
+Chat::numberingId }- - Numbering
+ChatPriority::chatId }-[#FF0000]- Chat
+ChatReminder::chatId }-[#FF0000]- Chat
+ChatReminder::userId }-[#00FF00]- UserInfo
+ChatTagGroup::chatId }-[#FF0000]- Chat
+ChatTagGroup::messageTagId }- - MessageTag
+ChatToUser::chatId }-[#FF0000]- Chat
+ChatToUser::userId }-[#00FF00]- UserInfo
+ChatToUserLastMessage::chatToUserId }-up- ChatToUser
+ChatToUserLastMessage::messageId }-[#0000FF]- Message
+ChatTree }-[#FF0000]- Chat
+ChatWork::chatId }-[#FF0000]- Chat
+ChatWork::userId }-[#00FF00]- UserInfo
+Message::chatId }-[#FF0000]left- Chat
+Message::childChatId }-[#FF0000]- Chat
+Message::fileId }- - FileInfo
+Message::parentMessageId -[#0000FF]- Message : hierarchy
+MessageFeedback::messageId }-[#0000FF]- Message
+MessageLog::messageId }-[#0000FF]- Message
+MessageTag::messageId }-[#0000FF]- Message
+MessageTag::tagId }- - Tag
+MessageToUser::messageId }-[#0000FF]- Message
+MessageToUser::userId }-[#00FF00]- UserInfo
+Numbering::userId }-[#00FF00]- UserInfo
+UserContact::chatId }-[#FF0000]- Chat
+UserContact::childUserId }-[#00FF00]- UserInfo
+UserContact::parentUserId }-[#00FF00]- UserInfo
+UserEntryPoint::userId }-[#00FF00]right- UserInfo
+UserFilter::userId }-[#00FF00]- UserInfo
+UserInfo::avatarId }- - FileInfo
+UserLink }-[#00FF00]- UserInfo
+UserLog::userId }-[#00FF00]- UserInfo
+UserSession::userEntryPointId }-up- UserEntryPoint
+UserSessionFail::userEntryPointId }- - UserEntryPoint
+UserTree }-[#00FF00]- UserInfo
+UserStatus::createdBy }-[#00FF00]- UserInfo
+Chat::createdBy }-[#000000]left- UserInfo
+RequestLog::token }-[#000000]up- UserSession::token
+
+UserLink -[hidden]down- UserTree
+UserStatus -[hidden]down- UserLog
+UserLog -[hidden]down- UserFilter
+UserFilter -[hidden]down- Numbering
+UserContact -[hidden]down- ChatWork
+ChatWork -[hidden]down- ChatReminder
+ChatTagGroup -[hidden]down- ChatTree
+@enduml
+
+PlantUML version 1.2021.16(Wed Dec 08 17:25:22 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+-->
+    </g>
+</svg>

@@ -30,7 +30,7 @@ public class UserLog extends AbstractEntityWithId {
     private String fieldNewValue;
 
     /**
-     * Комментарий - сообщение соответствующее изменению
+     * Комментарий. Сообщение соответствующее изменению
      */
     private String comment;
 
@@ -57,7 +57,7 @@ public class UserLog extends AbstractEntityWithId {
      * @param fieldName Поле
      * @param fieldOldValue Старое значение
      * @param fieldNewValue Новое значение
-     * @param comment Комментарий - сообщение соответствующее изменению
+     * @param comment Комментарий. Сообщение соответствующее изменению
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
      */
@@ -139,14 +139,14 @@ public class UserLog extends AbstractEntityWithId {
     }
 
     /**
-     * Получение комментарий - сообщение соответствующее изменению
+     * Получение комментарий. сообщение соответствующее изменению
      */
     public String getComment() {
         return comment;
     }
 
     /**
-     * Установить комментарий - сообщение соответствующее изменению
+     * Установить комментарий. сообщение соответствующее изменению
      */
     public void setComment(String comment) {
         this.comment = comment;

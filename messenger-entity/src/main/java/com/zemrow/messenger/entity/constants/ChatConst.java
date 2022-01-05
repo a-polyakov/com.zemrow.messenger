@@ -45,7 +45,7 @@ public class ChatConst extends com.querydsl.sql.RelationalPathBase<Chat> {
     public static final String CHAT_TYPE = "chatType";
 
     /**
-     * Использованый нумиратор (для определения префикса)
+     * Использованный нумератор (для определения префикса)
      */
     public static final String NUMBERING_ID = "numberingId";
 
@@ -100,7 +100,7 @@ public class ChatConst extends com.querydsl.sql.RelationalPathBase<Chat> {
     public final EnumPath<ChatTypeEnum> chatType = createEnum(CHAT_TYPE, ChatTypeEnum.class);
 
     /**
-     * Использованый нумиратор (для определения префикса)
+     * Использованный нумератор (для определения префикса)
      */
     public final NumberPath<Long> numberingId = createNumber(NUMBERING_ID, Long.class);
 
@@ -138,6 +138,16 @@ public class ChatConst extends com.querydsl.sql.RelationalPathBase<Chat> {
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<Chat> chat_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Chat_updatedBy_fk = createForeignKey(updatedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Chat_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Chat_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Numbering> Chat_numberingId_fk = createForeignKey(numberingId, "id");
 
     public ChatConst(String variable) {
         super(Chat.class, forVariable(variable), "public", "Chat");

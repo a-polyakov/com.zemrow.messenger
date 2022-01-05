@@ -23,7 +23,7 @@ public class TablesConst {
     public static final ChatReminderConst ChatReminder = ChatReminderConst.ChatReminder;
 
     /**
-     * Групповые теги чата (для упрощения поиска последнего тега из группы). Данные являются избыточными, возможно восстановить.
+     * Групповые теги чата. Для упрощения поиска последнего тега из группы. Данные являются избыточными, возможно восстановить.
      */
     public static final ChatTagGroupConst ChatTagGroup = ChatTagGroupConst.ChatTagGroup;
 
@@ -33,7 +33,7 @@ public class TablesConst {
     public static final ChatToUserConst ChatToUser = ChatToUserConst.ChatToUser;
 
     /**
-     * Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.
+     * Последнее сообщение для пользователя в чате. Для упрощения поиска последнего сообщения. Данные являются избыточными, возможно восстановить.
      */
     public static final ChatToUserLastMessageConst ChatToUserLastMessage = ChatToUserLastMessageConst.ChatToUserLastMessage;
 
@@ -43,7 +43,7 @@ public class TablesConst {
     public static final ChatTreeConst ChatTree = ChatTreeConst.ChatTree;
 
     /**
-     * Отметка пользователя о затраченом времени
+     * Отметка пользователя о затраченном времени
      */
     public static final ChatWorkConst ChatWork = ChatWorkConst.ChatWork;
 
@@ -78,7 +78,7 @@ public class TablesConst {
     public static final MessageToUserConst MessageToUser = MessageToUserConst.MessageToUser;
 
     /**
-     * Настройка нумирации для компании и типа чата
+     * Настройка нумерации для компании и типа чата
      */
     public static final NumberingConst Numbering = NumberingConst.Numbering;
 

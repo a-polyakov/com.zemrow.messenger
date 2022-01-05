@@ -53,7 +53,7 @@ public class UserLogConst extends com.querydsl.sql.RelationalPathBase<UserLog> {
     public static final String FIELD_NEW_VALUE = "fieldNewValue";
 
     /**
-     * Комментарий - сообщение соответствующее изменению
+     * Комментарий. Сообщение соответствующее изменению
      */
     public static final String COMMENT = "comment";
 
@@ -93,7 +93,7 @@ public class UserLogConst extends com.querydsl.sql.RelationalPathBase<UserLog> {
     public final StringPath fieldNewValue = createString(FIELD_NEW_VALUE);
 
     /**
-     * Комментарий - сообщение соответствующее изменению
+     * Комментарий. Сообщение соответствующее изменению
      */
     public final StringPath comment = createString(COMMENT);
 
@@ -106,6 +106,12 @@ public class UserLogConst extends com.querydsl.sql.RelationalPathBase<UserLog> {
      * Пользователь создавший запись
      */
     public final NumberPath<Long> createdBy = createNumber(CREATED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<UserLog> userlog_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserLog_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserLog_userId_fk = createForeignKey(userId, "id");
 
     public UserLogConst(String variable) {
         super(UserLog.class, forVariable(variable), "public", "UserLog");

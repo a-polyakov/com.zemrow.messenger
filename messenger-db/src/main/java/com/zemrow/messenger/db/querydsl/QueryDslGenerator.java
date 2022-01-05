@@ -1,5 +1,6 @@
 package com.zemrow.messenger.db.querydsl;
 
+import com.querydsl.codegen.EntityType;
 import com.querydsl.sql.codegen.OrdinalPositionComparator;
 import com.querydsl.sql.codegen.OriginalNamingStrategy;
 import com.zemrow.messenger.constants.DBConst;
@@ -9,15 +10,16 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
- * Обновление БД, актуализация констант, актуализация сущностей
+ * Актуализация констант, актуализация сущностей
  *
  * @author Alexandr Polyakov on 2020.05.07
  */
 public class QueryDslGenerator {
-    public static void generate(final String url, final String username,
-        final String password) throws ClassNotFoundException, SQLException {
+    public static List<EntityType> generate(final String url, final String username,
+                                            final String password) throws ClassNotFoundException, SQLException {
 
         // Актуализация констант
         Class.forName(DBConst.DRIVER_CLASS_NAME);
@@ -49,7 +51,8 @@ public class QueryDslGenerator {
             exporter.setNamingStrategy(new OriginalNamingStrategy());
             exporter.setConfiguration(QueryDslConfiguration.CUSTOM);
 
-            exporter.export(dbConn.getMetaData());
+            final List<EntityType> entityTypeList = exporter.export(dbConn.getMetaData());
+            return entityTypeList;
         }
     }
 }

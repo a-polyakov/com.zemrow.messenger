@@ -21,7 +21,7 @@ public class UserEntryPoint extends AbstractEntityWithId {
     private Boolean validate;
 
     /**
-     * Способ(система) авторизации: логин_пароль, vk.com, google, ...
+     * Способ авторизации. Например: логин_пароль, vk.com, google, ...
      */
     private EntryPointTypeEnum entryPointType;
 
@@ -76,7 +76,7 @@ public class UserEntryPoint extends AbstractEntityWithId {
      * @param id ID записи
      * @param userId ID пользователя
      * @param validate Прошел ли подтверждение
-     * @param entryPointType Способ(система) авторизации: логин_пароль, vk.com, google, ...
+     * @param entryPointType Способ авторизации. Например: логин_пароль, vk.com, google, ...
      * @param clientId Идентификатор в системе авторизации (логин)
      * @param credential Удостоверение личности в системе авторизации (пароль)
      * @param createTime Дата создания записи
@@ -158,14 +158,14 @@ public class UserEntryPoint extends AbstractEntityWithId {
     }
 
     /**
-     * Получение способ(система) авторизации: логин_пароль, vk.com, google, ...
+     * Получение способ авторизации. например: логин_пароль, vk.com, google, ...
      */
     public EntryPointTypeEnum getEntryPointType() {
         return entryPointType;
     }
 
     /**
-     * Установить способ(система) авторизации: логин_пароль, vk.com, google, ...
+     * Установить способ авторизации. например: логин_пароль, vk.com, google, ...
      */
     public void setEntryPointType(EntryPointTypeEnum entryPointType) {
         this.entryPointType = entryPointType;

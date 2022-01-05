@@ -20,7 +20,7 @@ public class MessageTag extends AbstractEntityWithId {
     private Long tagId;
 
     /**
-     * Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
+     * Значение тега. ID чата, дата в ms, ID пользователя в зависимости от типа тега.
      */
     private String value;
 
@@ -65,7 +65,7 @@ public class MessageTag extends AbstractEntityWithId {
      * @param id ID записи
      * @param messageId ID сообщения
      * @param tagId ID тега
-     * @param value Скрытое значение тега (ID чата, дата в ms, ID пользователя в зависимости от типа тега)
+     * @param value Значение тега. ID чата, дата в ms, ID пользователя в зависимости от типа тега.
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
      * @param updateTime Дата обновления записи
@@ -143,14 +143,14 @@ public class MessageTag extends AbstractEntityWithId {
     }
 
     /**
-     * Получение скрытое значение тега (id чата, дата в ms, id пользователя в зависимости от типа тега)
+     * Получение значение тега. id чата, дата в ms, id пользователя в зависимости от типа тега.
      */
     public String getValue() {
         return value;
     }
 
     /**
-     * Установить скрытое значение тега (id чата, дата в ms, id пользователя в зависимости от типа тега)
+     * Установить значение тега. id чата, дата в ms, id пользователя в зависимости от типа тега.
      */
     public void setValue(String value) {
         this.value = value;

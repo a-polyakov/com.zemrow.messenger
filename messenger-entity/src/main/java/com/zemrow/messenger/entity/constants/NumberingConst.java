@@ -14,7 +14,7 @@ import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * Класс сгенерирован автоматически, для таблицы Numbering(Настройка нумирации для компании и типа чата) из БД
+ * Класс сгенерирован автоматически, для таблицы Numbering(Настройка нумерации для компании и типа чата) из БД
  * 
  * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
@@ -23,7 +23,7 @@ public class NumberingConst extends com.querydsl.sql.RelationalPathBase<Numberin
     private static final long serialVersionUID = -1928424558;
 
     /**
-     * Настройка нумирации для компании и типа чата
+     * Настройка нумерации для компании и типа чата
      */
     public static final NumberingConst Numbering = new NumberingConst("Numbering");
 
@@ -126,6 +126,16 @@ public class NumberingConst extends com.querydsl.sql.RelationalPathBase<Numberin
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<Numbering> numbering_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Numbering_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Numbering_updatedBy_fk = createForeignKey(updatedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Numbering_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Numbering_userId_fk = createForeignKey(userId, "id");
 
     public NumberingConst(String variable) {
         super(Numbering.class, forVariable(variable), "public", "Numbering");

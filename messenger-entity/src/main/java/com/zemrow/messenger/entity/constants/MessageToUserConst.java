@@ -45,12 +45,12 @@ public class MessageToUserConst extends com.querydsl.sql.RelationalPathBase<Mess
     public static final String USER_ID = "userId";
 
     /**
-     * Статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)
+     * Статус сообщения для конкретного пользователя. Просмотрен/не просмотрен и т.д.
      */
     public static final String MESSAGE_STATUS = "messageStatus";
 
     /**
-     * Реакция на сообщение (like/dislike)
+     * Реакция на сообщение. like/dislike
      */
     public static final String MESSAGE_FEEDBACK = "messageFeedback";
 
@@ -100,12 +100,12 @@ public class MessageToUserConst extends com.querydsl.sql.RelationalPathBase<Mess
     public final NumberPath<Long> userId = createNumber(USER_ID, Long.class);
 
     /**
-     * Статус сообщения для конкретного контакта (просмотрен/не просмотрен и т.д.)
+     * Статус сообщения для конкретного пользователя. Просмотрен/не просмотрен и т.д.
      */
     public final EnumPath<MessageStatusEnum> messageStatus = createEnum(MESSAGE_STATUS, MessageStatusEnum.class);
 
     /**
-     * Реакция на сообщение (like/dislike)
+     * Реакция на сообщение. like/dislike
      */
     public final EnumPath<MessageFeedbackEnum> messageFeedback = createEnum(MESSAGE_FEEDBACK, MessageFeedbackEnum.class);
 
@@ -138,6 +138,18 @@ public class MessageToUserConst extends com.querydsl.sql.RelationalPathBase<Mess
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<MessageToUser> messagetouser_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> MessageToUser_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Message> MessageToUser_messageId_fk = createForeignKey(messageId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> MessageToUser_userId_fk = createForeignKey(userId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> MessageToUser_updatedBy_fk = createForeignKey(updatedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> MessageToUser_createdBy_fk = createForeignKey(createdBy, "id");
 
     public MessageToUserConst(String variable) {
         super(MessageToUser.class, forVariable(variable), "public", "MessageToUser");

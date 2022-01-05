@@ -21,7 +21,7 @@ public class UserLink extends AbstractEntityWithId {
     private Long childUserId;
 
     /**
-     * Тип связи (подчинение, замена)
+     * Тип связи
      */
     private UserLinkTypeEnum userLinkType;
 
@@ -56,7 +56,7 @@ public class UserLink extends AbstractEntityWithId {
      * @param id ID записи
      * @param parentUserId ID пользователя родителя
      * @param childUserId ID пользователя потомка
-     * @param userLinkType Тип связи (подчинение, замена)
+     * @param userLinkType Тип связи
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
      * @param deleteTime Дата удаления записи
@@ -122,14 +122,14 @@ public class UserLink extends AbstractEntityWithId {
     }
 
     /**
-     * Получение тип связи (подчинение, замена)
+     * Получение тип связи
      */
     public UserLinkTypeEnum getUserLinkType() {
         return userLinkType;
     }
 
     /**
-     * Установить тип связи (подчинение, замена)
+     * Установить тип связи
      */
     public void setUserLinkType(UserLinkTypeEnum userLinkType) {
         this.userLinkType = userLinkType;

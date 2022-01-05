@@ -21,7 +21,7 @@ public class Chat extends AbstractEntityWithId {
     private ChatTypeEnum chatType;
 
     /**
-     * Использованый нумиратор (для определения префикса)
+     * Использованный нумератор (для определения префикса)
      */
     private Long numberingId;
 
@@ -71,7 +71,7 @@ public class Chat extends AbstractEntityWithId {
      * @param id ID записи
      * @param label Наименование чата
      * @param chatType Тип чата: чат, задание
-     * @param numberingId Использованый нумиратор (для определения префикса)
+     * @param numberingId Использованный нумератор (для определения префикса)
      * @param orderNumber Номер чата(документа)
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
@@ -151,14 +151,14 @@ public class Chat extends AbstractEntityWithId {
     }
 
     /**
-     * Получение использованый нумиратор (для определения префикса)
+     * Получение использованный нумератор (для определения префикса)
      */
     public Long getNumberingId() {
         return numberingId;
     }
 
     /**
-     * Установить использованый нумиратор (для определения префикса)
+     * Установить использованный нумератор (для определения префикса)
      */
     public void setNumberingId(Long numberingId) {
         this.numberingId = numberingId;

@@ -26,12 +26,12 @@ public class Message extends AbstractEntityWithId {
     private Long fileId;
 
     /**
-     * ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
+     * ID созданного чата. Если сообщение содержало команду для создания дочернего чата (например задание).
      */
     private Long childChatId;
 
     /**
-     * Тип сообщени (SIMPLE, ERROR)
+     * Тип сообщения (SIMPLE, ERROR)
      */
     private MessageTypeEnum messageType;
 
@@ -82,8 +82,8 @@ public class Message extends AbstractEntityWithId {
      * @param chatId ID чата
      * @param text Текст
      * @param fileId ID прикрепленного файла
-     * @param childChatId ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
-     * @param messageType Тип сообщени (SIMPLE, ERROR)
+     * @param childChatId ID созданного чата. Если сообщение содержало команду для создания дочернего чата (например задание).
+     * @param messageType Тип сообщения (SIMPLE, ERROR)
      * @param parentMessageId ID родительского сообщения
      * @param createTime Дата создания записи
      * @param createdBy Пользователь создавший запись
@@ -179,28 +179,28 @@ public class Message extends AbstractEntityWithId {
     }
 
     /**
-     * Получение id созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
+     * Получение id созданного чата. если сообщение содержало команду для создания дочернего чата (например задание).
      */
     public Long getChildChatId() {
         return childChatId;
     }
 
     /**
-     * Установить id созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
+     * Установить id созданного чата. если сообщение содержало команду для создания дочернего чата (например задание).
      */
     public void setChildChatId(Long childChatId) {
         this.childChatId = childChatId;
     }
 
     /**
-     * Получение тип сообщени (simple, error)
+     * Получение тип сообщения (simple, error)
      */
     public MessageTypeEnum getMessageType() {
         return messageType;
     }
 
     /**
-     * Установить тип сообщени (simple, error)
+     * Установить тип сообщения (simple, error)
      */
     public void setMessageType(MessageTypeEnum messageType) {
         this.messageType = messageType;

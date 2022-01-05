@@ -1,5 +1,6 @@
 package com.zemrow.messenger.db;
 
+import com.querydsl.codegen.EntityType;
 import com.zemrow.messenger.constants.DBConst;
 import com.zemrow.messenger.constants.SystemPropertiesConst;
 import com.zemrow.messenger.db.querydsl.QueryDslGenerator;
@@ -46,6 +47,7 @@ public class RunUpdateDB {
             out.println("Время обновления БД " + time + "ms");
         }
 
+        List<EntityType> entityTypeList;
         if (true) {
             // Актуализация констант
             //TODO
@@ -53,10 +55,13 @@ public class RunUpdateDB {
 
             long time = System.currentTimeMillis();
 
-            QueryDslGenerator.generate(url, username, password);
+            entityTypeList = QueryDslGenerator.generate(url, username, password);
 
             time = System.currentTimeMillis() - time;
             out.println("Время генерации констант " + time + "ms");
+        }
+        if (true) {
+            DataBaseSchema2PlantUml.write(entityTypeList, "./readme/database_schema2.puml");
         }
     }
 

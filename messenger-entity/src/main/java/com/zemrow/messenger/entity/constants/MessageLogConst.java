@@ -77,6 +77,12 @@ public class MessageLogConst extends com.querydsl.sql.RelationalPathBase<Message
      */
     public final NumberPath<Long> createdBy = createNumber(CREATED_BY, Long.class);
 
+    public final com.querydsl.sql.PrimaryKey<MessageLog> messagelog_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Message> MessageLog_messageId_fk = createForeignKey(messageId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> MessageLog_createdBy_fk = createForeignKey(createdBy, "id");
+
     public MessageLogConst(String variable) {
         super(MessageLog.class, forVariable(variable), "public", "MessageLog");
         addMetadata();

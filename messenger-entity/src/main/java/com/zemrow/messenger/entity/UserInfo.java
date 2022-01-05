@@ -1,6 +1,7 @@
 package com.zemrow.messenger.entity;
 
 import com.zemrow.messenger.SessionStorage;
+import com.zemrow.messenger.entity.enums.UserStatusEnum;
 import com.zemrow.messenger.entity.enums.UserTypeEnum;
 
 /**
@@ -11,19 +12,19 @@ import com.zemrow.messenger.entity.enums.UserTypeEnum;
 public class UserInfo extends AbstractEntityWithId {
 
     /**
-     * Ссылка на таблицу file где хранится аватар
-     */
-    private Long avatarId;
-
-    /**
      * Наименование пользователя
      */
     private String name;
 
     /**
-     * Тип пользователя: физическое лицо, отдел, компания
+     * Тип пользователя. Например: физическое лицо, отдел, компания
      */
     private UserTypeEnum userType;
+
+    /**
+     * Ссылка на таблицу file где хранится аватар
+     */
+    private Long avatarId;
 
     /**
      * Json с дополнительными полями
@@ -31,19 +32,24 @@ public class UserInfo extends AbstractEntityWithId {
     private String publicInfo;
 
     /**
-     * Состояние пользователя: Не в сети, В сети, Не беспокоить
+     * Состояние пользователя. Не в сети, В сети
      */
-    private Long userStatusId;
+    private UserStatusEnum userStatus;
+
+    /**
+     * Статус который указал пользователь
+     */
+    private String userStatusLabel;
 
     /**
      * Язык
      */
-    private String locale;
+    private java.util.Locale locale;
 
     /**
      * Часовой пояс
      */
-    private String timeZone;
+    private java.time.ZoneId timeZone;
 
     /**
      * Дата создания записи
@@ -84,11 +90,12 @@ public class UserInfo extends AbstractEntityWithId {
     /**
      * Создать Пользователь
      * @param id ID записи
-     * @param avatarId Ссылка на таблицу file где хранится аватар
      * @param name Наименование пользователя
-     * @param userType Тип пользователя: физическое лицо, отдел, компания
+     * @param userType Тип пользователя. Например: физическое лицо, отдел, компания
+     * @param avatarId Ссылка на таблицу file где хранится аватар
      * @param publicInfo Json с дополнительными полями
-     * @param userStatusId Состояние пользователя: Не в сети, В сети, Не беспокоить
+     * @param userStatus Состояние пользователя. Не в сети, В сети
+     * @param userStatusLabel Статус который указал пользователь
      * @param locale Язык
      * @param timeZone Часовой пояс
      * @param createTime Дата создания записи
@@ -98,13 +105,14 @@ public class UserInfo extends AbstractEntityWithId {
      * @param deleteTime Дата удаления записи
      * @param deletedBy Пользователь удаливший запись
      */
-    public UserInfo(Long id, Long avatarId, String name, UserTypeEnum userType, String publicInfo, Long userStatusId, String locale, String timeZone, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
+    public UserInfo(Long id, String name, UserTypeEnum userType, Long avatarId, String publicInfo, UserStatusEnum userStatus, String userStatusLabel, java.util.Locale locale, java.time.ZoneId timeZone, Long createTime, Long createdBy, Long updateTime, Long updatedBy, Long deleteTime, Long deletedBy) {
         this.id = id;
-        this.avatarId = avatarId;
         this.name = name;
         this.userType = userType;
+        this.avatarId = avatarId;
         this.publicInfo = publicInfo;
-        this.userStatusId = userStatusId;
+        this.userStatus = userStatus;
+        this.userStatusLabel = userStatusLabel;
         this.locale = locale;
         this.timeZone = timeZone;
         this.createTime = createTime;
@@ -144,20 +152,6 @@ public class UserInfo extends AbstractEntityWithId {
     }
 
     /**
-     * Получение ссылка на таблицу file где хранится аватар
-     */
-    public Long getAvatarId() {
-        return avatarId;
-    }
-
-    /**
-     * Установить ссылка на таблицу file где хранится аватар
-     */
-    public void setAvatarId(Long avatarId) {
-        this.avatarId = avatarId;
-    }
-
-    /**
      * Получение наименование пользователя
      */
     public String getName() {
@@ -172,17 +166,31 @@ public class UserInfo extends AbstractEntityWithId {
     }
 
     /**
-     * Получение тип пользователя: физическое лицо, отдел, компания
+     * Получение тип пользователя. например: физическое лицо, отдел, компания
      */
     public UserTypeEnum getUserType() {
         return userType;
     }
 
     /**
-     * Установить тип пользователя: физическое лицо, отдел, компания
+     * Установить тип пользователя. например: физическое лицо, отдел, компания
      */
     public void setUserType(UserTypeEnum userType) {
         this.userType = userType;
+    }
+
+    /**
+     * Получение ссылка на таблицу file где хранится аватар
+     */
+    public Long getAvatarId() {
+        return avatarId;
+    }
+
+    /**
+     * Установить ссылка на таблицу file где хранится аватар
+     */
+    public void setAvatarId(Long avatarId) {
+        this.avatarId = avatarId;
     }
 
     /**
@@ -200,44 +208,58 @@ public class UserInfo extends AbstractEntityWithId {
     }
 
     /**
-     * Получение состояние пользователя: не в сети, в сети, не беспокоить
+     * Получение состояние пользователя. не в сети, в сети
      */
-    public Long getUserStatusId() {
-        return userStatusId;
+    public UserStatusEnum getUserStatus() {
+        return userStatus;
     }
 
     /**
-     * Установить состояние пользователя: не в сети, в сети, не беспокоить
+     * Установить состояние пользователя. не в сети, в сети
      */
-    public void setUserStatusId(Long userStatusId) {
-        this.userStatusId = userStatusId;
+    public void setUserStatus(UserStatusEnum userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    /**
+     * Получение статус который указал пользователь
+     */
+    public String getUserStatusLabel() {
+        return userStatusLabel;
+    }
+
+    /**
+     * Установить статус который указал пользователь
+     */
+    public void setUserStatusLabel(String userStatusLabel) {
+        this.userStatusLabel = userStatusLabel;
     }
 
     /**
      * Получение язык
      */
-    public String getLocale() {
+    public java.util.Locale getLocale() {
         return locale;
     }
 
     /**
      * Установить язык
      */
-    public void setLocale(String locale) {
+    public void setLocale(java.util.Locale locale) {
         this.locale = locale;
     }
 
     /**
      * Получение часовой пояс
      */
-    public String getTimeZone() {
+    public java.time.ZoneId getTimeZone() {
         return timeZone;
     }
 
     /**
      * Установить часовой пояс
      */
-    public void setTimeZone(String timeZone) {
+    public void setTimeZone(java.time.ZoneId timeZone) {
         this.timeZone = timeZone;
     }
 
@@ -331,20 +353,23 @@ public class UserInfo extends AbstractEntityWithId {
         if (id != null) {
             result.append(", id = \"").append(id).append('"');
         }
-        if (avatarId != null) {
-            result.append(", avatarId = \"").append(avatarId).append('"');
-        }
         if (name != null) {
             result.append(", name = \"").append(name).append('"');
         }
         if (userType != null) {
             result.append(", userType = \"").append(userType).append('"');
         }
+        if (avatarId != null) {
+            result.append(", avatarId = \"").append(avatarId).append('"');
+        }
         if (publicInfo != null) {
             result.append(", publicInfo = \"").append(publicInfo).append('"');
         }
-        if (userStatusId != null) {
-            result.append(", userStatusId = \"").append(userStatusId).append('"');
+        if (userStatus != null) {
+            result.append(", userStatus = \"").append(userStatus).append('"');
+        }
+        if (userStatusLabel != null) {
+            result.append(", userStatusLabel = \"").append(userStatusLabel).append('"');
         }
         if (locale != null) {
             result.append(", locale = \"").append(locale).append('"');

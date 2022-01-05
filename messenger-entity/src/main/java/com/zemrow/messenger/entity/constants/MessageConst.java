@@ -50,12 +50,12 @@ public class MessageConst extends com.querydsl.sql.RelationalPathBase<Message> {
     public static final String FILE_ID = "fileId";
 
     /**
-     * ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
+     * ID созданного чата. Если сообщение содержало команду для создания дочернего чата (например задание).
      */
     public static final String CHILD_CHAT_ID = "childChatId";
 
     /**
-     * Тип сообщени (SIMPLE, ERROR)
+     * Тип сообщения (SIMPLE, ERROR)
      */
     public static final String MESSAGE_TYPE = "messageType";
 
@@ -115,12 +115,12 @@ public class MessageConst extends com.querydsl.sql.RelationalPathBase<Message> {
     public final NumberPath<Long> fileId = createNumber(FILE_ID, Long.class);
 
     /**
-     * ID созданого дочернего чата (при наличии в сообщении управляющего тега например задание)
+     * ID созданного чата. Если сообщение содержало команду для создания дочернего чата (например задание).
      */
     public final NumberPath<Long> childChatId = createNumber(CHILD_CHAT_ID, Long.class);
 
     /**
-     * Тип сообщени (SIMPLE, ERROR)
+     * Тип сообщения (SIMPLE, ERROR)
      */
     public final EnumPath<MessageTypeEnum> messageType = createEnum(MESSAGE_TYPE, MessageTypeEnum.class);
 
@@ -158,6 +158,22 @@ public class MessageConst extends com.querydsl.sql.RelationalPathBase<Message> {
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<Message> message_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Message_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.FileInfo> Message_fileId_fk = createForeignKey(fileId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> Message_childChatId_fk = createForeignKey(childChatId, "id");
+
+    public final com.querydsl.sql.ForeignKey<Message> Message_parentMessageId_fk = createForeignKey(parentMessageId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Message_updatedBy_fk = createForeignKey(updatedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> Message_chatId_fk = createForeignKey(chatId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> Message_deletedBy_fk = createForeignKey(deletedBy, "id");
 
     public MessageConst(String variable) {
         super(Message.class, forVariable(variable), "public", "Message");

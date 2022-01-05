@@ -13,7 +13,7 @@ import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * Класс сгенерирован автоматически, для таблицы ChatToUserLastMessage(Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.) из БД
+ * Класс сгенерирован автоматически, для таблицы ChatToUserLastMessage(Последнее сообщение для пользователя в чате. Для упрощения поиска последнего сообщения. Данные являются избыточными, возможно восстановить.) из БД
  * 
  * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
@@ -22,12 +22,12 @@ public class ChatToUserLastMessageConst extends com.querydsl.sql.RelationalPathB
     private static final long serialVersionUID = -1930803860;
 
     /**
-     * Последнее сообщение для пользователя в чате (для упрощения поиска последнего сообщения). Данные являются избыточными, возможно восстановить.
+     * Последнее сообщение для пользователя в чате. Для упрощения поиска последнего сообщения. Данные являются избыточными, возможно восстановить.
      */
     public static final ChatToUserLastMessageConst ChatToUserLastMessage = new ChatToUserLastMessageConst("ChatToUserLastMessage");
 
     /**
-     * Пользователи в чате (ID чата и ID пользователя)
+     * Пользователь в чата. ID чата и ID пользователя
      */
     public static final String CHAT_TO_USER_ID = "chatToUserId";
 
@@ -37,7 +37,7 @@ public class ChatToUserLastMessageConst extends com.querydsl.sql.RelationalPathB
     public static final String MESSAGE_ID = "messageId";
 
     /**
-     * Пользователи в чате (ID чата и ID пользователя)
+     * Пользователь в чата. ID чата и ID пользователя
      */
     public final NumberPath<Long> chatToUserId = createNumber(CHAT_TO_USER_ID, Long.class);
 
@@ -45,6 +45,12 @@ public class ChatToUserLastMessageConst extends com.querydsl.sql.RelationalPathB
      * ID сообщения
      */
     public final NumberPath<Long> messageId = createNumber(MESSAGE_ID, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<ChatToUserLastMessage> chattouserlastmessage_pkey = createPrimaryKey(chatToUserId);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Message> ChatToUserLastMessage_messageId_fk = createForeignKey(messageId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.ChatToUser> ChatToUserLastMessage_chatToUserId_fk = createForeignKey(chatToUserId, "id");
 
     public ChatToUserLastMessageConst(String variable) {
         super(ChatToUserLastMessage.class, forVariable(variable), "public", "ChatToUserLastMessage");

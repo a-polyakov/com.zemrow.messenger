@@ -28,7 +28,7 @@ public class UserSessionConst extends com.querydsl.sql.RelationalPathBase<UserSe
     public static final UserSessionConst UserSession = new UserSessionConst("UserSession");
 
     /**
-     * Уникальный идентификатор сессии, сложный для подбора
+     * Уникальный идентификатор сессии. Сложный для подбора
      */
     public static final String TOKEN = "token";
 
@@ -53,7 +53,7 @@ public class UserSessionConst extends com.querydsl.sql.RelationalPathBase<UserSe
     public static final String DELETED_BY = "deletedBy";
 
     /**
-     * Уникальный идентификатор сессии, сложный для подбора
+     * Уникальный идентификатор сессии. Сложный для подбора
      */
     public final StringPath token = createString(TOKEN);
 
@@ -76,6 +76,12 @@ public class UserSessionConst extends com.querydsl.sql.RelationalPathBase<UserSe
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<UserSession> usersession_pkey = createPrimaryKey(token);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserSession_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserEntryPoint> UserSession_userEntryPointId_fk = createForeignKey(userEntryPointId, "id");
 
     public UserSessionConst(String variable) {
         super(UserSession.class, forVariable(variable), "public", "UserSession");

@@ -10,7 +10,7 @@ import com.zemrow.messenger.SessionStorage;
 public class UserSession extends AbstractEntity {
 
     /**
-     * Уникальный идентификатор сессии, сложный для подбора
+     * Уникальный идентификатор сессии. Сложный для подбора
      */
     private String token;
 
@@ -42,7 +42,7 @@ public class UserSession extends AbstractEntity {
 
     /**
      * Создать Сессия пользователя
-     * @param token Уникальный идентификатор сессии, сложный для подбора
+     * @param token Уникальный идентификатор сессии. Сложный для подбора
      * @param userEntryPointId Точка входа пользователя
      * @param createTime Дата создания записи
      * @param deleteTime Дата удаления записи
@@ -74,14 +74,14 @@ public class UserSession extends AbstractEntity {
     }
 
     /**
-     * Получение уникальный идентификатор сессии, сложный для подбора
+     * Получение уникальный идентификатор сессии. сложный для подбора
      */
     public String getToken() {
         return token;
     }
 
     /**
-     * Установить уникальный идентификатор сессии, сложный для подбора
+     * Установить уникальный идентификатор сессии. сложный для подбора
      */
     public void setToken(String token) {
         this.token = token;

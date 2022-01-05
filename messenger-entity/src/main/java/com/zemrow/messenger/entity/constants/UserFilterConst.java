@@ -40,7 +40,7 @@ public class UserFilterConst extends com.querydsl.sql.RelationalPathBase<UserFil
     public static final String USER_ID = "userId";
 
     /**
-     * id части системы (грид, панель, список) для применения данного фильтра
+     * ID части системы. Таблица, панель, список для применения данного фильтра
      */
     public static final String PAGE_TYPE = "pageType";
 
@@ -95,7 +95,7 @@ public class UserFilterConst extends com.querydsl.sql.RelationalPathBase<UserFil
     public final NumberPath<Long> userId = createNumber(USER_ID, Long.class);
 
     /**
-     * id части системы (грид, панель, список) для применения данного фильтра
+     * ID части системы. Таблица, панель, список для применения данного фильтра
      */
     public final EnumPath<FilterPageTypeEnum> pageType = createEnum(PAGE_TYPE, FilterPageTypeEnum.class);
 
@@ -138,6 +138,16 @@ public class UserFilterConst extends com.querydsl.sql.RelationalPathBase<UserFil
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<UserFilter> userfilter_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserFilter_userId_fk = createForeignKey(userId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserFilter_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserFilter_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> UserFilter_updatedBy_fk = createForeignKey(updatedBy, "id");
 
     public UserFilterConst(String variable) {
         super(UserFilter.class, forVariable(variable), "public", "UserFilter");

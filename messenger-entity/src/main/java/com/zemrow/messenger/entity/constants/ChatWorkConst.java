@@ -13,7 +13,7 @@ import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * Класс сгенерирован автоматически, для таблицы ChatWork(Отметка пользователя о затраченом времени) из БД
+ * Класс сгенерирован автоматически, для таблицы ChatWork(Отметка пользователя о затраченном времени) из БД
  * 
  * @author com.zemrow.messenger.db.querydsl.QueryDslMetaDataSerializer on 2020.10.23
  */
@@ -22,7 +22,7 @@ public class ChatWorkConst extends com.querydsl.sql.RelationalPathBase<ChatWork>
     private static final long serialVersionUID = -894696496;
 
     /**
-     * Отметка пользователя о затраченом времени
+     * Отметка пользователя о затраченном времени
      */
     public static final ChatWorkConst ChatWork = new ChatWorkConst("ChatWork");
 
@@ -115,6 +115,16 @@ public class ChatWorkConst extends com.querydsl.sql.RelationalPathBase<ChatWork>
      * Пользователь удаливший запись
      */
     public final NumberPath<Long> deletedBy = createNumber(DELETED_BY, Long.class);
+
+    public final com.querydsl.sql.PrimaryKey<ChatWork> chatwork_pkey = createPrimaryKey(id);
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatWork_createdBy_fk = createForeignKey(createdBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatWork_deletedBy_fk = createForeignKey(deletedBy, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.UserInfo> ChatWork_userId_fk = createForeignKey(userId, "id");
+
+    public final com.querydsl.sql.ForeignKey<com.zemrow.messenger.entity.Chat> ChatWork_chatId_fk = createForeignKey(chatId, "id");
 
     public ChatWorkConst(String variable) {
         super(ChatWork.class, forVariable(variable), "public", "ChatWork");

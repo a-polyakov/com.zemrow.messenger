@@ -1,10 +1,23 @@
 package com.zemrow.messenger.db.querydsl;
 
-import com.google.common.collect.Sets;
-import com.mysema.codegen.CodeWriter;
-import com.mysema.codegen.model.*;
-import com.querydsl.codegen.*;
-import com.querydsl.core.types.*;
+import com.querydsl.codegen.EntityType;
+import com.querydsl.codegen.Property;
+import com.querydsl.codegen.SerializerConfig;
+import com.querydsl.codegen.Supertype;
+import com.querydsl.codegen.TypeMappings;
+import com.querydsl.codegen.utils.CodeWriter;
+import com.querydsl.codegen.utils.Symbols;
+import com.querydsl.codegen.utils.model.ClassType;
+import com.querydsl.codegen.utils.model.Parameter;
+import com.querydsl.codegen.utils.model.SimpleType;
+import com.querydsl.codegen.utils.model.Type;
+import com.querydsl.codegen.utils.model.TypeCategory;
+import com.querydsl.codegen.utils.model.Types;
+import com.querydsl.core.types.ConstructorExpression;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.PathMetadataFactory;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.PathInits;
 import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.sql.ColumnMetadata;
@@ -13,15 +26,21 @@ import com.querydsl.sql.codegen.NamingStrategy;
 import com.querydsl.sql.codegen.SQLCodegenModule;
 import com.querydsl.sql.codegen.support.ForeignKeyData;
 import com.querydsl.sql.codegen.support.InverseForeignKeyData;
+import com.querydsl.sql.codegen.support.PrimaryKeyData;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.*;
-
-import static com.mysema.codegen.Symbols.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Настройка генерации констант
@@ -105,7 +124,10 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
         if (model.hasEntityFields() || model.hasInits()) {
             inits = true;
         } else {
-            Set<TypeCategory> collections = Sets.newHashSet(TypeCategory.COLLECTION, TypeCategory.LIST, TypeCategory.SET);
+            Set<TypeCategory> collections = new HashSet<>();
+            collections.add(TypeCategory.COLLECTION);
+            collections.add(TypeCategory.LIST);
+            collections.add(TypeCategory.SET);
             for (Property property : model.getProperties()) {
                 if (!property.isInherited() && collections.contains(property.getType().getCategory())) {
                     inits = true;
@@ -206,7 +228,7 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
             }
             property.getData().put("nameConstant", nameConstant.toString());
             writer.line("public static final String ", nameConstant.toString(),
-                    ASSIGN, QUOTE, name, QUOTE, SEMICOLON).nl();
+                    Symbols.ASSIGN, Symbols.QUOTE, name, Symbols.QUOTE, Symbols.SEMICOLON).nl();
         }
 
         for (Property property : QueryDslEntitySerializer.getSortProperties(model)) {
@@ -269,6 +291,20 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
                     break;
             }
         }
+
+        final Collection<PrimaryKeyData> primaryKeys =
+                (Collection<PrimaryKeyData>) model.getData().get(PrimaryKeyData.class);
+        // primary keys
+        if (primaryKeys != null) {
+            serializePrimaryKeys(model, writer, primaryKeys);
+        }
+
+        final Collection<ForeignKeyData> foreignKeys =
+                (Collection<ForeignKeyData>) model.getData().get(ForeignKeyData.class);
+        // foreign keys
+        if (foreignKeys != null) {
+            serializeForeignKeys(model, writer, foreignKeys, false);
+        }
     }
 
     @Override
@@ -320,7 +356,7 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
 //        boolean hasEntityFields = model.hasEntityFields() || superTypeHasEntityFields(model);
         boolean hasEntityFields = false;
 //        String thisOrSuper = hasEntityFields ? THIS : SUPER;
-        String thisOrSuper = SUPER;
+        String thisOrSuper = Symbols.SUPER;
         String additionalParams = hasEntityFields ? "" : getAdditionalConstructorParameter(model);
 
 //        if (!localName.equals(genericName)) {
@@ -330,8 +366,8 @@ public class QueryDslMetaDataSerializer extends MetaDataSerializer {
         if (stringOrBoolean) {
             writer.line(thisOrSuper, "(forVariable(variable)", additionalParams, ");");
         } else {
-            writer.line(thisOrSuper, "(", localName.equals(genericName) ? EMPTY : "(Class) ",
-                    writer.getClassConstant(localName) + COMMA + "forVariable(variable)", hasEntityFields ? ", INITS" : EMPTY,
+            writer.line(thisOrSuper, "(", localName.equals(genericName) ? Symbols.EMPTY : "(Class) ",
+                    writer.getClassConstant(localName) + Symbols.COMMA + "forVariable(variable)", hasEntityFields ? ", INITS" : Symbols.EMPTY,
                     additionalParams, ");");
         }
         if (!hasEntityFields) {
